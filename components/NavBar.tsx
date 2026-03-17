@@ -39,6 +39,16 @@ interface MegaMenuItem {
 // ================================================================
 // ICONS
 // ================================================================
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.qatech360.com";
+
+const LoginIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+    <polyline points="10 17 15 12 10 7"/>
+    <line x1="15" y1="12" x2="3" y2="12"/>
+  </svg>
+);
+
 const ShieldIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -425,9 +435,15 @@ export function NavBar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link href="/login" className="btn-ghost text-sm px-4 py-2">
+            <a
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost text-sm px-4 py-2 flex items-center gap-1.5"
+            >
+              <LoginIcon size={15} />
               Iniciar sesión
-            </Link>
+            </a>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link href="/trial" className="btn-primary text-sm px-5 py-2.5">
                 <ShieldIcon size={15} />
@@ -533,13 +549,16 @@ export function NavBar() {
 
               {/* CTAs */}
               <div className="px-4 py-4 border-t border-[rgba(55,65,81,0.4)] flex flex-col gap-3">
-                <Link
-                  href="/login"
+                <a
+                  href={APP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
-                  className="btn-secondary w-full justify-center text-sm"
+                  className="btn-secondary w-full justify-center text-sm flex items-center gap-2"
                 >
+                  <LoginIcon size={15} />
                   Iniciar sesión
-                </Link>
+                </a>
                 <Link
                   href="/trial"
                   onClick={() => setMobileOpen(false)}
