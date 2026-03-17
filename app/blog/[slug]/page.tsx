@@ -7,14 +7,6 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
 // ================================================================
-// STATIC GENERATION
-// ================================================================
-export async function generateStaticParams() {
-  return [{ slug: "ransomware-latam-2025" }];
-}
-export const dynamic = "force-static";
-
-// ================================================================
 // TYPES
 // ================================================================
 interface RelatedArticle {
