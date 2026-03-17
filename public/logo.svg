@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="g-outer" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1A3A8A"/>
+      <stop offset="100%" stop-color="#0D1E5A"/>
+    </linearGradient>
+    <linearGradient id="g-inner" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0070F3"/>
+      <stop offset="60%" stop-color="#0055CC"/>
+      <stop offset="100%" stop-color="#003BA3"/>
+    </linearGradient>
+    <linearGradient id="g-icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00D4FF"/>
+      <stop offset="100%" stop-color="#00AADD"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="g-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A90FF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0055CC" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer shield wings (dark navy with side extensions) -->
+  <path d="M60 4 L108 20 L108 65 Q108 98 60 116 Q12 98 12 65 L12 20 Z"
+        fill="url(#g-outer)"/>
+
+  <!-- Left wing accent -->
+  <path d="M12 20 L12 65 Q12 74 14 82 L20 76 L20 22 Z"
+        fill="#0D2060" opacity="0.7"/>
+
+  <!-- Right wing accent -->
+  <path d="M108 20 L108 65 Q108 74 106 82 L100 76 L100 22 Z"
+        fill="#0D2060" opacity="0.7"/>
+
+  <!-- Inner shield body (electric blue) -->
+  <path d="M60 14 L96 28 L96 64 Q96 91 60 108 Q24 91 24 64 L24 28 Z"
+        fill="url(#g-inner)"/>
+
+  <!-- Cyan inner border ring -->
+  <path d="M60 14 L96 28 L96 64 Q96 91 60 108 Q24 91 24 64 L24 28 Z"
+        fill="none" stroke="#00D4FF" stroke-width="2" opacity="0.5"/>
+
+  <!-- Darker center fill for depth -->
+  <path d="M60 22 L88 33 L88 63 Q88 85 60 100 Q32 85 32 63 L32 33 Z"
+        fill="#003BBF" opacity="0.45"/>
+
+  <!-- Top edge highlight -->
+  <path d="M38 28 Q60 18 82 28" stroke="#5599FF" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+  <!-- Cyan ring around icon -->
+  <circle cx="60" cy="60" r="20"
+          fill="none" stroke="#00D4FF" stroke-width="3"
+          opacity="0.9" filter="url(#glow)"/>
+
+  <!-- Checkmark (Q body) -->
+  <path d="M48 60 L57 69 L73 50"
+        stroke="url(#g-icon)" stroke-width="4.5"
+        stroke-linecap="round" stroke-linejoin="round"
+        fill="none" filter="url(#glow)"/>
+
+  <!-- Q tail / sword handle extending from check -->
+  <line x1="72" y1="69" x2="80" y2="77"
+        stroke="url(#g-icon)" stroke-width="3.5"
+        stroke-linecap="round" filter="url(#glow)"/>
+</svg>
