@@ -1,0 +1,836 @@
+/* ================================================================
+   qatech360 — Global Stylesheet
+   Stack: Next.js 14 + Tailwind CSS + Framer Motion + shadcn/ui
+   ================================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ================================================================ */
+:root {
+  /* === Brand Colors === */
+  --color-primary:    #0070F3;
+  --color-primary-rgb: 0, 112, 243;
+  --color-secondary:  #00D4FF;
+  --color-secondary-rgb: 0, 212, 255;
+  --color-accent:     #00FF88;
+  --color-accent-rgb: 0, 255, 136;
+  --color-warning:    #FF6B00;
+  --color-warning-rgb: 255, 107, 0;
+  --color-danger:     #FF3366;
+  --color-danger-rgb: 255, 51, 102;
+
+  /* === Background Layers === */
+  --bg-base:     #0A0A0A;
+  --bg-card:     #111827;
+  --bg-elevated: #1F2937;
+  --bg-overlay:  rgba(17, 24, 39, 0.85);
+
+  /* === Borders === */
+  --border-default: #374151;
+  --border-subtle:  #1F2937;
+  --border-strong:  #4B5563;
+  --border-primary: rgba(0, 112, 243, 0.4);
+
+  /* === Text === */
+  --text-primary:   #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-muted:     #6B7280;
+
+  /* === Gradients === */
+  --gradient-hero:   linear-gradient(135deg, #0070F3 0%, #00D4FF 100%);
+  --gradient-accent: linear-gradient(135deg, #00FF88 0%, #00D4FF 100%);
+  --gradient-card:   linear-gradient(135deg, rgba(0,112,243,0.2) 0%, rgba(0,212,255,0.1) 100%);
+
+  /* === Shadows === */
+  --shadow-card:       0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.3);
+  --shadow-card-hover: 0 20px 40px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,112,243,0.2);
+  --shadow-glow:       0 0 20px rgba(0,112,243,0.4), 0 0 60px rgba(0,112,243,0.15);
+  --shadow-glow-lg:    0 0 40px rgba(0,112,243,0.5), 0 0 100px rgba(0,112,243,0.2);
+
+  /* === Typography === */
+  --font-sans:    var(--font-inter, "Inter", system-ui, sans-serif);
+  --font-mono:    var(--font-jetbrains, "JetBrains Mono", "Fira Code", monospace);
+
+  /* === Transitions === */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* === Layout === */
+  --max-width: 80rem;
+  --nav-height: 4rem;
+  --section-padding: clamp(4rem, 8vw, 7rem);
+
+  /* === Z-index scale === */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 20;
+  --z-sticky:  40;
+  --z-nav:     50;
+  --z-modal:   60;
+  --z-toast:   70;
+  --z-tooltip: 80;
+
+  /* === shadcn/ui CSS vars (dark theme) === */
+  --background: 10 10 10;
+  --foreground: 255 255 255;
+  --card: 17 24 39;
+  --card-foreground: 255 255 255;
+  --popover: 31 41 55;
+  --popover-foreground: 255 255 255;
+  --primary: 0 112 243;
+  --primary-foreground: 255 255 255;
+  --secondary: 31 41 55;
+  --secondary-foreground: 156 163 175;
+  --muted: 31 41 55;
+  --muted-foreground: 156 163 175;
+  --accent: 0 255 136;
+  --accent-foreground: 10 10 10;
+  --destructive: 255 51 102;
+  --destructive-foreground: 255 255 255;
+  --border: 55 65 81;
+  --input: 55 65 81;
+  --ring: 0 112 243;
+  --radius: 0.5rem;
+}
+
+/* ================================================================
+   2. BASE RESET & GLOBAL STYLES
+   ================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Remove default button styles */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Remove list styles by default */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Typography defaults */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  max-width: 70ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ================================================================
+   3. CUSTOM SCROLLBAR
+   ================================================================ */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 112, 243, 0.4) rgba(31, 41, 55, 0.5);
+}
+
+/* Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.3);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 112, 243, 0.4);
+  border-radius: 99px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 112, 243, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ================================================================
+   4. SELECTION STYLES
+   ================================================================ */
+::selection {
+  background: rgba(0, 112, 243, 0.35);
+  color: #FFFFFF;
+}
+
+::-moz-selection {
+  background: rgba(0, 112, 243, 0.35);
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   5. FOCUS STYLES
+   ================================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ================================================================
+   6. CSS ANIMATIONS
+   ================================================================ */
+
+/* Gradient text */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Slow pulse glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,112,243,0.4), 0 0 60px rgba(0,112,243,0.15); }
+  50%       { box-shadow: 0 0 40px rgba(0,112,243,0.7), 0 0 100px rgba(0,112,243,0.3); }
+}
+
+@keyframes pulse-glow-cyan {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+  50%       { box-shadow: 0 0 50px rgba(0,212,255,0.6), 0 0 90px rgba(0,212,255,0.2); }
+}
+
+/* Float effect */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* Scan line effect */
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  5%   { opacity: 0.6; }
+  95%  { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Shimmer for loading */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Ripple for CTAs */
+@keyframes ripple {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Threat pulse */
+@keyframes threat-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.75; transform: scale(1.05); }
+}
+
+/* Border rotate gradient */
+@keyframes border-rotate {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+/* Slow spin */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+/* Particle drift */
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  33%  { transform: translate(30px, -25px) scale(1.1); opacity: 0.8; }
+  66%  { transform: translate(-20px, -45px) scale(0.9); opacity: 0.6; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+}
+
+/* Fade-in-up */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade in */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Scale-in */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Typewriter cursor */
+@keyframes cursor-blink {
+  0%, 49%  { border-right-color: #0070F3; }
+  50%, 100%{ border-right-color: transparent; }
+}
+
+/* ================================================================
+   7. UTILITY CLASSES
+   ================================================================ */
+
+/* === Gradient Text === */
+.text-gradient {
+  background: var(--gradient-hero);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-animated {
+  background: linear-gradient(135deg, #0070F3, #00D4FF, #00FF88, #00D4FF, #0070F3);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+
+.text-gradient-accent {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === Glow Effects === */
+.glow-primary {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-primary-lg {
+  box-shadow: var(--shadow-glow-lg);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(0,212,255,0.4), 0 0 60px rgba(0,212,255,0.15);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(0,255,136,0.4);
+}
+
+.glow-text-primary {
+  text-shadow: 0 0 20px rgba(0,112,243,0.6), 0 0 40px rgba(0,112,243,0.3);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 20px rgba(0,212,255,0.6), 0 0 40px rgba(0,212,255,0.3);
+}
+
+/* === Glass Morphism === */
+.glass {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.glass-strong {
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(55, 65, 81, 0.7);
+}
+
+.glass-nav {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+/* === Gradient Borders === */
+.border-gradient-primary {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.border-gradient-primary::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0,112,243,0.7), rgba(0,212,255,0.5));
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.border-gradient-animated {
+  position: relative;
+  background: #111827;
+  border-radius: 1rem;
+}
+
+.border-gradient-animated::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #0070F3, #00D4FF, #00FF88, #00D4FF, #0070F3);
+  background-size: 400% 400%;
+  animation: border-rotate 4s linear infinite;
+  z-index: -1;
+  padding: 1px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+/* === Scan Line Overlay === */
+.scan-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+  animation: scan-line 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* === Grid Background Pattern === */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0,112,243,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,112,243,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-sm {
+  background-image:
+    linear-gradient(rgba(0,112,243,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,112,243,0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* === Dot Grid Pattern === */
+.bg-dots {
+  background-image: radial-gradient(rgba(0,112,243,0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === Hero Glow === */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,112,243,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 20%, rgba(0,212,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* === Shimmer Loading === */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(31,41,55,0) 0%,
+    rgba(55,65,81,0.4) 50%,
+    rgba(31,41,55,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* === Badge variants === */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-primary {
+  background: rgba(0,112,243,0.15);
+  color: #60A5FA;
+  border: 1px solid rgba(0,112,243,0.3);
+}
+
+.badge-accent {
+  background: rgba(0,255,136,0.1);
+  color: #00FF88;
+  border: 1px solid rgba(0,255,136,0.25);
+}
+
+.badge-warning {
+  background: rgba(255,107,0,0.15);
+  color: #FF6B00;
+  border: 1px solid rgba(255,107,0,0.3);
+}
+
+.badge-danger {
+  background: rgba(255,51,102,0.15);
+  color: #FF3366;
+  border: 1px solid rgba(255,51,102,0.3);
+}
+
+/* === Section dividers === */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,112,243,0.4), rgba(0,212,255,0.3), transparent);
+}
+
+/* === Number counter highlight === */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ================================================================
+   8. COMPONENT UTILITIES
+   ================================================================ */
+
+/* Section spacing */
+.section-py {
+  padding-top: clamp(4rem, 8vw, 7rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.section-px {
+  padding-left: clamp(1.25rem, 4vw, 3rem);
+  padding-right: clamp(1.25rem, 4vw, 3rem);
+}
+
+/* Max width container */
+.container-qatech {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 3rem);
+  padding-right: clamp(1.25rem, 4vw, 3rem);
+}
+
+/* Inset border glow on focus */
+.interactive-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-card:hover {
+  border-color: rgba(0, 112, 243, 0.4);
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6), 0 0 40px rgba(0,112,243,0.1);
+  transform: translateY(-2px);
+}
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid #0070F3;
+  white-space: nowrap;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Number glow */
+.number-glow {
+  color: #0070F3;
+  text-shadow: 0 0 20px rgba(0,112,243,0.5);
+}
+
+/* ================================================================
+   9. FRAMER MOTION PERFORMANCE HINTS
+   ================================================================ */
+
+/* Tell browser which elements will animate */
+[data-animate] {
+  will-change: transform, opacity;
+}
+
+[data-animate-glow] {
+  will-change: box-shadow, opacity;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scan-overlay::after {
+    display: none;
+  }
+}
+
+/* ================================================================
+   10. PRINT STYLES
+   ================================================================ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+}
+
+/* ================================================================
+   11. RESPONSIVE TYPOGRAPHY SCALE
+   ================================================================ */
+.heading-display {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.heading-1 {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+.heading-2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.heading-3 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.body-lg {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ================================================================
+   12. DARK MODE OVERRIDES (shadcn/ui)
+   ================================================================ */
+.dark {
+  color-scheme: dark;
+}
+
+/* Ensure consistent theming for shadcn components */
+[data-radix-popper-content-wrapper] {
+  z-index: var(--z-tooltip) !important;
+}
+
+/* ================================================================
+   13. LOADING STATES
+   ================================================================ */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1F2937 25%,
+    #374151 50%,
+    #1F2937 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+/* ================================================================
+   14. THREAT MAP CANVAS STYLES
+   ================================================================ */
+canvas.threat-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ================================================================
+   15. NAVIGATION STYLES
+   ================================================================ */
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  padding: 0.25rem 0;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-hero);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--text-primary);
+}
+
+/* ================================================================
+   16. PRICING CARDS
+   ================================================================ */
+.pricing-card-featured {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0,112,243,0.08) 0%, rgba(0,212,255,0.04) 100%);
+}
+
+.pricing-card-featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #0070F3, #00D4FF);
+  z-index: -1;
+  padding: 1px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+/* ================================================================
+   17. TOOLTIP & POPOVER OVERRIDES
+   ================================================================ */
+[data-state="open"][data-side="top"]    { animation: fade-in 0.15s ease-out; }
+[data-state="open"][data-side="bottom"] { animation: fade-in 0.15s ease-out; }
+[data-state="closed"]                   { animation: fade-in 0.1s ease-in reverse; }
+
+/* ================================================================
+   18. FORM ELEMENTS
+   ================================================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================================================================
+   END
+   ================================================================ */
