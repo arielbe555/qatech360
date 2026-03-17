@@ -1,0 +1,938 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+
+// ================================================================
+// ICONS
+// ================================================================
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="rgba(0,255,136,0.15)" />
+    <path d="M8 12l3 3 5-5" stroke="#00FF88" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const XIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="rgba(255,51,102,0.1)" />
+    <path d="M9 9l6 6M15 9l-6 6" stroke="#FF3366" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+const PartialIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="rgba(255,107,0,0.15)" />
+    <path d="M8 12h8" stroke="#FF6B00" strokeWidth="2.5" strokeLinecap="round" />
+  </svg>
+);
+
+const ChevronDown = ({ open }: { open: boolean }) => (
+  <svg
+    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+    style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s" }}
+    aria-hidden="true"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
+// ================================================================
+// DATA
+// ================================================================
+const PLANS = [
+  {
+    id: "trial",
+    name: "FREE TRIAL",
+    tagline: "Conocé la plataforma sin riesgo",
+    monthlyPrice: 0,
+    annualPrice: 0,
+    annualTotal: 0,
+    unit: "15 días gratis",
+    badge: null,
+    badgeColor: null,
+    highlight: false,
+    minEndpoints: "Sin límite",
+    maxEndpoints: "Hasta 50",
+    ctaLabel: "Empezar prueba gratis",
+    ctaHref: "/trial",
+    ctaVariant: "secondary",
+    color: "#9CA3AF",
+    features: [
+      { label: "EDR Completo", included: true },
+      { label: "Detección IA", included: true },
+      { label: "Dashboard en tiempo real", included: true },
+      { label: "Alertas básicas", included: true },
+      { label: "Soporte por email", included: true },
+      { label: "SIEM básico", included: "partial" },
+      { label: "Threat Intelligence", included: "partial" },
+      { label: "Cumplimiento/Compliance", included: false },
+      { label: "SOC 24/7", included: false },
+      { label: "API Access", included: false },
+      { label: "Multi-tenancy", included: false },
+      { label: "SLA garantizado", included: false },
+    ],
+  },
+  {
+    id: "essential",
+    name: "ESSENTIAL",
+    tagline: "Para equipos que empiezan a escalar",
+    monthlyPrice: 2.99,
+    annualPrice: 29,
+    annualTotal: 290,
+    unit: "endpoint/año",
+    badge: null,
+    badgeColor: null,
+    highlight: false,
+    minEndpoints: "10",
+    maxEndpoints: "100",
+    ctaLabel: "Comenzar ahora",
+    ctaHref: "/trial",
+    ctaVariant: "secondary",
+    color: "#0070F3",
+    features: [
+      { label: "EDR Completo", included: true },
+      { label: "Detección IA", included: true },
+      { label: "Dashboard en tiempo real", included: true },
+      { label: "Alertas básicas", included: true },
+      { label: "Soporte por email", included: true },
+      { label: "SIEM básico", included: true },
+      { label: "Threat Intelligence", included: "partial" },
+      { label: "Cumplimiento/Compliance", included: "partial" },
+      { label: "SOC 24/7", included: false },
+      { label: "API Access", included: false },
+      { label: "Multi-tenancy", included: false },
+      { label: "SLA garantizado", included: false },
+    ],
+  },
+  {
+    id: "professional",
+    name: "PROFESSIONAL",
+    tagline: "La elección de equipos de seguridad",
+    monthlyPrice: 6.99,
+    annualPrice: 69,
+    annualTotal: 690,
+    unit: "endpoint/año",
+    badge: "MAS POPULAR",
+    badgeColor: "#00FF88",
+    highlight: true,
+    minEndpoints: "10",
+    maxEndpoints: "500",
+    ctaLabel: "Empezar ahora",
+    ctaHref: "/trial",
+    ctaVariant: "primary",
+    color: "#00D4FF",
+    features: [
+      { label: "EDR Completo", included: true },
+      { label: "Detección IA", included: true },
+      { label: "Dashboard en tiempo real", included: true },
+      { label: "Alertas avanzadas + correlación", included: true },
+      { label: "Soporte prioritario 8x5", included: true },
+      { label: "SIEM completo", included: true },
+      { label: "Threat Intelligence", included: true },
+      { label: "Cumplimiento/Compliance", included: true },
+      { label: "SOC 24/7", included: "partial" },
+      { label: "API Access", included: true },
+      { label: "Multi-tenancy", included: false },
+      { label: "SLA garantizado", included: true },
+    ],
+  },
+  {
+    id: "enterprise",
+    name: "ENTERPRISE",
+    tagline: "Máxima protección sin compromisos",
+    monthlyPrice: null,
+    annualPrice: 119,
+    annualTotal: 1190,
+    unit: "endpoint/año",
+    badge: "ENTERPRISE",
+    badgeColor: "#FF6B00",
+    highlight: false,
+    minEndpoints: "100+",
+    maxEndpoints: "Sin límite",
+    ctaLabel: "Hablar con ventas",
+    ctaHref: "/contact",
+    ctaVariant: "secondary",
+    color: "#FF6B00",
+    features: [
+      { label: "EDR Completo", included: true },
+      { label: "Detección IA", included: true },
+      { label: "Dashboard en tiempo real", included: true },
+      { label: "Alertas avanzadas + correlación", included: true },
+      { label: "Soporte dedicado 24/7", included: true },
+      { label: "SIEM completo + custom rules", included: true },
+      { label: "Threat Intelligence premium", included: true },
+      { label: "Cumplimiento multi-framework", included: true },
+      { label: "SOC 24/7 full", included: true },
+      { label: "API Access ilimitado", included: true },
+      { label: "Multi-tenancy", included: true },
+      { label: "SLA 99.99% garantizado", included: true },
+    ],
+  },
+];
+
+const COMPARISON_FEATURES = [
+  { category: "Detección y Respuesta", features: [
+    { name: "EDR (Endpoint Detection & Response)", trial: true, essential: true, pro: true, enterprise: true },
+    { name: "Detección con IA / ML", trial: true, essential: true, pro: true, enterprise: true },
+    { name: "Análisis de comportamiento (UEBA)", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "Threat Hunting automatizado", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "Respuesta automática a incidentes", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "Forensics y análisis post-mortem", trial: false, essential: false, pro: true, enterprise: true },
+  ]},
+  { category: "SIEM & Logs", features: [
+    { name: "SIEM integrado", trial: "partial", essential: true, pro: true, enterprise: true },
+    { name: "Retención de logs", trial: "7 días", essential: "30 días", pro: "90 días", enterprise: "1 año" },
+    { name: "Correlación de eventos", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "Reglas SIEM personalizadas", trial: false, essential: false, pro: true, enterprise: true },
+  ]},
+  { category: "Threat Intelligence", features: [
+    { name: "Feeds de amenazas globales", trial: "partial", essential: "partial", pro: true, enterprise: true },
+    { name: "IOC matching en tiempo real", trial: false, essential: true, pro: true, enterprise: true },
+    { name: "Dark web monitoring", trial: false, essential: false, pro: "partial", enterprise: true },
+    { name: "Integración con MITRE ATT&CK", trial: false, essential: "partial", pro: true, enterprise: true },
+  ]},
+  { category: "Compliance y Reportes", features: [
+    { name: "ISO 27001", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "SOC 2 Type II", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "PCI-DSS", trial: false, essential: false, pro: "partial", enterprise: true },
+    { name: "Reportes automáticos", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "Auditoría de accesos", trial: false, essential: true, pro: true, enterprise: true },
+  ]},
+  { category: "Infraestructura", features: [
+    { name: "Endpoints cubiertos", trial: "Hasta 50", essential: "10-100", pro: "10-500", enterprise: "Ilimitado" },
+    { name: "Cloud workloads", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "Contenedores / Kubernetes", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "Multi-cloud", trial: false, essential: false, pro: "partial", enterprise: true },
+  ]},
+  { category: "Soporte", features: [
+    { name: "Soporte por email", trial: true, essential: true, pro: true, enterprise: true },
+    { name: "Soporte telefónico", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "SOC 24/7 incluido", trial: false, essential: false, pro: "partial", enterprise: true },
+    { name: "Customer Success Manager", trial: false, essential: false, pro: false, enterprise: true },
+    { name: "Onboarding asistido", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "SLA garantizado", trial: false, essential: false, pro: "99.9%", enterprise: "99.99%" },
+  ]},
+  { category: "Integraciones y API", features: [
+    { name: "API REST", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "Webhooks", trial: false, essential: "partial", pro: true, enterprise: true },
+    { name: "SIEM de terceros (Splunk, QRadar)", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "SSO / SAML 2.0", trial: false, essential: false, pro: true, enterprise: true },
+    { name: "Multi-tenancy", trial: false, essential: false, pro: false, enterprise: true },
+  ]},
+];
+
+const FAQS = [
+  {
+    q: "¿Hay contrato mínimo de permanencia?",
+    a: "No. Todos nuestros planes son sin contrato mínimo. En planes anuales obtenés el descuento de precio, pero podés cancelar en cualquier momento con reembolso proporcional del tiempo no usado.",
+  },
+  {
+    q: "¿Puedo cancelar cuando quiera?",
+    a: "Sí, absolutamente. Si cancelás un plan mensual, tu acceso continúa hasta el fin del período facturado. Si cancelás un plan anual dentro de los 30 días, recibís un reembolso completo.",
+  },
+  {
+    q: "¿Qué incluye el trial gratuito de 15 días?",
+    a: "El trial incluye acceso completo a las funciones del plan Professional: EDR completo, SIEM, Threat Intelligence, hasta 50 endpoints, y soporte prioritario. Sin tarjeta de crédito requerida.",
+  },
+  {
+    q: "¿Los precios están en dólares? ¿Puedo pagar en moneda local?",
+    a: "Los precios base están en USD. Para clientes en Argentina, Brasil, México, Colombia, Chile y Perú ofrecemos facturación en moneda local con tasas de conversión transparentes. Contáctanos para más detalles.",
+  },
+  {
+    q: "¿Qué pasa si supero el número de endpoints contratados?",
+    a: "Te notificamos automáticamente cuando llegás al 80% del límite. Podés escalar el plan en cualquier momento de forma instantánea, y el cobro adicional se hace de forma proporcional.",
+  },
+  {
+    q: "¿Hay descuentos para startups o instituciones educativas?",
+    a: "Sí. Tenemos el programa qatech360 for Good con descuentos de hasta el 50% para ONGs, instituciones académicas y startups con menos de 2 años. Escribinos a hola@qatech360.com.",
+  },
+  {
+    q: "¿Cómo funciona la facturación anual?",
+    a: "En el plan anual, el precio se cobra en un solo pago al inicio del período. El ahorro promedio es del 32% vs el plan mensual. Para Enterprise, ofrecemos facturación trimestral o mensual sin recargo.",
+  },
+  {
+    q: "¿El plan Enterprise tiene precio fijo o requiere cotización?",
+    a: "Enterprise tiene un precio base de $119/endpoint/año, pero el precio final depende del volumen total, los servicios adicionales (SOC 24/7 full, CISO virtual, etc.) y el plazo de contrato. Pedí una cotización sin compromiso.",
+  },
+];
+
+const INDUSTRIES = [
+  { name: "Gobierno y Sector Público", discount: "30%", note: "Licitaciones y contratos marco" },
+  { name: "Salud y Hospitales", discount: "25%", note: "HIPAA + protección de datos de pacientes" },
+  { name: "Finanzas y Bancos", discount: "20%", note: "PCI-DSS + SWIFT CSP incluido" },
+];
+
+// ================================================================
+// ROI CALCULATOR
+// ================================================================
+function ROICalculator() {
+  const [endpoints, setEndpoints] = useState(50);
+  const [industry, setIndustry] = useState("technology");
+
+  const qatech = endpoints * 69;
+  const crowdstrike = endpoints * 184;
+  const sentinelone = endpoints * 207;
+  const savingVsCrowd = crowdstrike - qatech;
+  const savingVsSentinel = sentinelone - qatech;
+  const roi3years = savingVsCrowd * 3;
+
+  const industryMultipliers: Record<string, number> = {
+    finance: 1.4, health: 1.3, government: 1.2, technology: 1.0, retail: 1.1, manufacturing: 1.15,
+  };
+  const multiplier = industryMultipliers[industry] ?? 1;
+  const adjustedROI = Math.round(roi3years * multiplier);
+
+  return (
+    <section className="py-20 px-4 relative">
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <span className="badge badge-primary mb-4">Calculadora</span>
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Calculá tu <span className="text-gradient-primary">ROI con qatech360</span>
+          </h2>
+          <p className="text-[#9CA3AF] text-lg max-w-2xl mx-auto">
+            Compará cuánto ahorrarías vs CrowdStrike y SentinelOne en 3 años.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="glass-strong rounded-2xl p-8 md:p-12"
+        >
+          <div className="grid md:grid-cols-2 gap-10 mb-10">
+            {/* Inputs */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-white mb-3">
+                  Número de endpoints: <span className="text-[#00D4FF]">{endpoints}</span>
+                </label>
+                <input
+                  type="range"
+                  min={10}
+                  max={500}
+                  step={10}
+                  value={endpoints}
+                  onChange={(e) => setEndpoints(Number(e.target.value))}
+                  className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, #0070F3 0%, #0070F3 ${((endpoints - 10) / 490) * 100}%, #374151 ${((endpoints - 10) / 490) * 100}%, #374151 100%)`,
+                  }}
+                />
+                <div className="flex justify-between text-xs text-[#6B7280] mt-1">
+                  <span>10</span>
+                  <span>500</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-white mb-3">Industria</label>
+                <select
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                  className="w-full bg-[#1F2937] border border-[#374151] text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0070F3] focus:ring-1 focus:ring-[#0070F3]"
+                >
+                  <option value="technology">Tecnología</option>
+                  <option value="finance">Finanzas y Bancos</option>
+                  <option value="health">Salud</option>
+                  <option value="government">Gobierno</option>
+                  <option value="retail">Retail</option>
+                  <option value="manufacturing">Manufactura</option>
+                </select>
+              </div>
+
+              <div className="bg-[#0A0A0A] rounded-xl p-4 border border-[rgba(0,255,136,0.2)]">
+                <p className="text-xs text-[#9CA3AF] mb-2">Tu costo anual con qatech360</p>
+                <p className="text-3xl font-black text-[#00FF88]">${qatech.toLocaleString()}</p>
+                <p className="text-xs text-[#6B7280] mt-1">Plan Professional · {endpoints} endpoints</p>
+              </div>
+            </div>
+
+            {/* Outputs */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-[#6B7280] mb-4">Comparativa anual</h3>
+
+              {[
+                { label: "qatech360", cost: qatech, color: "#00FF88", isYou: true },
+                { label: "CrowdStrike", cost: crowdstrike, color: "#FF3366", isYou: false },
+                { label: "SentinelOne", cost: sentinelone, color: "#FF6B00", isYou: false },
+              ].map((item) => (
+                <div key={item.label} className={`rounded-xl p-4 ${item.isYou ? "bg-[rgba(0,255,136,0.08)] border border-[rgba(0,255,136,0.2)]" : "bg-[#111827] border border-[#374151]"}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`text-sm font-semibold ${item.isYou ? "text-white" : "text-[#9CA3AF]"}`}>
+                      {item.label} {item.isYou && <span className="badge badge-accent ml-2 text-[9px]">Tu elección</span>}
+                    </span>
+                    <span className={`text-xl font-black`} style={{ color: item.color }}>
+                      ${item.cost.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="h-2 bg-[#1F2937] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${(item.cost / sentinelone) * 100}%`, background: item.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="bg-[#111827] rounded-xl p-4 border border-[rgba(0,112,243,0.2)] text-center">
+                  <p className="text-xs text-[#9CA3AF] mb-1">Ahorro vs CrowdStrike</p>
+                  <p className="text-2xl font-black text-[#0070F3]">${savingVsCrowd.toLocaleString()}</p>
+                  <p className="text-xs text-[#6B7280]">al año</p>
+                </div>
+                <div className="bg-[#111827] rounded-xl p-4 border border-[rgba(0,255,136,0.2)] text-center">
+                  <p className="text-xs text-[#9CA3AF] mb-1">ROI ajustado (3 años)</p>
+                  <p className="text-2xl font-black text-[#00FF88]">${adjustedROI.toLocaleString()}</p>
+                  <p className="text-xs text-[#6B7280]">incluye factor industria</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-[#374151] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-[#9CA3AF]">
+              * Precios estimados basados en cotizaciones públicas de competidores. Ahorro real puede variar.
+            </p>
+            <Link href="/trial" className="btn-primary whitespace-nowrap">
+              Calculá tu propuesta exacta
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ================================================================
+// FEATURE CELL
+// ================================================================
+function FeatureCell({ value }: { value: boolean | string }) {
+  if (value === true) return <div className="flex justify-center"><CheckIcon /></div>;
+  if (value === false) return <div className="flex justify-center"><XIcon /></div>;
+  if (value === "partial") return <div className="flex justify-center"><PartialIcon /></div>;
+  return <div className="text-xs text-center text-[#9CA3AF] px-1">{value}</div>;
+}
+
+// ================================================================
+// COMPARISON TABLE
+// ================================================================
+function ComparisonTable() {
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(["Detección y Respuesta"]);
+
+  const toggle = (cat: string) => {
+    setExpandedCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  };
+
+  return (
+    <section className="py-20 px-4 relative">
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Comparativa <span className="text-gradient-primary">completa de features</span>
+          </h2>
+          <p className="text-[#9CA3AF] text-lg">Sin letra chica. Todo visible de un vistazo.</p>
+        </motion.div>
+
+        <div className="glass-strong rounded-2xl overflow-hidden">
+          {/* Header row */}
+          <div className="grid grid-cols-5 bg-[#0A0A0A] border-b border-[#374151] sticky top-0 z-10">
+            <div className="py-4 px-4 text-sm font-bold text-[#6B7280]">Feature</div>
+            {["Trial", "Essential", "Pro", "Enterprise"].map((plan, i) => (
+              <div key={plan} className={`py-4 px-3 text-center text-sm font-bold ${i === 2 ? "text-[#00D4FF]" : "text-white"}`}>
+                {plan}
+              </div>
+            ))}
+          </div>
+
+          {COMPARISON_FEATURES.map((cat) => {
+            const isOpen = expandedCategories.includes(cat.category);
+            return (
+              <div key={cat.category} className="border-b border-[rgba(55,65,81,0.4)] last:border-0">
+                <button
+                  onClick={() => toggle(cat.category)}
+                  className="w-full grid grid-cols-5 py-4 px-4 hover:bg-[rgba(0,112,243,0.04)] transition-colors group"
+                  aria-expanded={isOpen}
+                >
+                  <div className="col-span-5 flex items-center justify-between">
+                    <span className="text-sm font-bold text-white">{cat.category}</span>
+                    <ChevronDown open={isOpen} />
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      {cat.features.map((feat, idx) => (
+                        <div
+                          key={feat.name}
+                          className={`grid grid-cols-5 py-3 px-4 ${idx % 2 === 0 ? "bg-[rgba(17,24,39,0.5)]" : ""} hover:bg-[rgba(0,112,243,0.03)]`}
+                        >
+                          <div className="text-sm text-[#9CA3AF] flex items-center">{feat.name}</div>
+                          <FeatureCell value={feat.trial} />
+                          <FeatureCell value={feat.essential} />
+                          <div className="bg-[rgba(0,212,255,0.03)] rounded">
+                            <FeatureCell value={feat.pro} />
+                          </div>
+                          <FeatureCell value={feat.enterprise} />
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Legend */}
+        <div className="flex items-center gap-6 justify-center mt-6">
+          <div className="flex items-center gap-2 text-xs text-[#9CA3AF]"><CheckIcon /> Incluido</div>
+          <div className="flex items-center gap-2 text-xs text-[#9CA3AF]"><XIcon /> No incluido</div>
+          <div className="flex items-center gap-2 text-xs text-[#9CA3AF]"><PartialIcon /> Parcial</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ================================================================
+// MAIN PAGE
+// ================================================================
+export default function PricingPage() {
+  const [annual, setAnnual] = useState(true);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  return (
+    <div className="min-h-screen bg-[#0A0A0A] text-white">
+      <NavBar />
+
+      {/* Background */}
+      <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-30" />
+        <div className="absolute inset-0 bg-gradient-hero-radial" />
+      </div>
+
+      <main className="relative z-10 pt-20">
+
+        {/* ── HERO ── */}
+        <section className="pt-20 pb-10 px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <span className="badge badge-primary mb-6">Precios transparentes</span>
+            <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-tight">
+              Protección real.<br />
+              <span className="text-gradient-primary">Precio justo.</span>
+            </h1>
+            <p className="text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-10">
+              Sin sorpresas. Sin letra chica. Hasta 59% más económico que CrowdStrike y SentinelOne.
+            </p>
+
+            {/* Toggle Mensual/Anual */}
+            <div className="inline-flex items-center gap-4 bg-[#111827] border border-[#374151] rounded-2xl p-1.5 mb-4">
+              <button
+                onClick={() => setAnnual(false)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${!annual ? "bg-[#1F2937] text-white shadow-lg" : "text-[#6B7280] hover:text-white"}`}
+              >
+                Mensual
+              </button>
+              <button
+                onClick={() => setAnnual(true)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${annual ? "bg-[#0070F3] text-white shadow-[0_0_20px_rgba(0,112,243,0.5)]" : "text-[#6B7280] hover:text-white"}`}
+              >
+                Anual
+                <span className="bg-[#00FF88] text-[#0A0A0A] text-[10px] font-black px-1.5 py-0.5 rounded-full">-32%</span>
+              </button>
+            </div>
+            {annual && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-sm text-[#00FF88] text-center"
+              >
+                Ahorrás hasta $720/año en 10 endpoints vs plan mensual
+              </motion.p>
+            )}
+          </motion.div>
+        </section>
+
+        {/* ── PRICING CARDS ── */}
+        <section className="py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+              {PLANS.map((plan, idx) => (
+                <motion.div
+                  key={plan.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className={`relative rounded-2xl p-7 flex flex-col transition-all duration-300 ${
+                    plan.highlight
+                      ? "bg-[#111827] border-2 border-[#0070F3] shadow-[0_0_40px_rgba(0,112,243,0.25)] scale-[1.02]"
+                      : "bg-[#111827] border border-[#374151] hover:border-[rgba(0,112,243,0.4)] hover:shadow-card-hover"
+                  }`}
+                >
+                  {/* Badge */}
+                  {plan.badge && (
+                    <div
+                      className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-black tracking-widest uppercase"
+                      style={{ background: plan.badgeColor ?? "#0070F3", color: plan.id === "professional" ? "#0A0A0A" : "#fff" }}
+                    >
+                      {plan.badge}
+                    </div>
+                  )}
+
+                  {/* Plan name */}
+                  <div className="mb-6">
+                    <h3 className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: plan.color }}>
+                      {plan.name}
+                    </h3>
+                    <p className="text-[#9CA3AF] text-sm">{plan.tagline}</p>
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-6">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={annual ? "annual" : "monthly"}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        {plan.annualPrice === 0 ? (
+                          <div>
+                            <span className="text-5xl font-black text-white">Gratis</span>
+                            <p className="text-[#9CA3AF] text-sm mt-1">{plan.unit}</p>
+                          </div>
+                        ) : plan.monthlyPrice === null && !annual ? (
+                          <div>
+                            <span className="text-3xl font-black text-white">Cotización</span>
+                            <p className="text-[#9CA3AF] text-sm mt-1">personalizada</p>
+                          </div>
+                        ) : (
+                          <div>
+                            <div className="flex items-baseline gap-1">
+                              <span className="text-2xl text-[#9CA3AF]">$</span>
+                              <span className="text-5xl font-black text-white">
+                                {annual ? plan.annualPrice : plan.monthlyPrice}
+                              </span>
+                            </div>
+                            <p className="text-[#9CA3AF] text-sm mt-1">
+                              {annual ? `/${plan.unit}` : "/endpoint/mes"}
+                            </p>
+                            {annual && plan.annualPrice > 0 && (
+                              <p className="text-xs text-[#00FF88] mt-1">
+                                ${plan.annualTotal} para 10 endpoints
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Endpoints */}
+                  <div className="mb-5 py-2.5 px-3 bg-[#0A0A0A] rounded-lg border border-[#1F2937]">
+                    <p className="text-xs text-[#6B7280]">Endpoints</p>
+                    <p className="text-sm font-semibold text-white">{plan.minEndpoints} – {plan.maxEndpoints}</p>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {plan.features.map((feat) => (
+                      <li key={feat.label} className="flex items-center gap-2.5">
+                        {feat.included === true ? <CheckIcon /> : feat.included === "partial" ? <PartialIcon /> : <XIcon />}
+                        <span className={`text-sm ${feat.included === false ? "text-[#6B7280] line-through" : "text-[#D1D5DB]"}`}>
+                          {feat.label}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link
+                    href={plan.ctaHref}
+                    className={`w-full text-center py-3 px-5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                      plan.ctaVariant === "primary"
+                        ? "btn-primary"
+                        : plan.id === "trial"
+                        ? "bg-[rgba(0,255,136,0.1)] text-[#00FF88] border border-[rgba(0,255,136,0.3)] hover:bg-[rgba(0,255,136,0.2)] hover:shadow-glow-accent"
+                        : "btn-secondary"
+                    }`}
+                  >
+                    {plan.ctaLabel}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            <p className="text-center text-[#6B7280] text-sm mt-6">
+              Sin tarjeta de crédito para el trial. Todos los planes incluyen onboarding guiado.
+            </p>
+          </div>
+        </section>
+
+        {/* ── COMPARISON VS COMPETITORS ── */}
+        <section className="py-16 px-4">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-10"
+            >
+              <h2 className="text-3xl font-bold text-white mb-3">
+                Por qué elegir <span className="text-gradient-primary">qatech360</span>
+              </h2>
+              <p className="text-[#9CA3AF]">Mismas capacidades enterprise. Precio LATAM.</p>
+            </motion.div>
+
+            <div className="glass-strong rounded-2xl overflow-hidden">
+              <div className="grid grid-cols-4 bg-[#0A0A0A] border-b border-[#374151]">
+                <div className="py-4 px-4 text-xs font-bold text-[#6B7280] uppercase tracking-wider">Plataforma</div>
+                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Precio/endpoint/año</div>
+                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Ahorro</div>
+                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">LATAM native</div>
+              </div>
+              {[
+                { name: "qatech360", price: "$69", saving: "—", latam: true, highlight: true },
+                { name: "CrowdStrike Falcon", price: "$184", saving: "62% más caro", latam: false, highlight: false },
+                { name: "SentinelOne", price: "$207", saving: "200% más caro", latam: false, highlight: false },
+                { name: "Microsoft Defender", price: "$120", saving: "74% más caro", latam: false, highlight: false },
+              ].map((row) => (
+                <div
+                  key={row.name}
+                  className={`grid grid-cols-4 py-4 px-4 border-t border-[rgba(55,65,81,0.4)] ${row.highlight ? "bg-[rgba(0,255,136,0.04)]" : ""}`}
+                >
+                  <div className={`font-semibold text-sm flex items-center gap-2 ${row.highlight ? "text-[#00FF88]" : "text-[#9CA3AF]"}`}>
+                    {row.highlight && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#00FF88"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    )}
+                    {row.name}
+                  </div>
+                  <div className={`text-center font-black text-sm ${row.highlight ? "text-[#00FF88]" : "text-[#FF3366]"}`}>{row.price}</div>
+                  <div className={`text-center text-xs ${row.saving === "—" ? "text-[#00FF88]" : "text-[#9CA3AF]"}`}>{row.saving}</div>
+                  <div className="flex justify-center">
+                    {row.latam ? <CheckIcon /> : <XIcon />}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xs text-[#6B7280] mt-3">* Precios plan Professional. Cotizaciones públicas Q1 2026.</p>
+          </div>
+        </section>
+
+        {/* ── FEATURE COMPARISON TABLE ── */}
+        <ComparisonTable />
+
+        {/* ── ROI CALCULATOR ── */}
+        <ROICalculator />
+
+        {/* ── SECTOR SOLUTIONS ── */}
+        <section className="py-16 px-4">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-white mb-3">
+                Precios especiales por <span className="text-gradient-accent">sector</span>
+              </h2>
+              <p className="text-[#9CA3AF]">Descuentos y certificaciones incluidas según tu industria.</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {INDUSTRIES.map((ind, idx) => (
+                <motion.div
+                  key={ind.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="card-base text-center p-8"
+                >
+                  <div className="text-4xl font-black text-[#00FF88] mb-3">{ind.discount} off</div>
+                  <h3 className="text-white font-bold text-lg mb-2">{ind.name}</h3>
+                  <p className="text-[#9CA3AF] text-sm">{ind.note}</p>
+                  <Link href="/contact" className="mt-6 btn-ghost text-sm inline-block">
+                    Consultar condiciones →
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TESTIMONIAL ── */}
+        <section className="py-12 px-4">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="glass-strong rounded-2xl p-8 md:p-12 text-center relative"
+            >
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 rounded-2xl"
+                style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,112,243,0.08) 0%, transparent 70%)" }}
+              />
+              <div className="relative">
+                <div className="flex justify-center gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#FF6B00" aria-hidden="true">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  ))}
+                </div>
+                <blockquote className="text-xl text-white font-medium leading-relaxed mb-6">
+                  "Evaluamos CrowdStrike y SentinelOne. Ambos superaban nuestro presupuesto anual. Con qatech360 obtuvimos el mismo nivel de protección por menos de la mitad del costo. El ROI fue evidente en los primeros 90 días."
+                </blockquote>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#0070F3] flex items-center justify-center text-white font-black text-sm">
+                    MR
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-semibold text-sm">Marcos Rodríguez</p>
+                    <p className="text-[#6B7280] text-xs">CISO · Grupo Financiero Andino · Argentina</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section className="py-16 px-4">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-white mb-3">
+                Preguntas <span className="text-gradient-primary">frecuentes</span>
+              </h2>
+            </motion.div>
+
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  className="glass rounded-xl overflow-hidden"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                    className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-[rgba(0,112,243,0.04)] transition-colors"
+                    aria-expanded={openFaq === idx}
+                  >
+                    <span className="text-sm font-semibold text-white pr-4">{faq.q}</span>
+                    <ChevronDown open={openFaq === idx} />
+                  </button>
+                  <AnimatePresence>
+                    {openFaq === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-6 pb-5 text-sm text-[#9CA3AF] leading-relaxed">{faq.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── FINAL CTA ── */}
+        <section className="py-20 px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="glass-strong rounded-3xl p-12 relative overflow-hidden"
+            >
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,112,243,0.12) 0%, transparent 70%)" }}
+              />
+              <div className="relative">
+                <div className="inline-flex items-center gap-2 bg-[rgba(0,255,136,0.1)] border border-[rgba(0,255,136,0.2)] rounded-full px-4 py-1.5 text-[#00FF88] text-sm font-semibold mb-6">
+                  <span className="w-2 h-2 rounded-full bg-[#00FF88] animate-pulse" />
+                  Oferta limitada
+                </div>
+                <h2 className="text-4xl font-black text-white mb-4">
+                  Los primeros 30 días son gratis.
+                </h2>
+                <p className="text-xl text-[#9CA3AF] mb-8">Sin tarjeta de crédito. Sin compromiso. Cancela cuando quieras.</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/trial" className="btn-primary text-base px-8 py-4">
+                    Empezar prueba gratuita →
+                  </Link>
+                  <Link href="/contact" className="btn-secondary text-base px-8 py-4">
+                    Hablar con ventas
+                  </Link>
+                </div>
+                <p className="text-xs text-[#6B7280] mt-6">
+                  ISO 27001 · SOC 2 Type II · GDPR · Datos en LATAM
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
