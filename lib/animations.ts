@@ -3,7 +3,7 @@
  * Centralized animation library for consistent motion design
  */
 
-import type { Variants, Transition } from "framer-motion";
+import type { Variants, Transition, TargetAndTransition } from "framer-motion";
 
 // ================================================================
 // 1. BASE TRANSITIONS
@@ -370,8 +370,8 @@ export const counterVariants: Variants = {
 // 11. TESTIMONIAL / CAROUSEL VARIANTS
 // ================================================================
 
-export const testimonialSlide = {
-  enter: (direction: number): object => ({
+export const testimonialSlide: Variants = {
+  enter: (direction: number): TargetAndTransition => ({
     x: direction > 0 ? 80 : -80,
     opacity: 0,
     scale: 0.97,
@@ -382,7 +382,7 @@ export const testimonialSlide = {
     scale: 1,
     transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] },
   },
-  exit: (direction: number): object => ({
+  exit: (direction: number): TargetAndTransition => ({
     x: direction < 0 ? 80 : -80,
     opacity: 0,
     scale: 0.97,
