@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: FROM_EMAIL,
         to: [TEAM_EMAIL],
-        reply_to: email,
+        replyTo: email,
         subject: `[Demo] ${company} — ${name} (${country ?? "—"})`,
         html: demoNotificationEmail({
           name,
