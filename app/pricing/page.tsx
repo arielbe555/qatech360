@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // AnimatePresence used in FAQ
 import Link from "next/link";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -527,7 +527,6 @@ function ComparisonTable() {
 // MAIN PAGE
 // ================================================================
 export default function PricingPage() {
-  const [annual, setAnnual] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
@@ -549,40 +548,14 @@ export default function PricingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="badge badge-primary mb-6">Precios transparentes</span>
+            <span className="badge badge-primary mb-6">Planes flexibles</span>
             <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-tight">
-              Protección real.<br />
-              <span className="text-gradient-primary">Precio justo.</span>
+              Inversión en seguridad,<br />
+              <span className="text-gradient-primary">no en licencias</span>
             </h1>
             <p className="text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-10">
-              Sin sorpresas. Sin letra chica. Hasta 59% más económico que CrowdStrike y SentinelOne.
+              Precios claros, sin sorpresas. Escalá según tus necesidades con nuestros planes flexibles.
             </p>
-
-            {/* Toggle Mensual/Anual */}
-            <div className="inline-flex items-center gap-4 bg-[#111827] border border-[#374151] rounded-2xl p-1.5 mb-4">
-              <button
-                onClick={() => setAnnual(false)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${!annual ? "bg-[#1F2937] text-white shadow-lg" : "text-[#6B7280] hover:text-white"}`}
-              >
-                Mensual
-              </button>
-              <button
-                onClick={() => setAnnual(true)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${annual ? "bg-[#0070F3] text-white shadow-[0_0_20px_rgba(0,112,243,0.5)]" : "text-[#6B7280] hover:text-white"}`}
-              >
-                Anual
-                <span className="bg-[#00FF88] text-[#0A0A0A] text-[10px] font-black px-1.5 py-0.5 rounded-full">-32%</span>
-              </button>
-            </div>
-            {annual && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm text-[#00FF88] text-center"
-              >
-                Ahorrás hasta $720/año en 10 endpoints vs plan mensual
-              </motion.p>
-            )}
           </motion.div>
         </section>
 
@@ -622,44 +595,17 @@ export default function PricingPage() {
 
                   {/* Price */}
                   <div className="mb-6">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={annual ? "annual" : "monthly"}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.25 }}
-                      >
-                        {plan.annualPrice === 0 ? (
-                          <div>
-                            <span className="text-5xl font-black text-white">Gratis</span>
-                            <p className="text-[#9CA3AF] text-sm mt-1">{plan.unit}</p>
-                          </div>
-                        ) : plan.monthlyPrice === null && !annual ? (
-                          <div>
-                            <span className="text-3xl font-black text-white">Cotización</span>
-                            <p className="text-[#9CA3AF] text-sm mt-1">personalizada</p>
-                          </div>
-                        ) : (
-                          <div>
-                            <div className="flex items-baseline gap-1">
-                              <span className="text-2xl text-[#9CA3AF]">$</span>
-                              <span className="text-5xl font-black text-white">
-                                {annual ? plan.annualPrice : plan.monthlyPrice}
-                              </span>
-                            </div>
-                            <p className="text-[#9CA3AF] text-sm mt-1">
-                              {annual ? `/${plan.unit}` : "/endpoint/mes"}
-                            </p>
-                            {annual && plan.annualPrice > 0 && (
-                              <p className="text-xs text-[#00FF88] mt-1">
-                                ${plan.annualTotal} para 10 endpoints
-                              </p>
-                            )}
-                          </div>
-                        )}
-                      </motion.div>
-                    </AnimatePresence>
+                    {plan.annualPrice === 0 ? (
+                      <div>
+                        <span className="text-5xl font-black text-white">Gratis</span>
+                        <p className="text-[#9CA3AF] text-sm mt-1">{plan.unit}</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <span className="text-4xl font-black" style={{ color: plan.color }}>Consultar</span>
+                        <p className="text-[#9CA3AF] text-sm mt-2">Precio según necesidades</p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Endpoints */}
@@ -681,18 +627,20 @@ export default function PricingPage() {
                   </ul>
 
                   {/* CTA */}
-                  <Link
-                    href={plan.ctaHref}
-                    className={`w-full text-center py-3 px-5 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                      plan.ctaVariant === "primary"
-                        ? "btn-primary"
-                        : plan.id === "trial"
-                        ? "bg-[rgba(0,255,136,0.1)] text-[#00FF88] border border-[rgba(0,255,136,0.3)] hover:bg-[rgba(0,255,136,0.2)] hover:shadow-glow-accent"
-                        : "btn-secondary"
-                    }`}
-                  >
-                    {plan.ctaLabel}
-                  </Link>
+                  <div className="mt-auto pt-2">
+                    <Link
+                      href={plan.id === "trial" ? plan.ctaHref : "/contact"}
+                      className={`block w-full text-center py-3.5 px-5 rounded-xl font-bold text-sm transition-all duration-300 ${
+                        plan.ctaVariant === "primary"
+                          ? "btn-primary"
+                          : plan.id === "trial"
+                          ? "bg-[rgba(0,255,136,0.1)] text-[#00FF88] border border-[rgba(0,255,136,0.3)] hover:bg-[rgba(0,255,136,0.2)]"
+                          : "btn-secondary"
+                      }`}
+                    >
+                      {plan.id === "trial" ? plan.ctaLabel : "Consultar precio"}
+                    </Link>
+                  </div>
                 </motion.div>
               ))}
             </div>

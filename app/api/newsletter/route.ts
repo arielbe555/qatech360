@@ -4,12 +4,39 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <noreply@qatech360.com>";
 
+// ── Rate limiting ──
+const rateMap = new Map<string, { count: number; reset: number }>();
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.reset) {
+    rateMap.set(ip, { count: 1, reset: now + 60_000 });
+    return true;
+  }
+  if (entry.count >= 5) return false;
+  entry.count++;
+  return true;
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json(
+        { success: false, error: "Demasiadas solicitudes. Intenta en 1 minuto." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const { email, honeypot } = body;
 
     if (honeypot) return NextResponse.json({ success: true });
+
+    // ── Input length limit ──
+    if (email && email.length > 254) {
+      return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
+    }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
