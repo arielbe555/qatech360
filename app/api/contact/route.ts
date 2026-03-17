@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: FROM_EMAIL,
         to: [TEAM_EMAIL],
-        replyTo: email,
+        reply_to: email,
         subject: `[Contacto] ${subject ?? "Nueva consulta"} — ${company ?? "Sin empresa"}`,
         html: contactNotificationEmail({
           name,
