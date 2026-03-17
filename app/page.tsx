@@ -24,6 +24,7 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { CTASection } from "@/components/CTASection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { Footer } from "@/components/Footer";
+import CyberWorldMap from "@/components/CyberWorldMap";
 
 // ================================================================
 // PAGE
@@ -36,7 +37,13 @@ export default function HomePage() {
 
       <main>
         {/* 1. Hero */}
-        <HeroSection />
+        <div className="relative">
+          {/* CyberWorldMap SVG — decorative planisphere background */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <CyberWorldMap className="w-full h-full opacity-30" />
+          </div>
+          <HeroSection />
+        </div>
 
         {/* Divider */}
         <div className="divider-gradient" aria-hidden="true" />
