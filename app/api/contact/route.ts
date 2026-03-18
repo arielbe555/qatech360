@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
 
     // ── Anti-bot: honeypot field must be empty ──
     if (honeypot) {
-      // Silently accept but don't process (bot trap)
       return NextResponse.json({ success: true });
     }
 
@@ -69,38 +68,68 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Send emails in parallel ──
-    const [confirmResult, notifyResult] = await Promise.allSettled([
-      // 1. Confirmation to the user
-      getResend().emails.send({
-        from: FROM_EMAIL,
-        to: [email],
-        subject: "Recibimos tu consulta — qatech360",
-        html: contactConfirmationEmail(name),
-      }),
-      // 2. Internal notification to the team
-      getResend().emails.send({
-        from: FROM_EMAIL,
-        to: [TEAM_EMAIL],
-        replyTo: email,
-        subject: `[Contacto] ${subject ?? "Nueva consulta"} — ${company ?? "Sin empresa"}`,
-        html: contactNotificationEmail({
-          name,
-          email,
-          company: company ?? "—",
-          country: country ?? "—",
-          subject: subject ?? "Sin asunto",
-          message,
-        }),
-      }),
-    ]);
-
-    // Log any errors server-side (don't expose to client)
-    if (confirmResult.status === "rejected") {
-      console.error("[contact] confirmation email error:", confirmResult.reason);
+    // ── Check API key is configured ──
+    if (!process.env.RESEND_API_KEY) {
+      console.error("[contact] RESEND_API_KEY is not set!");
+      return NextResponse.json(
+        { success: false, error: "Error de configuración del servidor." },
+        { status: 500 }
+      );
     }
-    if (notifyResult.status === "rejected") {
-      console.error("[contact] notification email error:", notifyResult.reason);
+
+    const resend = getResend();
+    const errors: string[] = [];
+
+    // ── 1. Send confirmation email to user ──
+    const confirmResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      subject: "Recibimos tu consulta — qatech360",
+      html: contactConfirmationEmail(name),
+    });
+
+    if (confirmResult.error) {
+      console.error("[contact] confirmation email error:", JSON.stringify(confirmResult.error));
+      errors.push(`confirm: ${confirmResult.error.message}`);
+    } else {
+      console.log("[contact] confirmation email sent:", confirmResult.data?.id);
+    }
+
+    // ── 2. Send notification email to team ──
+    const notifyResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [TEAM_EMAIL],
+      replyTo: email,
+      subject: `[Contacto] ${subject ?? "Nueva consulta"} — ${company ?? "Sin empresa"}`,
+      html: contactNotificationEmail({
+        name,
+        email,
+        company: company ?? "—",
+        country: country ?? "—",
+        subject: subject ?? "Sin asunto",
+        message,
+      }),
+    });
+
+    if (notifyResult.error) {
+      console.error("[contact] notification email error:", JSON.stringify(notifyResult.error));
+      errors.push(`notify: ${notifyResult.error.message}`);
+    } else {
+      console.log("[contact] notification email sent:", notifyResult.data?.id);
+    }
+
+    // ── Return result based on actual email status ──
+    if (errors.length === 2) {
+      // Both emails failed
+      return NextResponse.json(
+        { success: false, error: "No se pudo enviar el mensaje. Intenta de nuevo.", debug: errors },
+        { status: 500 }
+      );
+    }
+
+    if (errors.length === 1) {
+      // One email failed but the other succeeded — still report success to user
+      console.warn("[contact] partial failure:", errors);
     }
 
     return NextResponse.json({ success: true });

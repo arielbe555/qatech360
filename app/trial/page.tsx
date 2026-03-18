@@ -151,6 +151,8 @@ const INDUSTRIES = [
 // ================================================================
 export default function TrialPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [form, setForm] = useState({
     name: "",
@@ -174,7 +176,7 @@ export default function TrialPage() {
     return errs;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) {
@@ -182,7 +184,34 @@ export default function TrialPage() {
       return;
     }
     setErrors({});
-    setSubmitted(true);
+    setLoading(true);
+    setApiError("");
+    try {
+      const res = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          company: form.company,
+          role: form.industry,
+          country: form.country,
+          endpoints: form.endpoints,
+          message: form.phone ? `Teléfono: ${form.phone}` : "",
+          honeypot: "",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setApiError(data.error ?? "Ocurrió un error. Intentá de nuevo.");
+      }
+    } catch {
+      setApiError("Error de conexión. Intentá de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = (field: string) =>
@@ -365,9 +394,19 @@ export default function TrialPage() {
                       />
                     </div>
 
-                    <button type="submit" className="btn-primary w-full py-4 text-base justify-center">
+                    {apiError && (
+                      <p className="text-[#FF3B3B] text-sm text-center bg-[#FF3B3B]/10 border border-[#FF3B3B]/20 rounded-lg px-4 py-2">
+                        {apiError}
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="btn-primary w-full py-4 text-base justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
                       <ShieldIcon />
-                      Iniciar mi prueba gratuita →
+                      {loading ? "Enviando..." : "Iniciar mi prueba gratuita →"}
                     </button>
 
                     <p className="text-center text-xs text-[#6B7280]">

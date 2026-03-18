@@ -42,7 +42,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
     }
 
-    await getResend().emails.send({
+    // ── Check API key is configured ──
+    if (!process.env.RESEND_API_KEY) {
+      console.error("[newsletter] RESEND_API_KEY is not set!");
+      return NextResponse.json(
+        { success: false, error: "Error de configuración del servidor." },
+        { status: 500 }
+      );
+    }
+
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: [email],
       subject: "¡Bienvenido al newsletter de qatech360! 🛡️",
@@ -59,6 +68,15 @@ export async function POST(req: NextRequest) {
       </body></html>`,
     });
 
+    if (result.error) {
+      console.error("[newsletter] Resend error:", JSON.stringify(result.error));
+      return NextResponse.json(
+        { success: false, error: "No se pudo enviar el email. Intenta de nuevo." },
+        { status: 500 }
+      );
+    }
+
+    console.log("[newsletter] email sent:", result.data?.id);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[newsletter] error:", err);

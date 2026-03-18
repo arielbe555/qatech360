@@ -68,36 +68,67 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Send emails in parallel ──
-    const [confirmResult, notifyResult] = await Promise.allSettled([
-      getResend().emails.send({
-        from: FROM_EMAIL,
-        to: [email],
-        subject: "¡Tu demo está confirmada! — qatech360",
-        html: demoConfirmationEmail(name, company),
-      }),
-      getResend().emails.send({
-        from: FROM_EMAIL,
-        to: [TEAM_EMAIL],
-        replyTo: email,
-        subject: `[Demo] ${company} — ${name} (${country ?? "—"})`,
-        html: demoNotificationEmail({
-          name,
-          email,
-          company,
-          role: role ?? "—",
-          country: country ?? "—",
-          endpoints: endpoints ?? "—",
-          message,
-        }),
-      }),
-    ]);
-
-    if (confirmResult.status === "rejected") {
-      console.error("[demo] confirmation error:", confirmResult.reason);
+    // ── Check API key is configured ──
+    if (!process.env.RESEND_API_KEY) {
+      console.error("[demo] RESEND_API_KEY is not set!");
+      return NextResponse.json(
+        { success: false, error: "Error de configuración del servidor." },
+        { status: 500 }
+      );
     }
-    if (notifyResult.status === "rejected") {
-      console.error("[demo] notification error:", notifyResult.reason);
+
+    const resend = getResend();
+    const errors: string[] = [];
+
+    // ── 1. Confirmation to user ──
+    const confirmResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      subject: "¡Tu demo está confirmada! — qatech360",
+      html: demoConfirmationEmail(name, company),
+    });
+
+    if (confirmResult.error) {
+      console.error("[demo] confirmation error:", JSON.stringify(confirmResult.error));
+      errors.push(`confirm: ${confirmResult.error.message}`);
+    } else {
+      console.log("[demo] confirmation email sent:", confirmResult.data?.id);
+    }
+
+    // ── 2. Notification to team ──
+    const notifyResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [TEAM_EMAIL],
+      replyTo: email,
+      subject: `[Demo] ${company} — ${name} (${country ?? "—"})`,
+      html: demoNotificationEmail({
+        name,
+        email,
+        company,
+        role: role ?? "—",
+        country: country ?? "—",
+        endpoints: endpoints ?? "—",
+        message,
+      }),
+    });
+
+    if (notifyResult.error) {
+      console.error("[demo] notification error:", JSON.stringify(notifyResult.error));
+      errors.push(`notify: ${notifyResult.error.message}`);
+    } else {
+      console.log("[demo] notification email sent:", notifyResult.data?.id);
+    }
+
+    // ── Return result based on actual email status ──
+    if (errors.length === 2) {
+      return NextResponse.json(
+        { success: false, error: "No se pudo enviar el mensaje. Intenta de nuevo.", debug: errors },
+        { status: 500 }
+      );
+    }
+
+    if (errors.length === 1) {
+      console.warn("[demo] partial failure:", errors);
     }
 
     return NextResponse.json({ success: true });
