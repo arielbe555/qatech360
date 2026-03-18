@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactConfirmationEmail, contactNotificationEmail } from "@/lib/email-templates";
 
-const TEAM_EMAIL = process.env.RESEND_CONTACT_TO ?? "hola@qatech360.com";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <noreply@qatech360.com>";
+const TEAM_EMAIL = process.env.RESEND_CONTACT_TO ?? "qatech360@gmail.com";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 SOC <soc@qatech360.com>";
 const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
 // ── Rate limiting ──
