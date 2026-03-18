@@ -1,67 +1,48 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendMail, isMailerConfigured, GMAIL_USER } from "@/lib/mailer";
 
 // ⚠️ DEBUG ENDPOINT — Remove before production!
-// Tests Resend API key and sends a simple test email
 
 export async function GET() {
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL ?? "qatech360 <soc@qatech.ar>";
-  const teamEmail = process.env.RESEND_CONTACT_TO ?? "qatech360@gmail.com";
-
   const diagnostics: Record<string, unknown> = {
     timestamp: new Date().toISOString(),
-    hasApiKey: !!apiKey,
-    apiKeyPrefix: apiKey ? apiKey.substring(0, 8) + "..." : "NOT SET",
-    fromEmail,
-    teamEmail,
-    resendContactTo: process.env.RESEND_CONTACT_TO ?? "NOT SET (using default)",
-    resendDemoTo: process.env.RESEND_DEMO_TO ?? "NOT SET (using default)",
-    resendFromEmail: process.env.RESEND_FROM_EMAIL ?? "NOT SET (using default)",
+    gmailUser: GMAIL_USER,
+    hasAppPassword: isMailerConfigured(),
+    appPasswordLength: process.env.GMAIL_APP_PASSWORD?.length ?? 0,
   };
 
-  if (!apiKey) {
+  if (!isMailerConfigured()) {
     return NextResponse.json({
       success: false,
-      error: "RESEND_API_KEY is not configured",
+      error: "GMAIL_APP_PASSWORD is not configured in environment variables",
       diagnostics,
     });
   }
 
   try {
-    const resend = new Resend(apiKey);
-
-    // Try sending a simple test email to the team
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: [teamEmail],
+    const info = await sendMail({
+      to: GMAIL_USER,
       subject: "[DEBUG] Test email from qatech360 — " + new Date().toISOString(),
-      html: `<h1>Test Email</h1><p>This is a debug test from the qatech360 API.</p><p>Timestamp: ${new Date().toISOString()}</p><p>From: ${fromEmail}</p><p>To: ${teamEmail}</p>`,
+      html: `<h1>✅ Test Email Funciona!</h1>
+        <p>Este es un email de prueba del sistema qatech360.</p>
+        <p>Timestamp: ${new Date().toISOString()}</p>
+        <p>From: ${GMAIL_USER}</p>`,
     });
 
-    diagnostics.resendResponse = result;
-    diagnostics.hasError = !!result.error;
-    diagnostics.emailId = result.data?.id ?? null;
-
-    if (result.error) {
-      return NextResponse.json({
-        success: false,
-        error: `Resend API error: ${result.error.message}`,
-        diagnostics,
-      });
-    }
+    diagnostics.messageId = info.messageId;
+    diagnostics.response = info.response;
 
     return NextResponse.json({
       success: true,
-      message: `Test email sent to ${teamEmail}. Check inbox (and spam).`,
-      emailId: result.data?.id,
+      message: `Test email sent to ${GMAIL_USER}. Revisá tu inbox.`,
       diagnostics,
     });
   } catch (err) {
-    diagnostics.exception = err instanceof Error ? err.message : String(err);
+    const msg = err instanceof Error ? err.message : String(err);
+    diagnostics.error = msg;
     return NextResponse.json({
       success: false,
-      error: "Exception thrown during email send",
+      error: msg,
       diagnostics,
     });
   }

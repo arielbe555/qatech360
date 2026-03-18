@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendMail, isMailerConfigured, GMAIL_USER } from "@/lib/mailer";
 import { demoConfirmationEmail, demoNotificationEmail } from "@/lib/email-templates";
 
-const TEAM_EMAIL = process.env.RESEND_DEMO_TO ?? "qatech360@gmail.com";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <soc@qatech.ar>";
-const getResend = () => new Resend(process.env.RESEND_API_KEY);
+const TEAM_EMAIL = process.env.GMAIL_USER ?? "qatech360@gmail.com";
 
 // ── Rate limiting ──
 const rateMap = new Map<string, { count: number; reset: number }>();
@@ -33,7 +31,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, company, role, country, endpoints, message, honeypot } = body;
 
-    // ── Anti-bot honeypot ──
     if (honeypot) {
       return NextResponse.json({ success: true });
     }
@@ -68,38 +65,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Check API key is configured ──
-    if (!process.env.RESEND_API_KEY) {
-      console.error("[demo] RESEND_API_KEY is not set!");
+    if (!isMailerConfigured()) {
+      console.error("[demo] GMAIL_APP_PASSWORD not set!");
       return NextResponse.json(
         { success: false, error: "Error de configuración del servidor." },
         { status: 500 }
       );
     }
 
-    const resend = getResend();
-    const errors: string[] = [];
-
     // ── 1. Confirmation to user ──
-    const confirmResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [email],
+    await sendMail({
+      to: email,
       subject: "¡Tu demo está confirmada! — qatech360",
       html: demoConfirmationEmail(name, company),
     });
 
-    if (confirmResult.error) {
-      console.error("[demo] confirmation error:", JSON.stringify(confirmResult.error));
-      errors.push(`confirm: ${confirmResult.error.message}`);
-    } else {
-      console.log("[demo] confirmation email sent:", confirmResult.data?.id);
-    }
-
     // ── 2. Notification to team ──
-    const notifyResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [TEAM_EMAIL],
-      replyTo: email,
+    await sendMail({
+      to: TEAM_EMAIL,
       subject: `[Demo] ${company} — ${name} (${country ?? "—"})`,
       html: demoNotificationEmail({
         name,
@@ -110,32 +93,15 @@ export async function POST(req: NextRequest) {
         endpoints: endpoints ?? "—",
         message,
       }),
+      replyTo: email,
     });
-
-    if (notifyResult.error) {
-      console.error("[demo] notification error:", JSON.stringify(notifyResult.error));
-      errors.push(`notify: ${notifyResult.error.message}`);
-    } else {
-      console.log("[demo] notification email sent:", notifyResult.data?.id);
-    }
-
-    // ── Return result based on actual email status ──
-    if (errors.length === 2) {
-      return NextResponse.json(
-        { success: false, error: "No se pudo enviar el mensaje. Intenta de nuevo.", debug: errors },
-        { status: 500 }
-      );
-    }
-
-    if (errors.length === 1) {
-      console.warn("[demo] partial failure:", errors);
-    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("[demo] unexpected error:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[demo] error:", msg);
     return NextResponse.json(
-      { success: false, error: "Error interno. Por favor intenta de nuevo." },
+      { success: false, error: "No se pudo enviar el mensaje. Intenta de nuevo." },
       { status: 500 }
     );
   }

@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <soc@qatech.ar>";
-const getResend = () => new Resend(process.env.RESEND_API_KEY);
+import { sendMail, isMailerConfigured } from "@/lib/mailer";
 
 // ── Rate limiting ──
 const rateMap = new Map<string, { count: number; reset: number }>();
@@ -33,7 +30,6 @@ export async function POST(req: NextRequest) {
 
     if (honeypot) return NextResponse.json({ success: true });
 
-    // ── Input length limit ──
     if (email && email.length > 254) {
       return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
     }
@@ -42,18 +38,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
     }
 
-    // ── Check API key is configured ──
-    if (!process.env.RESEND_API_KEY) {
-      console.error("[newsletter] RESEND_API_KEY is not set!");
+    if (!isMailerConfigured()) {
+      console.error("[newsletter] GMAIL_APP_PASSWORD not set!");
       return NextResponse.json(
         { success: false, error: "Error de configuración del servidor." },
         { status: 500 }
       );
     }
 
-    const result = await getResend().emails.send({
-      from: FROM_EMAIL,
-      to: [email],
+    await sendMail({
+      to: email,
       subject: "¡Bienvenido al newsletter de qatech360! 🛡️",
       html: `<!DOCTYPE html><html><body style="background:#0A0A0A;font-family:sans-serif;padding:40px 16px;text-align:center;">
         <div style="max-width:480px;margin:0 auto;background:#111827;border-radius:12px;padding:32px;border:1px solid #1F2937;">
@@ -68,18 +62,10 @@ export async function POST(req: NextRequest) {
       </body></html>`,
     });
 
-    if (result.error) {
-      console.error("[newsletter] Resend error:", JSON.stringify(result.error));
-      return NextResponse.json(
-        { success: false, error: "No se pudo enviar el email. Intenta de nuevo." },
-        { status: 500 }
-      );
-    }
-
-    console.log("[newsletter] email sent:", result.data?.id);
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("[newsletter] error:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[newsletter] error:", msg);
     return NextResponse.json({ success: false, error: "Error interno." }, { status: 500 });
   }
 }
