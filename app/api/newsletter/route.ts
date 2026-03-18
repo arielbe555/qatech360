@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 SOC <soc@qatech360.com>";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <soc@qatech.ar>";
 const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
 // ── Rate limiting ──
