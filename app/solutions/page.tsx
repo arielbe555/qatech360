@@ -11,7 +11,7 @@ const industries = [
     slug: "pyme",
     label: "PyMEs y Startups",
     subtitle: "10–200 endpoints",
-    description: "Protección enterprise desde $149/mes, sin equipo de seguridad propio. Onboarding en 15 minutos.",
+    description: "Protección enterprise para tu empresa, sin equipo de seguridad propio. Onboarding en 15 minutos.",
     compliance: "NOM-151 · ISO 27001",
     color: "#0070F3",
     svg: (

@@ -28,7 +28,7 @@ const painPoints = [
       </svg>
     ),
     title: "Presupuesto limitado",
-    desc: "Las soluciones enterprise como CrowdStrike cuestan $8–15 USD por endpoint por mes, más implementación. Inaccesible para una PyME.",
+    desc: "Las soluciones enterprise líderes tienen costos muy elevados por endpoint, más implementación. Inaccesible para una PyME.",
     color: "#FFB800",
   },
   {
@@ -84,7 +84,7 @@ const faqs = [
   },
   {
     q: "¿Qué pasa si mi empresa crece y necesito más endpoints?",
-    a: "Puedes agregar endpoints adicionales por $3 USD/endpoint/mes, o subir al plan Profesional (100 endpoints, $399/mes) con un clic desde tu panel.",
+    a: "Puedes agregar endpoints adicionales o subir al plan Profesional con un clic desde tu panel. Contáctanos para conocer precios.",
   },
 ];
 
@@ -165,7 +165,7 @@ export default function PymePage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap gap-4 justify-center mb-10 text-sm"
           >
-            {["Desde $149/mes", "Sin contratos anuales", "Onboarding en 15 minutos", "Prueba gratis 14 días"].map((t) => (
+            {["Consultar precios", "Sin contratos anuales", "Onboarding en 15 minutos", "Prueba gratis 14 días"].map((t) => (
               <span key={t} className="flex items-center gap-1.5 text-[#A0A0A0]">
                 <svg className="w-4 h-4 text-[#00FF88]" viewBox="0 0 16 16" fill="currentColor">
                   <path fillRule="evenodd" d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z" />
@@ -345,14 +345,13 @@ export default function PymePage() {
               Plan Starter — El más popular entre PyMEs
             </div>
             <div className="mb-6">
-              <span className="text-7xl font-black text-white">$149</span>
-              <span className="text-[#A0A0A0] text-xl">/mes</span>
+              <span className="text-5xl font-black text-white">Consultar</span>
             </div>
             <p className="text-[#A0A0A0] mb-2">25 endpoints · 14 días gratis · Sin tarjeta de crédito</p>
             <p className="text-xs text-[#666666] mb-8">Facturación disponible en MXN, BRL, COP, ARS, CLP</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/trial" className="px-10 py-4 bg-[#0070F3] hover:bg-[#0050D0] text-white font-bold rounded-lg transition-all duration-200 shadow-[0_0_20px_rgba(0,112,243,0.4)] text-lg">
-                Iniciar prueba gratuita
+              <Link href="/contact" className="px-10 py-4 bg-[#0070F3] hover:bg-[#0050D0] text-white font-bold rounded-lg transition-all duration-200 shadow-[0_0_20px_rgba(0,112,243,0.4)] text-lg">
+                Contáctanos para conocer precios
               </Link>
               <Link href="/pricing" className="px-10 py-4 border border-[#2A2A2A] hover:border-[#0070F3]/40 text-[#A0A0A0] hover:text-white font-semibold rounded-lg transition-all duration-200">
                 Ver todos los planes

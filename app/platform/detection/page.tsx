@@ -498,8 +498,8 @@ export default function DetectionPage() {
               <div className="p-4 font-bold text-sm text-center text-[#0070F3] border-l border-[#374151]">
                 <span className="text-gradient-primary">qatech360</span>
               </div>
-              <div className="p-4 font-semibold text-sm text-center text-[#9CA3AF] border-l border-[#374151]">CrowdStrike</div>
-              <div className="p-4 font-semibold text-sm text-center text-[#9CA3AF] border-l border-[#374151]">SentinelOne</div>
+              <div className="p-4 font-semibold text-sm text-center text-[#9CA3AF] border-l border-[#374151]">Crowd...</div>
+              <div className="p-4 font-semibold text-sm text-center text-[#9CA3AF] border-l border-[#374151]">Sentine...</div>
             </div>
             {comparisonFeatures.map((row, i) => (
               <div

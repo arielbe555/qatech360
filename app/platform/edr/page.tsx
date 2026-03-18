@@ -493,8 +493,8 @@ export default function EdrPage() {
               <div className="p-4 text-sm font-bold text-center text-[#0070F3] border-l border-[#374151]">
                 <span className="text-gradient-primary">qatech360</span>
               </div>
-              <div className="p-4 text-sm font-semibold text-center text-[#9CA3AF] border-l border-[#374151]">CrowdStrike</div>
-              <div className="p-4 text-sm font-semibold text-center text-[#9CA3AF] border-l border-[#374151]">SentinelOne</div>
+              <div className="p-4 text-sm font-semibold text-center text-[#9CA3AF] border-l border-[#374151]">Crowd...</div>
+              <div className="p-4 text-sm font-semibold text-center text-[#9CA3AF] border-l border-[#374151]">Sentine...</div>
             </div>
             {performanceData.map((row, i) => (
               <div
@@ -576,7 +576,7 @@ export default function EdrPage() {
                 <path d="M10 20c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10S10 25.52 10 20zm10-6a6 6 0 100 12A6 6 0 0020 14z" fill="#0070F3" />
               </svg>
               <p className="text-xl lg:text-2xl font-medium leading-relaxed mb-8 text-white">
-                "Migré de CrowdStrike a qatech360 EDR. El impacto en CPU bajó de 8.5% a 2.1% y la velocidad de detección mejoró 4x. Además, el precio es 60% menor con más funcionalidades incluidas."
+                "Migré de la plataforma líder en rojo a qatech360 EDR. El impacto en CPU bajó de 8.5% a 2.1% y la velocidad de detección mejoró 4x. Además, el precio es 60% menor con más funcionalidades incluidas."
               </p>
               <div>
                 <div className="font-bold">Alejandro Martínez</div>

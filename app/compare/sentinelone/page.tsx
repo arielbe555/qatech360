@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import NavBar from "@/components/NavBar";
@@ -74,13 +74,13 @@ const ShieldCheckIcon = () => (
 // ================================================================
 const COMPARISON_ROWS = [
   { feature: "Idioma principal", qa: "Español nativo", s1: "Inglés", qaGood: true, s1Good: false, both: false },
-  { feature: "Precio transparente", qa: "Sí, desde $149/mes", s1: "No (requiere cotización)", qaGood: true, s1Good: false, both: false },
+  { feature: "Precio transparente", qa: "Precios accesibles y transparentes", s1: "No (requiere cotización)", qaGood: true, s1Good: false, both: false },
   { feature: "Analistas humanos LATAM 24/7", qa: "✅", s1: "❌", qaGood: true, s1Good: false, both: false },
   { feature: "Onboarding", qa: "15 minutos", s1: "Días / semanas", qaGood: true, s1Good: false, both: false },
   { feature: "Open source core", qa: "Wazuh", s1: "Propietario", qaGood: true, s1Good: false, both: false },
   { feature: "Cumplimiento NOM-151 / LGPD", qa: "✅", s1: "❌", qaGood: true, s1Good: false, both: false },
   { feature: "Prueba gratuita sin tarjeta", qa: "14 días", s1: "No", qaGood: true, s1Good: false, both: false },
-  { feature: "Precio inicial (USD/mes)", qa: "$149 / mes", s1: "~$6.99 / endpoint / mes", qaGood: true, s1Good: false, both: false },
+  { feature: "Precio inicial", qa: "Precios accesibles LATAM", s1: "Requiere cotización enterprise", qaGood: true, s1Good: false, both: false },
   { feature: "Container Security", qa: "✅", s1: "✅", qaGood: true, s1Good: true, both: true },
   { feature: "Compliance Automation LATAM", qa: "✅", s1: "❌", qaGood: true, s1Good: false, both: false },
 ];
@@ -90,19 +90,19 @@ const SOC_ADVANTAGES = [
     icon: <BrainIcon />,
     title: "IA automática que nunca descansa",
     description:
-      "Como SentinelOne, nuestra plataforma usa detección automática de comportamiento anómalo impulsada por modelos de machine learning. Correlación cross-layer, mapeo MITRE ATT&CK, respuesta activa automatizada.",
+      "Como la plataforma autónoma, nuestra plataforma usa detección automática de comportamiento anómalo impulsada por modelos de machine learning. Correlación cross-layer, mapeo MITRE ATT&CK, respuesta activa automatizada.",
   },
   {
     icon: <UsersIcon />,
     title: "Más ojos humanos LATAM 24/7",
     description:
-      "Donde SentinelOne termina (la alerta), nosotros empezamos. Cada alerta crítica tiene un analista LATAM que la revisa, triagea y te llama en español. Sin bots, sin scripts de respuesta genéricos.",
+      "Donde el competidor de IA autónoma termina (la alerta), nosotros empezamos. Cada alerta crítica tiene un analista LATAM que la revisa, triagea y te llama en español. Sin bots, sin scripts de respuesta genéricos.",
   },
   {
     icon: <GlobeIcon />,
     title: "Contexto regional que la IA no tiene",
     description:
-      "Nuestro feed de inteligencia de amenazas LATAM cubre grupos de ransomware activos en México, Colombia, Brasil y Argentina. SentinelOne usa inteligencia global — nosotros también, pero además la local.",
+      "Nuestro feed de inteligencia de amenazas LATAM cubre grupos de ransomware activos en México, Colombia, Brasil y Argentina. Sentine... usa inteligencia global — nosotros también, pero además la local.",
   },
 ];
 
@@ -110,32 +110,32 @@ const MISSING_FEATURES = [
   {
     title: "Soporte y documentación en inglés",
     description:
-      "El portal de SentinelOne, la documentación técnica, los playbooks de respuesta y la comunicación del equipo de soporte son en inglés. Para equipos LATAM esto implica barreras operativas reales.",
+      "El portal de Sentine..., la documentación técnica, los playbooks de respuesta y la comunicación del equipo de soporte son en inglés. Para equipos LATAM esto implica barreras operativas reales.",
   },
   {
     title: "Sin cobertura de regulaciones locales",
     description:
-      "NOM-151 en México, LGPD en Brasil, Ley 1581 en Colombia. SentinelOne no ofrece mapeo nativo de controles para estas regulaciones. Necesitás un equipo especializado para construirlo manualmente.",
+      "NOM-151 en México, LGPD en Brasil, Ley 1581 en Colombia. Sentine... no ofrece mapeo nativo de controles para estas regulaciones. Necesitás un equipo especializado para construirlo manualmente.",
   },
   {
     title: "Precios opacos, sin transparencia",
     description:
-      "Para obtener un precio de SentinelOne necesitás pasar por un proceso de ventas. Sin publicar precios, la comparación es imposible y el proceso de compra consume tiempo valioso de tu equipo.",
+      "Para obtener un precio de Sentine... necesitás pasar por un proceso de ventas. Sin publicar precios, la comparación es imposible y el proceso de compra consume tiempo valioso de tu equipo.",
   },
   {
     title: "SOC en zonas horarias USA/EMEA",
     description:
-      "Cuando ocurre un incidente a las 3am en Buenos Aires, el equipo de soporte de SentinelOne está en San Francisco (GMT-7) o en Europa. Los tiempos de respuesta en incidentes P1 lo reflejan.",
+      "Cuando ocurre un incidente a las 3am en Buenos Aires, el equipo de soporte de Sentine... está en San Francisco (GMT-7) o en Europa. Los tiempos de respuesta en incidentes P1 lo reflejan.",
   },
   {
     title: "Complejidad de deployment enterprise",
     description:
-      "SentinelOne está diseñado para organizaciones enterprise con equipos de IT maduros. El proceso de deployment y tuning inicial requiere semanas de trabajo especializado que muchas PyMEs LATAM no pueden costear.",
+      "Sentine... está diseñado para organizaciones enterprise con equipos de IT maduros. El proceso de deployment y tuning inicial requiere semanas de trabajo especializado que muchas PyMEs LATAM no pueden costear.",
   },
   {
     title: "Sin prueba gratuita real",
     description:
-      "SentinelOne no ofrece una prueba gratuita sin proceso de ventas previo. Con qatech360 podés activar 14 días completos en minutos, sin tarjeta de crédito y sin hablar con nadie.",
+      "Sentine... no ofrece una prueba gratuita sin proceso de ventas previo. Con qatech360 podés activar 14 días completos en minutos, sin tarjeta de crédito y sin hablar con nadie.",
   },
 ];
 
@@ -144,7 +144,7 @@ const MIGRATION_STEPS = [
     step: "01",
     title: "Instalación paralela sin downtime",
     description:
-      "El agente qatech360 se instala en paralelo con SentinelOne. Ambos conviven sin conflictos. Durante esta fase nuestro equipo verifica que todas las fuentes de datos estén correctamente integradas y configuradas para tu entorno específico.",
+      "El agente qatech360 se instala en paralelo con Sentine.... Ambos conviven sin conflictos. Durante esta fase nuestro equipo verifica que todas las fuentes de datos estén correctamente integradas y configuradas para tu entorno específico.",
     time: "Día 1",
   },
   {
@@ -156,9 +156,9 @@ const MIGRATION_STEPS = [
   },
   {
     step: "03",
-    title: "Activación SOC y retiro de SentinelOne",
+    title: "Activación SOC y retiro del agente anterior",
     description:
-      "Con cobertura validada, nuestro SOC LATAM activa monitoreo 24/7 completo. Desinstalás el agente SentinelOne. La migración está completa. Tiempo total del proceso: menos de 48 horas sin interrupciones.",
+      "Con cobertura validada, nuestro SOC LATAM activa monitoreo 24/7 completo. Desinstalás el agente anterior. La migración está completa. Tiempo total del proceso: menos de 48 horas sin interrupciones.",
     time: "Día 2",
   },
 ];
@@ -166,66 +166,26 @@ const MIGRATION_STEPS = [
 const TESTIMONIALS = [
   {
     quote:
-      "Usábamos SentinelOne Singularity y era bueno técnicamente, pero todo en inglés y el soporte tardaba horas. Con qatech360 tenemos el mismo nivel de detección automática y encima un analista nos llama cuando hay algo crítico. En español, en nuestro horario.",
+      "Usábamos la plataforma autónoma y era buena técnicamente, pero todo en inglés y el soporte tardaba horas. Con qatech360 tenemos el mismo nivel de detección automática y encima un analista nos llama cuando hay algo crítico. En español, en nuestro horario.",
     name: "Valentina Torres",
     title: "CISO — Fintech Argentina",
     initials: "VT",
   },
   {
     quote:
-      "La diferencia clave para nosotros fue el cumplimiento LGPD. SentinelOne no tiene ese mapeo nativo — con qatech360 lo tenemos out of the box y generamos los reportes de auditoría en un clic.",
+      "La diferencia clave para nosotros fue el cumplimiento LGPD. Sentine... no tiene ese mapeo nativo — con qatech360 lo tenemos out of the box y generamos los reportes de auditoría en un clic.",
     name: "Ricardo Fonseca",
     title: "CTO — Healthcare Brasil",
     initials: "RF",
   },
   {
     quote:
-      "El precio de SentinelOne para 150 endpoints era casi $14k al año, sin incluir el trabajo de configuración. Con qatech360 pagamos $4,800 al año, todo incluido, y el onboarding lo hicieron ellos en dos días.",
+      "El precio de Sentine... para 150 endpoints era mucho más de lo que podíamos invertir, sin incluir el trabajo de configuración. Con qatech360 ahorramos significativamente, todo incluido, y el onboarding lo hicieron ellos en dos días.",
     name: "Sofía Vargas",
     title: "IT Director — Retail México",
     initials: "SV",
   },
 ];
-
-// ================================================================
-// ANIMATED BAR COMPONENT
-// ================================================================
-function AnimatedBar({
-  value,
-  max,
-  color,
-  label,
-}: {
-  value: number;
-  max: number;
-  color: string;
-  label: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <div ref={ref} className="space-y-2">
-      <div className="flex justify-between text-sm mb-1">
-        <span className="text-white font-medium">{label}</span>
-        <span style={{ color }} className="font-bold">
-          ${value.toLocaleString()}
-        </span>
-      </div>
-      <div className="h-8 bg-[#1A1A1A] rounded-lg overflow-hidden border border-[#2A2A2A]">
-        <motion.div
-          className="h-full rounded-lg flex items-center pl-3 text-xs font-bold text-white"
-          style={{ backgroundColor: color }}
-          initial={{ width: "0%" }}
-          animate={inView ? { width: `${(value / max) * 100}%` } : { width: "0%" }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-        >
-          {inView && `$${value.toLocaleString()}/año`}
-        </motion.div>
-      </div>
-    </div>
-  );
-}
 
 // ================================================================
 // PAGE
@@ -282,13 +242,13 @@ export default function CompareSentinelOnePage() {
           <h1 className="text-4xl md:text-6xl font-bold mb-5 leading-tight">
             <span className="text-white">qatech360</span>{" "}
             <span className="text-[#A0A0A0]">vs</span>{" "}
-            <span className="text-[#8B5CF6]">SentinelOne</span>
+            <span className="text-[#8B5CF6]">Sentine...</span>
           </h1>
           <p className="text-xl md:text-2xl text-[#A0A0A0] mb-8 leading-relaxed">
             Detección autónoma + analistas humanos LATAM — lo mejor de ambos mundos
           </p>
           <p className="text-base text-[#666666] max-w-xl mx-auto mb-10">
-            SentinelOne tiene IA avanzada. Nosotros también — y además tenés un analista humano LATAM revisando cada alerta crítica, en tu idioma, en tu zona horaria, con contexto regional que ningún modelo global tiene.
+            La plataforma autónoma tiene IA avanzada. Nosotros también — y además tenés un analista humano LATAM revisando cada alerta crítica, en tu idioma, en tu zona horaria, con contexto regional que ningún modelo global tiene.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -340,7 +300,7 @@ export default function CompareSentinelOnePage() {
                   <th className="text-center px-6 py-4 w-1/3">
                     <span className="inline-flex items-center gap-2 text-[#8B5CF6] font-bold text-base">
                       <span className="w-2 h-2 rounded-full bg-[#8B5CF6] inline-block" />
-                      SentinelOne
+                      Sentine...
                     </span>
                   </th>
                 </tr>
@@ -396,7 +356,7 @@ export default function CompareSentinelOnePage() {
               IA automática + ojos humanos LATAM
             </h2>
             <p className="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
-              SentinelOne confía en IA autónoma. Nosotros también — y le sumamos analistas reales en tu zona horaria.
+              La plataforma autónoma confía en IA autónoma. Nosotros también — y le sumamos analistas reales en tu zona horaria.
             </p>
           </motion.div>
 
@@ -453,7 +413,7 @@ export default function CompareSentinelOnePage() {
             className="text-center mb-14"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Lo que SentinelOne no te dice
+              Lo que Sentine... no te dice
             </h2>
             <p className="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
               Capacidades técnicas excelentes. Realidad operativa para LATAM — otra historia.
@@ -492,30 +452,50 @@ export default function CompareSentinelOnePage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Costo anual — 100 endpoints
+              Ahorro significativo para LATAM
             </h2>
-            <p className="text-[#A0A0A0] text-lg">Comparación de costo total, facturación anual.</p>
+            <p className="text-[#A0A0A0] text-lg">Protección enterprise a precios accesibles para la región.</p>
           </motion.div>
 
-          <div className="space-y-5">
-            <AnimatedBar value={3990} max={12000} color="#0070F3" label="qatech360 Professional (anual)" />
-            <AnimatedBar value={8388} max={12000} color="#8B5CF6" label="SentinelOne Singularity Core (estimado)" />
-            <AnimatedBar value={11400} max={12000} color="#6D28D9" label="SentinelOne Singularity Complete (estimado)" />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={pricingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+          >
+            <div className="bg-[#0A0A0A] border border-[#0070F3]/30 rounded-xl p-6 text-center">
+              <div className="text-[#0070F3] font-bold text-lg mb-2">qatech360</div>
+              <div className="text-[#00FF88] font-bold text-2xl mb-1">Consultar</div>
+              <p className="text-[#666666] text-xs">Precios accesibles LATAM</p>
+            </div>
+            <div className="bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl p-6 text-center">
+              <div className="text-[#8B5CF6] font-bold text-lg mb-2">Sentine... Core</div>
+              <div className="text-[#A0A0A0] font-bold text-2xl mb-1">Cotización enterprise</div>
+              <p className="text-[#666666] text-xs">Requiere proceso de ventas</p>
+            </div>
+            <div className="bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl p-6 text-center">
+              <div className="text-[#6D28D9] font-bold text-lg mb-2">Sentine... Complete</div>
+              <div className="text-[#A0A0A0] font-bold text-2xl mb-1">Cotización enterprise</div>
+              <p className="text-[#666666] text-xs">Requiere proceso de ventas</p>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={pricingInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 p-5 bg-[#0A0A0A] rounded-xl border border-[#2A2A2A] text-center"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="p-5 bg-[#0A0A0A] rounded-xl border border-[#2A2A2A] text-center"
           >
-            <p className="text-[#A0A0A0] text-sm">
-              Ahorro promedio al migrar a qatech360 Professional:{" "}
-              <span className="text-[#00FF88] font-bold text-lg">$4,398 USD / año</span>
+            <p className="text-[#A0A0A0] text-sm mb-4">
+              Las empresas que migran a qatech360 reportan un ahorro significativo en su inversión anual de ciberseguridad.
             </p>
-            <p className="text-[#666666] text-xs mt-2">
-              Precios SentinelOne son estimados basados en información pública. El costo real varía según el contrato.
-            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#0070F3] hover:bg-[#0050D0] text-white font-semibold transition-colors duration-200 shadow-[0_0_20px_rgba(0,112,243,0.3)]"
+            >
+              Solicitar cotización personalizada
+              <ArrowRightIcon />
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -567,7 +547,7 @@ export default function CompareSentinelOnePage() {
                 icon: "🔍",
                 title: "Feed de amenazas LATAM",
                 description:
-                  "Inteligencia de grupos activos en México, Colombia, Brasil, Argentina y Chile. Contexto regional que los feeds globales de SentinelOne no cubren con la misma profundidad.",
+                  "Inteligencia de grupos activos en México, Colombia, Brasil, Argentina y Chile. Contexto regional que los feeds globales del competidor autónomo no cubren con la misma profundidad.",
               },
               {
                 icon: "🧪",
@@ -643,7 +623,7 @@ export default function CompareSentinelOnePage() {
             <div>
               <p className="text-white font-semibold mb-1">Garantía de cobertura durante la migración</p>
               <p className="text-[#A0A0A0] text-sm">
-                Si durante el proceso de migración detectamos cualquier gap de cobertura, pausamos el retiro de SentinelOne hasta resolverlo. Tu seguridad nunca queda comprometida.
+                Si durante el proceso de migración detectamos cualquier gap de cobertura, pausamos el retiro del agente anterior hasta resolverlo. Tu seguridad nunca queda comprometida.
               </p>
             </div>
           </motion.div>
@@ -714,19 +694,19 @@ export default function CompareSentinelOnePage() {
           <div className="space-y-4">
             {[
               {
-                q: "¿qatech360 tiene las mismas capacidades de IA que SentinelOne Singularity?",
-                a: "Tenemos detección automática de comportamiento, correlación cross-layer y respuesta activa automatizada — los casos de uso centrales de Singularity. SentinelOne tiene Purple AI (LLM nativo) que nosotros no replicamos. Para el 95% de empresas LATAM, nuestras capacidades de detección son equivalentes o superiores en contexto regional.",
+                q: "¿qatech360 tiene las mismas capacidades de IA que la plataforma autónoma?",
+                a: "Tenemos detección automática de comportamiento, correlación cross-layer y respuesta activa automatizada — los casos de uso centrales de la plataforma autónoma. Sentine... tiene un LLM nativo que nosotros no replicamos. Para el 95% de empresas LATAM, nuestras capacidades de detección son equivalentes o superiores en contexto regional.",
               },
               {
-                q: "¿Puedo probar qatech360 sin cancelar SentinelOne?",
+                q: "¿Puedo probar qatech360 sin cancelar mi plataforma actual?",
                 a: "Sí. La prueba gratuita de 14 días está diseñada para eso. Instalás el agente en un subconjunto de endpoints y comparás la detección y cobertura en paralelo antes de tomar ninguna decisión.",
               },
               {
-                q: "¿Qué pasa con mis datos e histórico de SentinelOne?",
-                a: "Los datos de SentinelOne son tuyos. Podemos ayudarte a exportar logs históricos e importarlos a nuestro sistema de Log Management para mantener continuidad de evidencia para cumplimiento.",
+                q: "¿Qué pasa con mis datos e histórico de la plataforma anterior?",
+                a: "Los datos de tu plataforma anterior son tuyos. Podemos ayudarte a exportar logs históricos e importarlos a nuestro sistema de Log Management para mantener continuidad de evidencia para cumplimiento.",
               },
               {
-                q: "¿La respuesta activa automatizada es igual de rápida que SentinelOne?",
+                q: "¿La respuesta activa automatizada es igual de rápida que la del competidor?",
                 a: "Sí. Nuestro módulo de Active Response ejecuta contramedidas en milisegundos: bloqueo de IP, cuarentena de archivos, terminación de procesos, aislamiento de endpoint. La diferencia es que además tenés un analista humano revisando el contexto.",
               },
             ].map((item, i) => (

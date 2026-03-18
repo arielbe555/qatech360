@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // AnimatePresence used in FAQ
 import Link from "next/link";
 import NavBar from "@/components/NavBar";
@@ -81,10 +81,10 @@ const PLANS = [
     id: "essential",
     name: "ESSENTIAL",
     tagline: "Para equipos que empiezan a escalar",
-    monthlyPrice: 2.99,
-    annualPrice: 29,
-    annualTotal: 290,
-    unit: "endpoint/año",
+    monthlyPrice: null,
+    annualPrice: null,
+    annualTotal: null,
+    unit: "",
     badge: null,
     badgeColor: null,
     highlight: false,
@@ -113,10 +113,10 @@ const PLANS = [
     id: "professional",
     name: "PROFESSIONAL",
     tagline: "La elección de equipos de seguridad",
-    monthlyPrice: 6.99,
-    annualPrice: 69,
-    annualTotal: 690,
-    unit: "endpoint/año",
+    monthlyPrice: null,
+    annualPrice: null,
+    annualTotal: null,
+    unit: "",
     badge: "MAS POPULAR",
     badgeColor: "#00FF88",
     highlight: true,
@@ -146,9 +146,9 @@ const PLANS = [
     name: "ENTERPRISE",
     tagline: "Máxima protección sin compromisos",
     monthlyPrice: null,
-    annualPrice: 119,
-    annualTotal: 1190,
-    unit: "endpoint/año",
+    annualPrice: null,
+    annualTotal: null,
+    unit: "",
     badge: "ENTERPRISE",
     badgeColor: "#FF6B00",
     highlight: false,
@@ -257,158 +257,43 @@ const FAQS = [
   },
   {
     q: "¿El plan Enterprise tiene precio fijo o requiere cotización?",
-    a: "Enterprise tiene un precio base de $119/endpoint/año, pero el precio final depende del volumen total, los servicios adicionales (SOC 24/7 full, CISO virtual, etc.) y el plazo de contrato. Pedí una cotización sin compromiso.",
+    a: "Enterprise tiene precios personalizados que dependen del volumen total de endpoints, los servicios adicionales (SOC 24/7 full, CISO virtual, etc.) y el plazo de contrato. Pedí una cotización sin compromiso.",
   },
 ];
 
 const INDUSTRIES = [
-  { name: "Gobierno y Sector Público", discount: "30%", note: "Licitaciones y contratos marco" },
-  { name: "Salud y Hospitales", discount: "25%", note: "HIPAA + protección de datos de pacientes" },
-  { name: "Finanzas y Bancos", discount: "20%", note: "PCI-DSS + SWIFT CSP incluido" },
+  { name: "Gobierno y Sector Público", discount: "Consultar", note: "Licitaciones y contratos marco" },
+  { name: "Salud y Hospitales", discount: "Consultar", note: "HIPAA + protección de datos de pacientes" },
+  { name: "Finanzas y Bancos", discount: "Consultar", note: "PCI-DSS + SWIFT CSP incluido" },
 ];
 
 // ================================================================
-// ROI CALCULATOR
+// CUSTOM QUOTE CTA (replaces ROI Calculator)
 // ================================================================
-function ROICalculator() {
-  const [endpoints, setEndpoints] = useState(50);
-  const [industry, setIndustry] = useState("technology");
-
-  const qatech = endpoints * 69;
-  const crowdstrike = endpoints * 184;
-  const sentinelone = endpoints * 207;
-  const savingVsCrowd = crowdstrike - qatech;
-  const savingVsSentinel = sentinelone - qatech;
-  const roi3years = savingVsCrowd * 3;
-
-  const industryMultipliers: Record<string, number> = {
-    finance: 1.4, health: 1.3, government: 1.2, technology: 1.0, retail: 1.1, manufacturing: 1.15,
-  };
-  const multiplier = industryMultipliers[industry] ?? 1;
-  const adjustedROI = Math.round(roi3years * multiplier);
-
+function CustomQuoteCTA() {
   return (
     <section className="py-20 px-4 relative">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="glass-strong rounded-2xl p-8 md:p-12 text-center"
         >
-          <span className="badge badge-primary mb-4">Calculadora</span>
+          <span className="badge badge-primary mb-4">Cotización personalizada</span>
           <h2 className="text-4xl font-bold text-white mb-4">
-            Calculá tu <span className="text-gradient-primary">ROI con qatech360</span>
+            Obtené una <span className="text-gradient-primary">propuesta a medida</span>
           </h2>
-          <p className="text-[#9CA3AF] text-lg max-w-2xl mx-auto">
-            Compará cuánto ahorrarías vs CrowdStrike y SentinelOne en 3 años.
+          <p className="text-[#9CA3AF] text-lg max-w-2xl mx-auto mb-8">
+            Cada empresa tiene necesidades diferentes. Contáctanos para recibir una cotización personalizada según tu cantidad de endpoints, industria y requerimientos de cumplimiento.
           </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass-strong rounded-2xl p-8 md:p-12"
-        >
-          <div className="grid md:grid-cols-2 gap-10 mb-10">
-            {/* Inputs */}
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-white mb-3">
-                  Número de endpoints: <span className="text-[#00D4FF]">{endpoints}</span>
-                </label>
-                <input
-                  type="range"
-                  min={10}
-                  max={500}
-                  step={10}
-                  value={endpoints}
-                  onChange={(e) => setEndpoints(Number(e.target.value))}
-                  className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, #0070F3 0%, #0070F3 ${((endpoints - 10) / 490) * 100}%, #374151 ${((endpoints - 10) / 490) * 100}%, #374151 100%)`,
-                  }}
-                />
-                <div className="flex justify-between text-xs text-[#6B7280] mt-1">
-                  <span>10</span>
-                  <span>500</span>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-white mb-3">Industria</label>
-                <select
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full bg-[#1F2937] border border-[#374151] text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0070F3] focus:ring-1 focus:ring-[#0070F3]"
-                >
-                  <option value="technology">Tecnología</option>
-                  <option value="finance">Finanzas y Bancos</option>
-                  <option value="health">Salud</option>
-                  <option value="government">Gobierno</option>
-                  <option value="retail">Retail</option>
-                  <option value="manufacturing">Manufactura</option>
-                </select>
-              </div>
-
-              <div className="bg-[#0A0A0A] rounded-xl p-4 border border-[rgba(0,255,136,0.2)]">
-                <p className="text-xs text-[#9CA3AF] mb-2">Tu costo anual con qatech360</p>
-                <p className="text-3xl font-black text-[#00FF88]">${qatech.toLocaleString()}</p>
-                <p className="text-xs text-[#6B7280] mt-1">Plan Professional · {endpoints} endpoints</p>
-              </div>
-            </div>
-
-            {/* Outputs */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-[#6B7280] mb-4">Comparativa anual</h3>
-
-              {[
-                { label: "qatech360", cost: qatech, color: "#00FF88", isYou: true },
-                { label: "CrowdStrike", cost: crowdstrike, color: "#FF3366", isYou: false },
-                { label: "SentinelOne", cost: sentinelone, color: "#FF6B00", isYou: false },
-              ].map((item) => (
-                <div key={item.label} className={`rounded-xl p-4 ${item.isYou ? "bg-[rgba(0,255,136,0.08)] border border-[rgba(0,255,136,0.2)]" : "bg-[#111827] border border-[#374151]"}`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`text-sm font-semibold ${item.isYou ? "text-white" : "text-[#9CA3AF]"}`}>
-                      {item.label} {item.isYou && <span className="badge badge-accent ml-2 text-[9px]">Tu elección</span>}
-                    </span>
-                    <span className={`text-xl font-black`} style={{ color: item.color }}>
-                      ${item.cost.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="h-2 bg-[#1F2937] rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-700"
-                      style={{ width: `${(item.cost / sentinelone) * 100}%`, background: item.color }}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="bg-[#111827] rounded-xl p-4 border border-[rgba(0,112,243,0.2)] text-center">
-                  <p className="text-xs text-[#9CA3AF] mb-1">Ahorro vs CrowdStrike</p>
-                  <p className="text-2xl font-black text-[#0070F3]">${savingVsCrowd.toLocaleString()}</p>
-                  <p className="text-xs text-[#6B7280]">al año</p>
-                </div>
-                <div className="bg-[#111827] rounded-xl p-4 border border-[rgba(0,255,136,0.2)] text-center">
-                  <p className="text-xs text-[#9CA3AF] mb-1">ROI ajustado (3 años)</p>
-                  <p className="text-2xl font-black text-[#00FF88]">${adjustedROI.toLocaleString()}</p>
-                  <p className="text-xs text-[#6B7280]">incluye factor industria</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-[#374151] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-[#9CA3AF]">
-              * Precios estimados basados en cotizaciones públicas de competidores. Ahorro real puede variar.
-            </p>
-            <Link href="/trial" className="btn-primary whitespace-nowrap">
-              Calculá tu propuesta exacta
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact" className="btn-primary whitespace-nowrap text-base px-8 py-4">
+              Solicitar cotización
+            </Link>
+            <Link href="/demo" className="btn-secondary whitespace-nowrap text-base px-8 py-4">
+              Ver demo en vivo
             </Link>
           </div>
         </motion.div>
@@ -670,15 +555,15 @@ export default function PricingPage() {
             <div className="glass-strong rounded-2xl overflow-hidden">
               <div className="grid grid-cols-4 bg-[#0A0A0A] border-b border-[#374151]">
                 <div className="py-4 px-4 text-xs font-bold text-[#6B7280] uppercase tracking-wider">Plataforma</div>
-                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Precio/endpoint/año</div>
-                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Ahorro</div>
+                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Precio</div>
+                <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">Ventaja</div>
                 <div className="py-4 px-4 text-center text-xs font-bold text-[#6B7280] uppercase tracking-wider">LATAM native</div>
               </div>
               {[
-                { name: "qatech360", price: "$69", saving: "—", latam: true, highlight: true },
-                { name: "CrowdStrike Falcon", price: "$184", saving: "62% más caro", latam: false, highlight: false },
-                { name: "SentinelOne", price: "$207", saving: "200% más caro", latam: false, highlight: false },
-                { name: "Microsoft Defender", price: "$120", saving: "74% más caro", latam: false, highlight: false },
+                { name: "qatech360", price: "Consultar", saving: "Accesible LATAM", latam: true, highlight: true },
+                { name: "Crowd...", price: "Cotización enterprise", saving: "Requiere proceso de ventas", latam: false, highlight: false },
+                { name: "Sentine...", price: "Cotización enterprise", saving: "Requiere proceso de ventas", latam: false, highlight: false },
+                { name: "Microsoft Defender", price: "Cotización enterprise", saving: "Requiere proceso de ventas", latam: false, highlight: false },
               ].map((row) => (
                 <div
                   key={row.name}
@@ -690,23 +575,23 @@ export default function PricingPage() {
                     )}
                     {row.name}
                   </div>
-                  <div className={`text-center font-black text-sm ${row.highlight ? "text-[#00FF88]" : "text-[#FF3366]"}`}>{row.price}</div>
-                  <div className={`text-center text-xs ${row.saving === "—" ? "text-[#00FF88]" : "text-[#9CA3AF]"}`}>{row.saving}</div>
+                  <div className={`text-center font-black text-sm ${row.highlight ? "text-[#00FF88]" : "text-[#9CA3AF]"}`}>{row.price}</div>
+                  <div className={`text-center text-xs ${row.highlight ? "text-[#00FF88]" : "text-[#9CA3AF]"}`}>{row.saving}</div>
                   <div className="flex justify-center">
                     {row.latam ? <CheckIcon /> : <XIcon />}
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-center text-xs text-[#6B7280] mt-3">* Precios plan Professional. Cotizaciones públicas Q1 2026.</p>
+            <p className="text-center text-xs text-[#6B7280] mt-3">Contáctanos para obtener una cotización personalizada para tu empresa.</p>
           </div>
         </section>
 
         {/* ── FEATURE COMPARISON TABLE ── */}
         <ComparisonTable />
 
-        {/* ── ROI CALCULATOR ── */}
-        <ROICalculator />
+        {/* ── CUSTOM QUOTE CTA ── */}
+        <CustomQuoteCTA />
 
         {/* ── SECTOR SOLUTIONS ── */}
         <section className="py-16 px-4">
@@ -719,9 +604,9 @@ export default function PricingPage() {
               className="text-center mb-12"
             >
               <h2 className="text-3xl font-bold text-white mb-3">
-                Precios especiales por <span className="text-gradient-accent">sector</span>
+                Soluciones por <span className="text-gradient-accent">sector</span>
               </h2>
-              <p className="text-[#9CA3AF]">Descuentos y certificaciones incluidas según tu industria.</p>
+              <p className="text-[#9CA3AF]">Planes adaptados y certificaciones incluidas según tu industria.</p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -734,7 +619,7 @@ export default function PricingPage() {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="card-base text-center p-8"
                 >
-                  <div className="text-4xl font-black text-[#00FF88] mb-3">{ind.discount} off</div>
+                  <div className="text-4xl font-black text-[#00FF88] mb-3">{ind.discount}</div>
                   <h3 className="text-white font-bold text-lg mb-2">{ind.name}</h3>
                   <p className="text-[#9CA3AF] text-sm">{ind.note}</p>
                   <Link href="/contact" className="mt-6 btn-ghost text-sm inline-block">
@@ -770,7 +655,7 @@ export default function PricingPage() {
                   ))}
                 </div>
                 <blockquote className="text-xl text-white font-medium leading-relaxed mb-6">
-                  "Evaluamos CrowdStrike y SentinelOne. Ambos superaban nuestro presupuesto anual. Con qatech360 obtuvimos el mismo nivel de protección por menos de la mitad del costo. El ROI fue evidente en los primeros 90 días."
+                  "Evaluamos las plataformas líderes del mercado norteamericano. Ambas superaban nuestro presupuesto anual. Con qatech360 obtuvimos el mismo nivel de protección por menos de la mitad del costo. El ROI fue evidente en los primeros 90 días."
                 </blockquote>
                 <div className="flex items-center justify-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#0070F3] flex items-center justify-center text-white font-black text-sm">

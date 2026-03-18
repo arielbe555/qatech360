@@ -299,7 +299,7 @@ export default function ServicesPage() {
 
   function getRecommendation(): string {
     const [size, , concern] = quizAnswers;
-    if (size === "Menos de 25") return "Plan Inicial — SIEM + EDR + FIM desde $149/mes";
+    if (size === "Menos de 25") return "Plan Inicial — SIEM + EDR + FIM. Contáctanos para precios.";
     if (concern === "Cumplimiento regulatorio") return "Plan Profesional con Automatización de Cumplimiento";
     if (concern === "Protección en la nube") return "Plan Profesional con Seguridad en la Nube";
     return "Plan Profesional — protección 24/7 con XDR + SOC LATAM";
@@ -524,7 +524,7 @@ export default function ServicesPage() {
           >
             <h2 className="text-3xl font-bold mb-4">¿Cuánto cuesta proteger tu empresa?</h2>
             <p className="text-[#A0A0A0] mb-8">
-              Precios transparentes desde $149/mes. Sin sorpresas, sin llamadas de ventas obligatorias.
+              Planes flexibles para cada necesidad. Contáctanos para conocer precios.
             </p>
             <Link
               href="/pricing"

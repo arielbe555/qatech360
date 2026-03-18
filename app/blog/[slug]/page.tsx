@@ -603,7 +603,7 @@ export default function BlogArticlePage() {
                     },
                     {
                       title: "EDR con capacidad de rollback",
-                      detail: "Soluciones como SentinelOne, CrowdStrike Falcon y el agente qatech360 pueden revertir cambios realizados por ransomware antes de que el cifrado sea completo. Este feature puede ser la diferencia entre un incidente menor y uno catastrófico.",
+                      detail: "Soluciones EDR líderes del mercado y el agente qatech360 pueden revertir cambios realizados por ransomware antes de que el cifrado sea completo. Este feature puede ser la diferencia entre un incidente menor y uno catastrófico.",
                     },
                   ].map((rec, i) => (
                     <div key={i} className="card-base border-l-2 border-l-brand-primary">

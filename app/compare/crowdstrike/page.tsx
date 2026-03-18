@@ -63,13 +63,13 @@ const UserIcon = () => (
 const COMPARISON_ROWS = [
   { feature: "Idioma principal", qa: "Español nativo", cs: "Inglés", qaGood: true, csGood: false },
   { feature: "Mercado objetivo", qa: "LATAM", cs: "Global (USA-first)", qaGood: true, csGood: false },
-  { feature: "Precio transparente", qa: "Sí, desde $149/mes", cs: "No (requiere llamada de ventas)", qaGood: true, csGood: false },
+  { feature: "Precio transparente", qa: "Precios accesibles y transparentes", cs: "No (requiere llamada de ventas)", qaGood: true, csGood: false },
   { feature: "Onboarding", qa: "15 minutos", cs: "Días / semanas", qaGood: true, csGood: false },
   { feature: "Open source core", qa: "Wazuh", cs: "Propietario", qaGood: true, csGood: false },
   { feature: "SOC en zona horaria LATAM", qa: "✅", cs: "❌", qaGood: true, csGood: false },
   { feature: "Cumplimiento NOM-151 / LGPD", qa: "✅", cs: "❌", qaGood: true, csGood: false },
   { feature: "Prueba gratuita sin tarjeta", qa: "14 días", cs: "No", qaGood: true, csGood: false },
-  { feature: "Precio inicial (USD/mes)", qa: "$149 / mes", cs: "~$8.99 / endpoint / mes", qaGood: true, csGood: false },
+  { feature: "Precios accesibles", qa: "Precios accesibles LATAM", cs: "Requiere cotización enterprise", qaGood: true, csGood: false },
   { feature: "SLA P1", qa: "15 minutos", cs: "Varía", qaGood: true, csGood: null },
 ];
 
@@ -84,13 +84,13 @@ const REASONS = [
     icon: <ClockIcon />,
     title: "Operacional en 15 minutos, no en 15 días",
     description:
-      "CrowdStrike requiere un equipo de ingeniería para el deployment y ajuste inicial. Con qatech360, instalas un agente ligero, y el sistema empieza a detectar amenazas de inmediato, sin configuración compleja.",
+      "El líder del mercado norteamericano requiere un equipo de ingeniería para el deployment y ajuste inicial. Con qatech360, instalas un agente ligero, y el sistema empieza a detectar amenazas de inmediato, sin configuración compleja.",
   },
   {
     icon: <TagIcon />,
     title: "El precio que ves es el precio que pagas",
     description:
-      "Sin llamadas de ventas para obtener una cotización. Sin sorpresas en la factura. $149/mes para 25 endpoints, $399/mes para 100. Facturación disponible en MXN, BRL, COP, ARS y CLP.",
+      "Sin llamadas de ventas para obtener una cotización. Sin sorpresas en la factura. Precios accesibles para LATAM. Facturación disponible en MXN, BRL, COP, ARS y CLP.",
   },
 ];
 
@@ -99,7 +99,7 @@ const MIGRATION_STEPS = [
     step: "01",
     title: "Instala el agente qatech360 en paralelo",
     description:
-      "Descarga e instala el agente qatech360 en tus endpoints mientras CrowdStrike sigue corriendo. No hay downtime ni conflictos — ambos agentes coexisten sin problemas durante la migración.",
+      "Descarga e instala el agente qatech360 en tus endpoints mientras la plataforma anterior sigue corriendo. No hay downtime ni conflictos — ambos agentes coexisten sin problemas durante la migración.",
   },
   {
     step: "02",
@@ -109,30 +109,30 @@ const MIGRATION_STEPS = [
   },
   {
     step: "03",
-    title: "Remueve CrowdStrike y activa protección completa",
+    title: "Remueve el agente anterior y activa protección completa",
     description:
-      "Una vez validado, desinstalás el agente CrowdStrike. Nuestro SOC activa la cobertura 24/7 completa. Tiempo total del proceso: menos de 48 horas sin interrupciones operativas.",
+      "Una vez validado, desinstalás el agente anterior. Nuestro SOC activa la cobertura 24/7 completa. Tiempo total del proceso: menos de 48 horas sin interrupciones operativas.",
   },
 ];
 
 const TESTIMONIALS = [
   {
     quote:
-      "Pagábamos más de $14,000 USD al año por CrowdStrike para 80 endpoints, en inglés, con soporte que tardaba horas. Con qatech360 pagamos $400/mes, todo en español, y cuando tuvimos un incidente a las 2am un analista mexicano nos llamó en 8 minutos.",
+      "Pagábamos mucho más al año por la plataforma líder en rojo para 80 endpoints, en inglés, con soporte que tardaba horas. Con qatech360 ahorramos significativamente, todo en español, y cuando tuvimos un incidente a las 2am un analista mexicano nos llamó en 8 minutos.",
     name: "Carlos Méndez",
     title: "CTO — FinTech México",
     initials: "CM",
   },
   {
     quote:
-      "La migración desde CrowdStrike tomó dos días. No un mes, dos días. El equipo de qatech360 hizo todo el trabajo pesado y el dashboard en español es infinitamente más útil para presentarle al directorio.",
+      "La migración desde Crowd... tomó dos días. No un mes, dos días. El equipo de qatech360 hizo todo el trabajo pesado y el dashboard en español es infinitamente más útil para presentarle al directorio.",
     name: "Ana Salcedo",
     title: "CISO — Retail Colombia",
     initials: "AS",
   },
   {
     quote:
-      "Lo que me convenció fue la transparencia de precios. Con CrowdStrike nunca sabíamos cuánto íbamos a pagar el mes siguiente. qatech360 es precio fijo, en pesos colombianos si querés, sin letra chica.",
+      "Lo que me convenció fue la transparencia de precios. Con Crowd... nunca sabíamos cuánto íbamos a pagar el mes siguiente. qatech360 es precio fijo, en pesos colombianos si querés, sin letra chica.",
     name: "Diego Rojas",
     title: "IT Manager — Manufactura Colombia",
     initials: "DR",
@@ -216,13 +216,13 @@ export default function CompareCrowdstrikePage() {
           <h1 className="text-4xl md:text-6xl font-bold mb-5 leading-tight">
             <span className="text-white">qatech360</span>{" "}
             <span className="text-[#A0A0A0]">vs</span>{" "}
-            <span className="text-[#FF3B3B]">CrowdStrike</span>
+            <span className="text-[#FF3B3B]">Crowd...</span>
           </h1>
           <p className="text-xl md:text-2xl text-[#A0A0A0] mb-8 leading-relaxed">
-            Protección de nivel Fortune 500 — sin el precio Fortune 500
+            Protección de nivel Fortune 500 — adaptada para LATAM
           </p>
           <p className="text-base text-[#666666] max-w-xl mx-auto mb-10">
-            CrowdStrike es una plataforma excelente diseñada para corporaciones globales con equipos de seguridad dedicados. Si tu empresa opera en LATAM y busca protección en español, precio transparente y onboarding rápido — hay una mejor opción.
+            La plataforma líder en rojo es excelente para corporaciones globales con equipos de seguridad dedicados. Si tu empresa opera en LATAM y busca protección en español, precio transparente y onboarding rápido — hay una mejor opción.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -274,7 +274,7 @@ export default function CompareCrowdstrikePage() {
                   <th className="text-center px-6 py-4 w-1/3">
                     <span className="inline-flex items-center gap-2 text-[#FF3B3B] font-bold text-base">
                       <span className="w-2 h-2 rounded-full bg-[#FF3B3B] inline-block" />
-                      CrowdStrike
+                      Crowd...
                     </span>
                   </th>
                 </tr>
@@ -322,7 +322,7 @@ export default function CompareCrowdstrikePage() {
               ¿Por qué las empresas LATAM eligen qatech360?
             </h2>
             <p className="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
-              No es que CrowdStrike sea malo. Es que no fue construido para vos.
+              No es que Crowd... sea malo. Es que no fue construido para vos.
             </p>
           </motion.div>
 
@@ -358,22 +358,22 @@ export default function CompareCrowdstrikePage() {
               <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#0070F3] to-[#00D4FF] rounded-l-2xl" />
               <div className="pl-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                  "CrowdStrike es excelente... si tenés un equipo de 10 ingenieros de seguridad y $100k de presupuesto."
+                  "La plataforma líder en rojo es excelente... si tenés un equipo de 10 ingenieros de seguridad y un presupuesto corporativo."
                 </h2>
                 <div className="space-y-4 text-[#A0A0A0] leading-relaxed">
                   <p>
-                    CrowdStrike Falcon es una de las plataformas de ciberseguridad más avanzadas del mundo. Fue construida para las Fortune 500 de Estados Unidos, con equipos de security operations completos y presupuestos de siete cifras.
+                    La suite del competidor líder es una de las plataformas de ciberseguridad más avanzadas del mundo. Fue construida para las Fortune 500 de Estados Unidos, con equipos de security operations completos y presupuestos de siete cifras.
                   </p>
                   <p>
-                    Para una empresa mediana en México, Colombia o Brasil — con un equipo de IT de 3 personas, regulaciones locales específicas y soporte que necesita ser en español — CrowdStrike es un Ferrari para quien necesita una camioneta todoterreno confiable.
+                    Para una empresa mediana en México, Colombia o Brasil — con un equipo de IT de 3 personas, regulaciones locales específicas y soporte que necesita ser en español — Crowd... es un Ferrari para quien necesita una camioneta todoterreno confiable.
                   </p>
                   <p>
-                    <strong className="text-white">Nosotros hacemos lo mismo, gestionado, en español, desde $149/mes.</strong> Y no necesitás un equipo dedicado de seguridad para operarlo — el nuestro lo hace por vos.
+                    <strong className="text-white">Nosotros hacemos lo mismo, gestionado, en español, a precios accesibles para LATAM.</strong> Y no necesitás un equipo dedicado de seguridad para operarlo — el nuestro lo hace por vos.
                   </p>
                 </div>
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
                   {[
-                    { label: "Precio inicial", qa: "$149/mes", cs: "~$1,080/mes*" },
+                    { label: "Precio", qa: "Accesible LATAM", cs: "Cotización enterprise" },
                     { label: "Onboarding", qa: "15 minutos", cs: "2–4 semanas" },
                     { label: "Idioma SOC", qa: "Español", cs: "Inglés" },
                     { label: "NOM-151 / LGPD", qa: "Incluido", cs: "No disponible" },
@@ -385,14 +385,14 @@ export default function CompareCrowdstrikePage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-[#666666] text-xs mt-4">* Estimado para 120 endpoints al precio de lista CrowdStrike Falcon Go.</p>
+                <p className="text-[#666666] text-xs mt-4">* Estimado para 120 endpoints al precio de lista del competidor líder.</p>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── 5. PRICING COMPARISON VISUAL ── */}
+      {/* ── 5. PRICING COMPARISON ── */}
       <section ref={pricingRef} className="py-20 px-6 bg-[#111111] border-t border-b border-[#2A2A2A]">
         <div className="max-w-3xl mx-auto">
           <motion.div
@@ -402,29 +402,31 @@ export default function CompareCrowdstrikePage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Costo anual — 100 endpoints
+              Ahorro significativo vs. el competidor líder
             </h2>
-            <p className="text-[#A0A0A0] text-lg">Comparación de costo total para 100 endpoints, facturación anual.</p>
+            <p className="text-[#A0A0A0] text-lg">Misma protección enterprise, a una fracción del costo. Contactanos para una cotización personalizada.</p>
           </motion.div>
-
-          <div className="space-y-5">
-            <AnimatedBar value={3990} max={14000} color="#0070F3" label="qatech360 Professional (anual)" />
-            <AnimatedBar value={10788} max={14000} color="#FF3B3B" label="CrowdStrike Falcon Go (estimado)" />
-            <AnimatedBar value={13200} max={14000} color="#FF6B00" label="CrowdStrike Falcon Pro (estimado)" />
-          </div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={pricingInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 p-5 bg-[#0A0A0A] rounded-xl border border-[#2A2A2A] text-center"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="p-8 bg-[#0A0A0A] rounded-xl border border-[#2A2A2A] text-center"
           >
-            <p className="text-[#A0A0A0] text-sm">
-              Ahorro promedio al migrar a qatech360 Professional:{" "}
-              <span className="text-[#00FF88] font-bold text-lg">$6,798 USD / año</span>
+            <p className="text-[#A0A0A0] text-lg mb-4">
+              Las empresas LATAM que migran a qatech360 reportan un{" "}
+              <span className="text-[#00FF88] font-bold text-xl">ahorro significativo</span>{" "}
+              en costos anuales de seguridad.
             </p>
-            <p className="text-[#666666] text-xs mt-2">
-              Precios CrowdStrike son estimados de lista pública. El costo real puede variar según el contrato negociado.
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#0070F3] hover:bg-[#0050D0] text-white font-semibold transition-colors duration-200"
+            >
+              Solicitar cotización personalizada
+              <ArrowRightIcon />
+            </Link>
+            <p className="text-[#666666] text-xs mt-4">
+              Contáctanos para una comparación detallada de costos adaptada a tu entorno.
             </p>
           </motion.div>
         </div>
@@ -440,7 +442,7 @@ export default function CompareCrowdstrikePage() {
             className="text-center mb-14"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Migra desde CrowdStrike en 48 horas
+              Migra desde Crowd... en 48 horas
             </h2>
             <p className="text-[#A0A0A0] text-lg">Sin downtime. Sin pérdida de cobertura. Nuestro equipo lo hace por vos.</p>
           </motion.div>
@@ -537,18 +539,18 @@ export default function CompareCrowdstrikePage() {
             {[
               {
                 q: "¿Pierdo cobertura durante la migración?",
-                a: "No. El proceso de migración tiene una fase de coexistencia donde ambos agentes corren en paralelo. Sólo retirás CrowdStrike una vez que validamos que qatech360 tiene cobertura completa.",
+                a: "No. El proceso de migración tiene una fase de coexistencia donde ambos agentes corren en paralelo. Sólo retirás el agente anterior una vez que validamos que qatech360 tiene cobertura completa.",
               },
               {
-                q: "¿qatech360 tiene las mismas capacidades que CrowdStrike Falcon?",
-                a: "Cubrimos los casos de uso críticos: EDR, SIEM, XDR, Vulnerability Management, Cloud Security y Compliance. CrowdStrike tiene capacidades adicionales de IA propietaria — pero para el 95% de empresas LATAM, qatech360 ofrece protección suficiente con mejor soporte local.",
+                q: "¿qatech360 tiene las mismas capacidades que la suite del competidor?",
+                a: "Cubrimos los casos de uso críticos: EDR, SIEM, XDR, Vulnerability Management, Cloud Security y Compliance. Crowd... tiene capacidades adicionales de IA propietaria — pero para el 95% de empresas LATAM, qatech360 ofrece protección suficiente con mejor soporte local.",
               },
               {
-                q: "¿Qué pasa con mis datos históricos de CrowdStrike?",
-                a: "Los logs históricos de CrowdStrike pertenecen a tu organización. Podemos ayudarte a exportarlos y, si querés, importarlos al sistema de Log Management de qatech360 para mantener continuidad de evidencia.",
+                q: "¿Qué pasa con mis datos históricos del competidor?",
+                a: "Los logs históricos de tu plataforma anterior pertenecen a tu organización. Podemos ayudarte a exportarlos y, si querés, importarlos al sistema de Log Management de qatech360 para mantener continuidad de evidencia.",
               },
               {
-                q: "¿Puedo probar qatech360 sin cancelar CrowdStrike?",
+                q: "¿Puedo probar qatech360 sin cancelar mi plataforma actual?",
                 a: "Sí. La prueba gratuita de 14 días está diseñada exactamente para eso. Instalás el agente en un subconjunto de endpoints y comparás resultados antes de tomar ninguna decisión.",
               },
             ].map((item, i) => (

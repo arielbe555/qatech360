@@ -19,7 +19,7 @@ const integrations = [
   { name: "Fortinet", color: "#EE3124", abbr: "FTN" },
   { name: "Cisco ASA / FTD", color: "#1BA0D7", abbr: "Cisco" },
   { name: "Palo Alto NGFW", color: "#FA5A1F", abbr: "PA" },
-  { name: "CrowdStrike Falcon", color: "#E82127", abbr: "CS" },
+  { name: "Crowd... (EDR)", color: "#E82127", abbr: "CS" },
   { name: "Okta IAM", color: "#007DC1", abbr: "Okta" },
   { name: "Splunk (forward)", color: "#FF6D00", abbr: "SPL" },
   { name: "Windows Event", color: "#00BCF2", abbr: "WEV" },

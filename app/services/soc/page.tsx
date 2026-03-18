@@ -408,11 +408,11 @@ export default function SOCPage() {
               </div>
               <div className="space-y-3 mb-6">
                 {[
-                  ["3 analistas Tier 1", "$180,000/año"],
-                  ["2 analistas Tier 2", "$160,000/año"],
-                  ["1 manager SOC", "$95,000/año"],
-                  ["Herramientas SIEM + EDR", "$60,000/año"],
-                  ["Capacitación anual", "$25,000/año"],
+                  ["3 analistas Tier 1", "Alto costo"],
+                  ["2 analistas Tier 2", "Alto costo"],
+                  ["1 manager SOC", "Alto costo"],
+                  ["Herramientas SIEM + EDR", "Alto costo"],
+                  ["Capacitación anual", "Alto costo"],
                 ].map(([item, cost]) => (
                   <div key={item} className="flex justify-between items-center text-sm">
                     <span className="text-[#9CA3AF]">{item}</span>
@@ -423,7 +423,7 @@ export default function SOCPage() {
               <div className="border-t border-[#FF3366]/30 pt-4">
                 <div className="flex justify-between items-center">
                   <span className="text-white font-bold">Total anual</span>
-                  <span className="text-3xl font-black text-[#FF3366]">$520,000</span>
+                  <span className="text-2xl font-black text-[#FF3366]">Muy elevado</span>
                 </div>
                 <p className="text-xs text-[#9CA3AF] mt-2">*Sin contar rotación de personal, overhead de RRHH</p>
               </div>
@@ -464,13 +464,13 @@ export default function SOCPage() {
               </div>
               <div className="border-t border-[#00FF88]/30 pt-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-bold">Desde</span>
+                  <span className="text-white font-bold">Precio</span>
                   <div className="text-right">
-                    <div className="text-3xl font-black text-[#00FF88]">$8</div>
-                    <div className="text-xs text-[#9CA3AF]">por empleado / mes</div>
+                    <div className="text-3xl font-black text-[#00FF88]">Consultar</div>
+                    <div className="text-xs text-[#9CA3AF]">según necesidades</div>
                   </div>
                 </div>
-                <p className="text-xs text-[#9CA3AF] mt-2">*Empresa de 100 empleados = $800/mes = $9,600/año</p>
+                <p className="text-xs text-[#9CA3AF] mt-2">*Contáctanos para una cotización personalizada</p>
               </div>
             </motion.div>
           </div>
@@ -483,7 +483,7 @@ export default function SOCPage() {
           >
             <div className="inline-flex items-center gap-3 glass rounded-full px-8 py-4 border border-[#00FF88]/30">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FF88" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>
-              <span className="text-white font-bold text-lg">Ahorro promedio: <span className="text-[#00FF88] text-2xl font-black">$510,400/año</span></span>
+              <span className="text-white font-bold text-lg">Ahorro significativo vs. SOC interno — <span className="text-[#00FF88] text-xl font-black">Consultar</span></span>
             </div>
           </motion.div>
         </div>
@@ -633,31 +633,31 @@ export default function SOCPage() {
             {[
               {
                 name: "MDR Essentials",
-                price: "$8",
-                unit: "/ empleado / mes",
+                price: "Consultar",
+                unit: "",
                 desc: "Para equipos de hasta 250 personas",
                 color: "#0070F3",
                 features: ["EDR gestionado 24/7", "SIEM cloud incluido", "Respuesta a incidentes Tier 1", "SLA crítico < 30 min", "Reporte mensual ejecutivo"],
-                cta: "Empezar prueba gratis",
+                cta: "Solicitar información",
               },
               {
                 name: "MDR Pro",
-                price: "$14",
-                unit: "/ empleado / mes",
+                price: "Consultar",
+                unit: "",
                 desc: "Para empresas medianas 250–2,000",
                 color: "#00D4FF",
                 highlight: true,
                 features: ["Todo en Essentials", "Threat hunting proactivo", "SLA crítico < 15 min", "CISO virtual mensual", "Inteligencia de amenazas", "API para integraciones"],
-                cta: "Solicitar demo",
+                cta: "Solicitar información",
               },
               {
                 name: "MDR Enterprise",
-                price: "Custom",
+                price: "Consultar",
                 unit: "",
                 desc: "Grandes empresas y grupos corporativos",
                 color: "#00FF88",
                 features: ["Todo en Pro", "Analista dedicado", "SLA crítico < 5 min", "Data residency LATAM", "Red team trimestral", "SLAs contractuales personalizados"],
-                cta: "Hablar con ventas",
+                cta: "Solicitar información",
               },
             ].map((plan, i) => (
               <motion.div
