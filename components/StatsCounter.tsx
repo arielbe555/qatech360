@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { statsContainer, statItem, viewportOnce } from "@/lib/animations";
 
 // ================================================================
@@ -283,7 +284,7 @@ export function StatsCounter() {
       className="relative section-py overflow-hidden"
       aria-labelledby="stats-title"
     >
-      {/* Background */}
+      {/* Background — planisferio como mapa de cobertura global */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
@@ -292,6 +293,23 @@ export function StatsCounter() {
             "linear-gradient(180deg, rgba(0,112,243,0.04) 0%, rgba(0,212,255,0.02) 50%, transparent 100%)",
         }}
       />
+      {/* Real world map image */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <Image
+          src="/images/backgrounds/planisferio.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+          style={{ opacity: 0.07, mixBlendMode: "luminosity" }}
+        />
+        {/* Dark gradient overlay to keep text readable */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.7) 100%)",
+          }}
+        />
+      </div>
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-grid opacity-20 pointer-events-none"

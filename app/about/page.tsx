@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 
@@ -77,58 +78,63 @@ const CERTS = [
 ];
 
 // ================================================================
-// LATAM SVG MAP
+// LATAM COVERAGE MAP — real planisphere image
 // ================================================================
 function LatamMap() {
-  const countries = [
-    { name: "México", cx: 110, cy: 140 },
-    { name: "Colombia", cx: 160, cy: 230 },
-    { name: "Brasil", cx: 230, cy: 270 },
-    { name: "Argentina", cx: 190, cy: 380 },
-    { name: "Chile", cx: 170, cy: 360 },
-    { name: "Perú", cx: 160, cy: 290 },
-  ];
-
   return (
-    <svg viewBox="0 0 380 480" fill="none" className="w-full max-w-xs mx-auto">
-      {/* Simplified LATAM silhouette */}
-      <path
-        d="M95,80 L130,75 L155,90 L165,110 L150,130 L145,160 L155,185 L148,210 L155,225 L162,240 L175,255 L185,270 L210,265 L240,258 L255,270 L260,285 L250,305 L235,320 L220,335 L210,355 L200,375 L195,395 L185,415 L175,430 L165,420 L158,400 L160,380 L155,360 L148,345 L140,330 L135,315 L138,295 L130,280 L125,260 L120,240 L115,220 L108,200 L100,175 L95,155 L88,130 L92,110 L95,80z"
-        fill="#111111"
-        stroke="#2A2A2A"
-        strokeWidth="1"
+    <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
+      <Image
+        src="/images/backgrounds/planisferio.png"
+        alt="Mapa de cobertura qatech360 en América Latina — México, Colombia, Brasil, Argentina, Chile, Perú"
+        fill
+        className="object-cover object-center"
+        style={{ opacity: 0.85 }}
       />
-
-      {/* Coverage dots with pulse */}
-      {countries.map((c, i) => (
-        <g key={i}>
-          <circle cx={c.cx} cy={c.cy} r="12" fill="#0070F3" opacity="0.1">
-            <animate attributeName="r" values="12;20;12" dur={`${3 + i * 0.5}s`} repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.1;0;0.1" dur={`${3 + i * 0.5}s`} repeatCount="indefinite" />
-          </circle>
-          <circle cx={c.cx} cy={c.cy} r="5" fill="#0070F3" />
-          <circle cx={c.cx} cy={c.cy} r="2" fill="white" />
-          <text x={c.cx + 9} y={c.cy + 4} fill="#A0A0A0" fontSize="8" fontWeight="500">{c.name}</text>
-        </g>
+      {/* Teal overlay to harmonize with dark theme */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(135deg, rgba(0,112,243,0.15) 0%, rgba(0,212,255,0.08) 50%, rgba(0,0,0,0.4) 100%)",
+        }}
+      />
+      {/* Coverage indicator dots */}
+      {[
+        { label: "🇲🇽 México", x: "22%", y: "28%", color: "#0070F3" },
+        { label: "🇨🇴 Colombia", x: "30%", y: "46%", color: "#00D4FF" },
+        { label: "🇧🇷 Brasil", x: "42%", y: "55%", color: "#00FF88" },
+        { label: "🇦🇷 Argentina", x: "36%", y: "75%", color: "#FFB800" },
+        { label: "🇨🇱 Chile", x: "30%", y: "72%", color: "#00D4FF" },
+        { label: "🇵🇪 Perú", x: "28%", y: "57%", color: "#0070F3" },
+      ].map((dot, i) => (
+        <div
+          key={i}
+          className="absolute flex items-center gap-1.5"
+          style={{ left: dot.x, top: dot.y }}
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span
+              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+              style={{ backgroundColor: dot.color, animationDelay: `${i * 0.5}s` }}
+            />
+            <span
+              className="relative inline-flex rounded-full h-2.5 w-2.5"
+              style={{ backgroundColor: dot.color }}
+            />
+          </span>
+          <span className="text-[10px] font-semibold text-white drop-shadow-lg" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}>
+            {dot.label}
+          </span>
+        </div>
       ))}
-
-      {/* Connection lines between countries */}
-      {countries.map((c, i) =>
-        countries.slice(i + 1, i + 3).map((c2, j) => (
-          <line
-            key={`${i}-${j}`}
-            x1={c.cx}
-            y1={c.cy}
-            x2={c2.cx}
-            y2={c2.cy}
-            stroke="#0070F3"
-            strokeWidth="0.5"
-            strokeDasharray="4 3"
-            opacity="0.3"
-          />
-        ))
-      )}
-    </svg>
+      {/* SOC badge */}
+      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-[#111]/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#00FF88]/30">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF88]" />
+        </span>
+        <span className="text-[#00FF88] text-[10px] font-mono font-bold">SOC ACTIVO 24/7</span>
+      </div>
+    </div>
   );
 }
 
@@ -145,6 +151,23 @@ export default function AboutPage() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+        {/* Planisferio background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/backgrounds/planisferio.png"
+            alt=""
+            fill
+            className="object-cover object-center"
+            style={{ opacity: 0.09, mixBlendMode: "luminosity" }}
+            priority
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.2) 50%, rgba(10,10,10,0.9) 100%)",
+            }}
+          />
+        </div>
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -342,7 +365,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-8"
+              className="relative rounded-2xl overflow-hidden border border-[#2A2A2A] shadow-[0_0_60px_rgba(0,112,243,0.2)]"
             >
               <LatamMap />
             </motion.div>

@@ -143,6 +143,27 @@ export function HeroSection() {
         threatFrequency={1800}
       />
 
+      {/* Shield watermark — floating behind hero content */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute right-[-5%] top-[5%] w-[55vw] max-w-[700px] pointer-events-none select-none"
+        animate={{ y: [0, -18, 0], opacity: [0.07, 0.12, 0.07] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Image
+          src="/images/backgrounds/shield.png"
+          alt=""
+          width={700}
+          height={420}
+          className="w-full h-auto"
+          style={{
+            mixBlendMode: "screen",
+            filter: "saturate(0.6) brightness(0.5)",
+          }}
+          priority
+        />
+      </motion.div>
+
       {/* Radial glow top */}
       <div
         aria-hidden="true"
@@ -262,21 +283,45 @@ export function HeroSection() {
           <HeroStat value="< 1s" label="Detección" color="cyan" />
         </motion.div>
 
-        {/* Dashboard screenshot */}
+        {/* Dashboard screenshot — producto real */}
         <motion.div
           variants={heroStats}
-          className="relative w-full max-w-3xl mt-4"
+          className="relative w-full max-w-4xl mt-4"
         >
+          {/* Outer glow frame */}
+          <div
+            className="absolute -inset-[1px] rounded-2xl pointer-events-none"
+            style={{
+              background: "linear-gradient(135deg, rgba(0,112,243,0.6) 0%, rgba(0,212,255,0.4) 50%, rgba(0,255,136,0.2) 100%)",
+            }}
+          />
+          {/* Screenshot */}
           <Image
             src="/images/screenshots/dashboard.png"
-            alt="Dashboard SOC de qatech360 — vista principal de alertas y eventos en tiempo real"
-            width={680}
-            height={420}
-            className="rounded-xl border border-[#2A2A2A] shadow-[0_0_40px_rgba(0,112,243,0.3)] w-full h-auto"
+            alt="Panel de Seguridad SOC de qatech360 — alertas críticas, agentes activos y amenazas bloqueadas en tiempo real"
+            width={1200}
+            height={740}
+            className="relative rounded-2xl w-full h-auto"
+            style={{
+              boxShadow: "0 0 80px rgba(0,112,243,0.45), 0 0 160px rgba(0,212,255,0.15), 0 40px 80px rgba(0,0,0,0.6)",
+            }}
             priority
           />
-          {/* Glow overlay */}
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent pointer-events-none" />
+          {/* Bottom fade so it blends into the page */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent pointer-events-none" />
+          {/* LIVE badge */}
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-[#111]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#00FF88]/30 shadow-[0_0_12px_rgba(0,255,136,0.2)]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF88]" />
+            </span>
+            <span className="text-[#00FF88] text-[11px] font-mono font-bold tracking-wider">LIVE</span>
+          </div>
+          {/* Corner accent lines */}
+          <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#0070F3]/60 rounded-tl-2xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#0070F3]/60 rounded-tr-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00D4FF]/40 rounded-bl-2xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#00D4FF]/40 rounded-br-2xl pointer-events-none" />
         </motion.div>
 
         {/* Logos / social proof */}

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 
@@ -176,6 +177,23 @@ export default function PlatformPage() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
+        {/* Planisferio background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/backgrounds/planisferio.png"
+            alt=""
+            fill
+            className="object-cover object-center"
+            style={{ opacity: 0.1, mixBlendMode: "luminosity" }}
+            priority
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.85) 100%)",
+            }}
+          />
+        </div>
         {/* Grid background */}
         <div
           className="absolute inset-0 opacity-[0.04]"
@@ -230,55 +248,55 @@ export default function PlatformPage() {
             </div>
           </motion.div>
 
-          {/* Architecture SVG */}
+          {/* Dashboard screenshot — producto real */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mx-auto max-w-2xl"
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
+            className="relative mx-auto max-w-5xl"
           >
-            <svg viewBox="0 0 520 360" fill="none" className="w-full drop-shadow-2xl">
-              {/* Central hub */}
-              <circle cx="260" cy="180" r="52" fill="#111111" stroke="#0070F3" strokeWidth="2" />
-              <text x="260" y="173" textAnchor="middle" fill="#0070F3" fontSize="11" fontWeight="700">qatech360</text>
-              <text x="260" y="188" textAnchor="middle" fill="#A0A0A0" fontSize="9">Plataforma</text>
-
-              {/* Nodes */}
-              {[
-                { x: 80, y: 80, label: "Endpoints", color: "#0070F3" },
-                { x: 440, y: 80, label: "Servidores", color: "#00D4FF" },
-                { x: 80, y: 280, label: "Cloud", color: "#00FF88" },
-                { x: 440, y: 280, label: "Red", color: "#FFB800" },
-                { x: 260, y: 30, label: "Identidad", color: "#00D4FF" },
-              ].map((node, i) => (
-                <g key={i}>
-                  <line
-                    x1={node.x}
-                    y1={node.y}
-                    x2="260"
-                    y2="180"
-                    stroke={node.color}
-                    strokeWidth="1.5"
-                    strokeDasharray="6 3"
-                    opacity="0.5"
-                  />
-                  <circle cx={node.x} cy={node.y} r="28" fill="#111111" stroke={node.color} strokeWidth="1.5" />
-                  <text x={node.x} y={node.y + 4} textAnchor="middle" fill={node.color} fontSize="9" fontWeight="600">
-                    {node.label}
-                  </text>
-                  <circle cx={node.x} cy={node.y} r="4" fill={node.color} opacity="0.6">
-                    <animate attributeName="r" values="4;8;4" dur="3s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite" />
-                  </circle>
-                </g>
-              ))}
-
-              {/* Pulse rings on hub */}
-              <circle cx="260" cy="180" r="60" stroke="#0070F3" strokeWidth="1" opacity="0.3">
-                <animate attributeName="r" values="60;90;60" dur="4s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite" />
-              </circle>
-            </svg>
+            {/* Outer glow border */}
+            <div
+              className="absolute -inset-[1px] rounded-2xl pointer-events-none"
+              style={{
+                background: "linear-gradient(135deg, rgba(0,112,243,0.7) 0%, rgba(0,212,255,0.5) 50%, rgba(0,255,136,0.25) 100%)",
+              }}
+            />
+            <Image
+              src="/images/screenshots/dashboard.png"
+              alt="Panel de Seguridad qatech360 — SIEM, EDR y XDR unificados en un solo dashboard"
+              width={1200}
+              height={740}
+              className="relative rounded-2xl w-full h-auto"
+              style={{
+                boxShadow: "0 0 100px rgba(0,112,243,0.5), 0 0 200px rgba(0,212,255,0.15), 0 60px 120px rgba(0,0,0,0.7)",
+              }}
+              priority
+            />
+            {/* Fade bottom */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent pointer-events-none" />
+            {/* LIVE badge */}
+            <div className="absolute top-4 right-4 flex items-center gap-2 bg-[#111]/85 backdrop-blur-md px-3 py-2 rounded-full border border-[#00FF88]/30 shadow-[0_0_16px_rgba(0,255,136,0.25)]">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00FF88]" />
+              </span>
+              <span className="text-[#00FF88] text-xs font-mono font-bold tracking-wider">EN VIVO</span>
+            </div>
+            {/* Stat pill overlays */}
+            <div className="absolute bottom-6 left-6 flex items-center gap-2 bg-[#111]/85 backdrop-blur-md px-4 py-2 rounded-xl border border-[#0070F3]/30">
+              <span className="text-[#0070F3] font-bold text-lg">840</span>
+              <span className="text-[#A0A0A0] text-xs">Agentes activos</span>
+            </div>
+            <div className="absolute bottom-6 right-6 flex items-center gap-2 bg-[#111]/85 backdrop-blur-md px-4 py-2 rounded-xl border border-[#FF3B3B]/30">
+              <span className="text-[#FF3B3B] font-bold text-lg">1.2M+</span>
+              <span className="text-[#A0A0A0] text-xs">Amenazas bloqueadas</span>
+            </div>
+            {/* Corner accents */}
+            <div className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-[#0070F3]/70 rounded-tl-2xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-[#0070F3]/70 rounded-tr-2xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-[#00D4FF]/50 rounded-bl-2xl pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-[#00D4FF]/50 rounded-br-2xl pointer-events-none" />
           </motion.div>
         </div>
       </section>

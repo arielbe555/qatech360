@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ctaContainer, ctaItem, viewportOnce } from "@/lib/animations";
 
 // ================================================================
@@ -56,6 +57,17 @@ export function CTASection() {
       className="relative overflow-hidden section-py"
       aria-labelledby="cta-title"
     >
+      {/* Planisferio background — mundo cibernético */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <Image
+          src="/images/backgrounds/planisferio.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+          style={{ opacity: 0.12, mixBlendMode: "luminosity" }}
+        />
+      </div>
+
       {/* Animated gradient background (parallax) */}
       <motion.div
         aria-hidden="true"
@@ -67,26 +79,26 @@ export function CTASection() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(135deg, #0A0E1A 0%, #0D1829 40%, #071020 60%, #0A0A0A 100%)",
+              "linear-gradient(135deg, rgba(10,14,26,0.9) 0%, rgba(13,24,41,0.85) 40%, rgba(7,16,32,0.85) 60%, rgba(10,10,10,0.92) 100%)",
           }}
         />
         {/* Glow orbs */}
         <div
           className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px]"
           style={{
-            background: "radial-gradient(ellipse, rgba(0,112,243,0.22) 0%, transparent 65%)",
+            background: "radial-gradient(ellipse, rgba(0,112,243,0.25) 0%, transparent 65%)",
           }}
         />
         <div
           className="absolute top-1/3 right-1/4 w-[400px] h-[300px]"
           style={{
-            background: "radial-gradient(ellipse, rgba(0,212,255,0.12) 0%, transparent 65%)",
+            background: "radial-gradient(ellipse, rgba(0,212,255,0.14) 0%, transparent 65%)",
           }}
         />
         <div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px]"
           style={{
-            background: "radial-gradient(ellipse, rgba(0,255,136,0.05) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse, rgba(0,255,136,0.06) 0%, transparent 70%)",
           }}
         />
         {/* Grid overlay */}

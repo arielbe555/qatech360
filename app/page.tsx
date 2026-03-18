@@ -15,6 +15,7 @@
  */
 
 import { Suspense } from "react";
+import Image from "next/image";
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
 import { StatsCounter } from "@/components/StatsCounter";
@@ -38,19 +39,31 @@ export default function HomePage() {
       <main>
         {/* 1. Hero */}
         <div className="relative">
-          {/* Video background — cybernetic world loop */}
+          {/* Video background — mapa cibernético animado */}
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.28] pointer-events-none"
+            aria-hidden="true"
           >
             <source src="/images/videos/planivideo.mp4" type="video/mp4" />
           </video>
-          {/* CyberWorldMap SVG — decorative planisphere background */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <CyberWorldMap className="w-full h-full opacity-30" />
+          {/* Planisferio static fallback + depth layer */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <Image
+              src="/images/backgrounds/planisferio.png"
+              alt=""
+              fill
+              className="object-cover"
+              style={{ opacity: 0.06, mixBlendMode: "screen" }}
+              priority
+            />
+          </div>
+          {/* CyberWorldMap SVG — decorative overlay nodes */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <CyberWorldMap className="w-full h-full opacity-20" />
           </div>
           <HeroSection />
         </div>
