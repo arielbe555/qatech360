@@ -2340,4 +2340,111 @@ All API routes include:
 
 ---
 
-*Last updated: 2026-03-18 — qatech360.com CLAUDE.md v1.1*
+*Last updated: 2026-03-19 — qatech360.com CLAUDE.md v1.2*
+
+---
+
+## 16. Rules Established During Development (v1.2)
+
+These rules were confirmed during active development sessions and MUST be respected in all future code.
+
+### 16.1 No Prices Anywhere — Everything is "Consultar"
+
+- **NEVER show any dollar amount, price, or cost figure** on any public-facing page.
+- Remove: `$149`, `$399`, `$500`, `$3/endpoint`, percentages like `30% off`, ROI calculators with dollar outputs.
+- Replace all with: **"Consultar"**, **"Solicitar cotización"**, **"A medida"**, or **"Contáctanos"**.
+- Applies to: pricing page, solutions, services, compare pages, testimonials, blog, FAQ — everywhere.
+- The internal `CLAUDE.md` pricing data is for reference only — never render it.
+
+### 16.2 Competitor Names Always Anonymized
+
+- **CrowdStrike** → `"Crowd..."` or `"el líder del mercado norteamericano"` or `"la plataforma líder en rojo"`
+- **SentinelOne** → `"Sentine..."` or `"la plataforma autónoma"` or `"el competidor de IA autónoma"`
+- **Falcon** (product) → `"la suite del competidor líder"` or remove entirely
+- **Singularity** (product) → `"la plataforma autónoma"` or remove entirely
+- **No competitor pricing** — never mention what competitors charge, not even approximate
+- Compare pages use anonymized headers in ALL tables, sections, and body text
+- Final check: `grep -r "CrowdStrike\|SentinelOne\|Falcon\|Singularity" app/` must return zero results
+
+### 16.3 No Wazuh References — Everything is qatech360
+
+- **NEVER mention "Wazuh"** on any public-facing page
+- `agente Wazuh` → `agente qatech360`
+- `Wazuh manager` / `wazuh-manager` → `motor qatech360` / `motor-qatech360`
+- `Powered by Wazuh` → `Motor de detección propio` or `Tecnología qatech360`
+- Install scripts → `qatech360-agent` service name, not `wazuh-agent`
+- systemctl commands → `systemctl start qatech360-agent`
+- Final check: `grep -r "[Ww]azuh" app/` must return zero results
+
+### 16.4 Logo & Favicon
+
+- **Shield logo** at `/public/logo.svg` — navy outer (#0A2540 gradient), electric blue inner (#0070F3), cyan ring (#00D4FF), checkmark+sword icon
+- **Favicon** at `/public/favicon.svg` — same shield simplified for 64×64, referenced in `app/layout.tsx` as SVG (`type: "image/svg+xml"`)
+- Use shield SVG inline in NavBar (logo + "qatech360" text)
+- Apple touch icon also uses `/favicon.svg`
+- Do NOT reference non-existent `.ico` or `.png` favicon files
+
+### 16.5 Platform Page — "Agente qatech360" Not "Agente Wazuh"
+
+- The platform page (`/platform`) must show "agente qatech360" in all diagrams, install scripts, and architecture labels
+- Architecture diagram labels: "Agente qatech360" → "Motor qatech360" → "Dashboard"
+- Install script: `curl -s https://install.qatech360.com/agent.sh | sudo bash -s -- --token $TOKEN`
+- Service name: `qatech360-agent` (not wazuh-agent)
+
+### 16.6 Installer Pages (Internal/Client Use)
+
+Three pages built at `/install/` for client onboarding — NOT linked from public navbar:
+
+| Route | Purpose |
+|---|---|
+| `/install/endpoint` | Single-endpoint installer — Windows .exe, Linux .sh, macOS .pkg — token-based |
+| `/install/network` | Mass network deployment — GPO, SCCM, Ansible, MDM — remote install |
+| `/install/firewall` | Firewall config guides — Fortinet, Cisco, Huawei, Palo Alto, pfSense, MikroTik |
+
+These pages should only be accessible from the client portal or shared directly. Add to navbar only when authenticated.
+
+### 16.7 Media Directories for Images/Videos
+
+```
+public/images/
+├── backgrounds/     # Hero backgrounds, planisphere textures (user uploads here)
+├── screenshots/     # Dashboard screenshots, SOC panel, alerts
+└── videos/          # GIFs, MP4/WebM short loops for hero/sections
+```
+
+- User uploads background images to `public/images/backgrounds/`
+- Videos/GIFs go in `public/images/videos/`
+- Use `<video autoPlay muted loop playsInline>` with WebM + MP4 fallback
+- All `alt` text in Spanish
+- Use `next/image` with `Image` component for all static images
+
+### 16.8 Resend Email Integration
+
+- API key: stored in `RESEND_RESEND_API_KEY` env var (Netlify + local `.env.local`)
+- **Contact form** (`/api/contact`): sends notification to `hola@qatech360.com` + confirmation to user
+- **Demo form** (`/api/demo`): sends notification to `demos@qatech360.com` + confirmation to user
+- **Newsletter** (`/api/newsletter`): subscribes to Resend audience
+- All emails use branded HTML template: dark bg (#0A0A0A), shield logo header, blue CTA, footer with social links
+- Field name for reply address: `replyTo` (Resend v6 SDK — NOT `reply_to`)
+- Rate limiting: 5 req/60s per IP on all routes
+- Honeypot field: `_honey` — reject if filled
+
+### 16.9 Security Headers Applied
+
+In `next.config.mjs`:
+- `Content-Security-Policy` with `frame-ancestors 'none'`
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+- `X-DNS-Prefetch-Control: off`
+
+### 16.10 CyberWorldMap Background
+
+- Component at `components/CyberWorldMap.tsx`
+- SVG equirectangular planisphere with LATAM threat nodes (7 cities: CDMX, Bogotá, São Paulo, Buenos Aires, Lima, Santiago, Miami)
+- Animated connection lines between nodes (dashoffset animation)
+- Pulsing city dots (Framer Motion)
+- Used in `app/page.tsx` behind HeroSection at 30% opacity
+- Layers: world map → ThreatMapBackground canvas → hero content
