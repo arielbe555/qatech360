@@ -149,6 +149,8 @@ const EMPTY_FORM: ContactFormState = {
 export default function ContactPage() {
   const [form, setForm] = useState<ContactFormState>(EMPTY_FORM);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const formRef = useRef(null);
@@ -160,9 +162,36 @@ export default function ContactPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.nombre,
+          email: form.email,
+          company: form.empresa,
+          country: form.pais,
+          subject: form.asunto,
+          message: form.mensaje,
+          honeypot: "",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+        setForm(EMPTY_FORM);
+      } else {
+        setErrorMsg(data.error ?? "Ocurrió un error. Intentá de nuevo.");
+      }
+    } catch {
+      setErrorMsg("Error de conexión. Intentá de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -322,11 +351,18 @@ export default function ContactPage() {
                       />
                     </div>
 
+                    {errorMsg && (
+                      <p className="text-[#FF3B3B] text-sm text-center bg-[#FF3B3B]/10 border border-[#FF3B3B]/20 rounded-lg px-4 py-2">
+                        {errorMsg}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
-                      className="w-full py-3.5 bg-[#0070F3] hover:bg-[#0050D0] text-white font-semibold rounded-lg transition-all duration-200 shadow-[0_0_20px_rgba(0,112,243,0.3)]"
+                      disabled={loading}
+                      className="w-full py-3.5 bg-[#0070F3] hover:bg-[#0050D0] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 shadow-[0_0_20px_rgba(0,112,243,0.3)]"
                     >
-                      Enviar mensaje →
+                      {loading ? "Enviando..." : "Enviar mensaje →"}
                     </button>
 
                     <p className="text-center text-[#666] text-xs">
