@@ -2267,4 +2267,77 @@ Text Secondary:  #A0A0A0
 
 ---
 
-*Last updated: 2026-03-17 — qatech360.com CLAUDE.md v1.0*
+## 15. Branding & Content Rules (MANDATORY)
+
+These rules were established during development and MUST be followed in ALL future code generation.
+
+### 15.1 No Prices on the Website
+
+- **NEVER show dollar amounts, pricing, or cost figures** on any public-facing page.
+- All pricing references must say **"Consultar"**, **"Contáctanos"**, or **"Solicitar cotización"**.
+- No monthly/annual pricing toggles. No ROI calculators with dollar figures.
+- CTAs on pricing pages link to `/contact` with text like "Solicitar información".
+- This applies to: `/pricing`, `/compare/*`, `/solutions/*`, `/services/*`, and ANY other page.
+- The `CLAUDE.md` data section retains internal pricing for reference only — it must NEVER render on the site.
+
+### 15.2 Competitor Names — Always Anonymized
+
+- **NEVER use full competitor names** on the website.
+- `CrowdStrike` → **"Crowd..."** or "La plataforma líder en rojo" or "El líder del mercado norteamericano"
+- `SentinelOne` → **"Sentine..."** or "La plataforma autónoma" or "El competidor de IA autónoma"
+- `Falcon` (CrowdStrike product) → "la suite del competidor" or remove entirely
+- `Singularity` (SentinelOne product) → "la plataforma autónoma" or remove entirely
+- **No competitor pricing** — never mention what competitors charge.
+- Comparison pages (`/compare/*`) use anonymized names in headers, tables, and body text.
+
+### 15.3 No Wazuh References — Everything is qatech360
+
+- **NEVER mention "Wazuh" on any public-facing page.** The underlying technology is internal knowledge only.
+- `agente Wazuh` → **"agente qatech360"**
+- `Wazuh manager` → **"motor qatech360"**
+- `Powered by Wazuh` → **"Motor de detección propio"** or **"Tecnología qatech360"**
+- `wazuh-manager` (in diagrams/scripts) → **"motor-qatech360"** or **"qatech360-engine"**
+- Install scripts reference `qatech360-agent`, not `wazuh-agent`.
+- The `CLAUDE.md` data section retains Wazuh technical references for internal context only.
+- Blog posts, webinars, careers — all must use qatech360 branding, never Wazuh.
+
+### 15.4 Logo / Isologo
+
+- The qatech360 shield logo is at `/public/logo.svg` (full) and `/public/favicon.svg` (simplified for tabs).
+- Shield design: navy blue outer (#0A2540), electric blue inner (#0070F3), cyan accent ring (#00D4FF), check/sword icon.
+- Use the shield SVG inline in NavBar and Footer — reference from `/public/logo.svg`.
+- Favicon is configured in `app/layout.tsx` metadata as SVG.
+
+### 15.5 Image & Media Directories
+
+```
+public/images/
+├── backgrounds/     # Hero backgrounds, planisphere, textures
+├── screenshots/     # Dashboard screenshots, SOC panel, alerts
+└── videos/          # GIFs, MP4/WebM short loops for hero/services
+```
+
+- Use `next/image` with `Image` component for all static images.
+- Videos: use `<video autoPlay muted loop playsInline>` with WebM primary + MP4 fallback.
+- GIFs: prefer WebM/MP4 over GIF for better compression.
+- All `alt` text must be in Spanish.
+
+### 15.6 Security Hardening (Applied)
+
+All API routes include:
+- **Rate limiting**: 5 requests per 60 seconds per IP (in-memory Map, upgrade to Upstash Redis at scale)
+- **Input sanitization**: Length caps on all fields (name≤200, message≤5000, email≤254 RFC)
+- **Honeypot fields**: Anti-bot trap on all forms
+- **CSP headers**: Full Content-Security-Policy with `frame-ancestors 'none'`
+- **Security headers**: HSTS, X-Frame-Options DENY, X-Content-Type-Options nosniff, Permissions-Policy
+- **No information disclosure**: `/api/health` returns only `{status, timestamp}`
+
+### 15.7 External Links
+
+- "Iniciar sesión" button in NavBar → `https://app.qatech360.com` (opens in new tab via `<a target="_blank">`)
+- Configured via `NEXT_PUBLIC_APP_URL` environment variable.
+- Portal subdomain: `app.qatech360.com` (Wazuh dashboard behind nginx reverse proxy — internal only).
+
+---
+
+*Last updated: 2026-03-18 — qatech360.com CLAUDE.md v1.1*
