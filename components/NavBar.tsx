@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import {
   navVariants,
@@ -379,46 +380,14 @@ export function NavBar() {
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
               {/* qatech360 shield logo */}
-              <svg width="38" height="38" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="nb-outer" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#1A3A8A"/>
-                    <stop offset="100%" stopColor="#0D1E5A"/>
-                  </linearGradient>
-                  <linearGradient id="nb-inner" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#0070F3"/>
-                    <stop offset="60%" stopColor="#0055CC"/>
-                    <stop offset="100%" stopColor="#003BA3"/>
-                  </linearGradient>
-                  <linearGradient id="nb-icon" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#00D4FF"/>
-                    <stop offset="100%" stopColor="#00AADD"/>
-                  </linearGradient>
-                  <filter id="nb-glow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="2" result="blur"/>
-                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                  </filter>
-                </defs>
-                {/* Outer shield (dark navy) */}
-                <path d="M60 4 L108 20 L108 65 Q108 98 60 116 Q12 98 12 65 L12 20 Z" fill="url(#nb-outer)"/>
-                {/* Left/right wing accents */}
-                <path d="M12 20 L12 65 Q12 74 14 82 L20 76 L20 22 Z" fill="#0D2060" opacity="0.7"/>
-                <path d="M108 20 L108 65 Q108 74 106 82 L100 76 L100 22 Z" fill="#0D2060" opacity="0.7"/>
-                {/* Inner shield (electric blue) */}
-                <path d="M60 14 L96 28 L96 64 Q96 91 60 108 Q24 91 24 64 L24 28 Z" fill="url(#nb-inner)"/>
-                {/* Cyan border */}
-                <path d="M60 14 L96 28 L96 64 Q96 91 60 108 Q24 91 24 64 L24 28 Z" fill="none" stroke="#00D4FF" strokeWidth="2" opacity="0.5"/>
-                {/* Dark depth fill */}
-                <path d="M60 22 L88 33 L88 63 Q88 85 60 100 Q32 85 32 63 L32 33 Z" fill="#003BBF" opacity="0.45"/>
-                {/* Top highlight */}
-                <path d="M38 28 Q60 18 82 28" stroke="#5599FF" strokeWidth="1.5" fill="none" opacity="0.6"/>
-                {/* Cyan ring */}
-                <circle cx="60" cy="60" r="20" fill="none" stroke="#00D4FF" strokeWidth="3" opacity="0.9" filter="url(#nb-glow)"/>
-                {/* Checkmark */}
-                <path d="M48 60 L57 69 L73 50" stroke="url(#nb-icon)" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" fill="none" filter="url(#nb-glow)"/>
-                {/* Q tail / sword */}
-                <line x1="72" y1="69" x2="80" y2="77" stroke="url(#nb-icon)" strokeWidth="3.5" strokeLinecap="round" filter="url(#nb-glow)"/>
-              </svg>
+              <Image
+                src="/images/backgrounds/shield.png"
+                alt="qatech360 logo"
+                width={38}
+                height={38}
+                className="h-9 w-auto"
+                priority
+              />
             </motion.span>
             <span className="text-xl font-extrabold tracking-tight">
               <span className="text-white">qatech</span>

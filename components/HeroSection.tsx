@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import {
   heroContainer,
   heroBadge,
@@ -259,6 +260,23 @@ export function HeroSection() {
           <HeroStat value="99.9%" label="Uptime SLA" color="accent" />
           <HeroStat value="50+" label="Clientes activos" color="primary" />
           <HeroStat value="< 1s" label="Detección" color="cyan" />
+        </motion.div>
+
+        {/* Dashboard screenshot */}
+        <motion.div
+          variants={heroStats}
+          className="relative w-full max-w-3xl mt-4"
+        >
+          <Image
+            src="/images/screenshots/dashboard.png"
+            alt="Dashboard SOC de qatech360 — vista principal de alertas y eventos en tiempo real"
+            width={680}
+            height={420}
+            className="rounded-xl border border-[#2A2A2A] shadow-[0_0_40px_rgba(0,112,243,0.3)] w-full h-auto"
+            priority
+          />
+          {/* Glow overlay */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent pointer-events-none" />
         </motion.div>
 
         {/* Logos / social proof */}

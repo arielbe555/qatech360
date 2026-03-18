@@ -38,6 +38,16 @@ export default function HomePage() {
       <main>
         {/* 1. Hero */}
         <div className="relative">
+          {/* Video background — cybernetic world loop */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+          >
+            <source src="/images/videos/planivideo.mp4" type="video/mp4" />
+          </video>
           {/* CyberWorldMap SVG — decorative planisphere background */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <CyberWorldMap className="w-full h-full opacity-30" />
