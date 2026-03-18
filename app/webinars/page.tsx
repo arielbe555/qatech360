@@ -63,8 +63,8 @@ const WEBINARS: Webinar[] = [
     iconColor: "#FFB800",
   },
   {
-    id: "wazuh-deployment",
-    title: "Despliegue avanzado de Wazuh: arquitectura para 500+ endpoints",
+    id: "qatech360-deployment",
+    title: "Despliegue avanzado de qatech360: arquitectura para 500+ endpoints",
     speaker: "Diego Morales",
     role: "Solutions Architect",
     company: "qatech360",

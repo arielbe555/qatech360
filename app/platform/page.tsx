@@ -211,7 +211,7 @@ export default function PlatformPage() {
             </h1>
 
             <p className="text-xl text-[#A0A0A0] max-w-3xl mx-auto mb-10">
-              Wazuh enterprise-grade, gestionado por expertos LATAM. SIEM + EDR + XDR + Cumplimiento en un solo panel.
+              Seguridad enterprise-grade, gestionada por expertos LATAM. SIEM + EDR + XDR + Cumplimiento en un solo panel.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center mb-16">
@@ -330,8 +330,8 @@ export default function PlatformPage() {
               {/* Stages */}
               {[
                 { x: 30, label: "Fuentes de Datos", sub: "Servers·Endpoints·Cloud", color: "#666" },
-                { x: 180, label: "Wazuh Agents", sub: "Recolección y envío", color: "#0070F3" },
-                { x: 340, label: "wazuh-manager", sub: "Correlación y análisis", color: "#00D4FF" },
+                { x: 180, label: "Agentes qatech360", sub: "Recolección y envío", color: "#0070F3" },
+                { x: 340, label: "Motor qatech360", sub: "Correlación y análisis", color: "#00D4FF" },
                 { x: 500, label: "OpenSearch", sub: "Indexación y búsqueda", color: "#FFB800" },
                 { x: 660, label: "qatech360 Dashboard", sub: "Visibilidad unificada", color: "#00FF88" },
               ].map((stage, i) => (
@@ -476,7 +476,7 @@ export default function PlatformPage() {
             </div>
             <pre className="p-6 text-sm font-mono overflow-x-auto">
               <code>
-                <span className="text-[#666]"># Instalación del agente qatech360 (Wazuh 4.9.x)</span>{"\n"}
+                <span className="text-[#666]"># Instalación del agente qatech360</span>{"\n"}
                 <span className="text-[#00FF88]">curl</span>
                 <span className="text-white"> -so qatech360-agent.sh \</span>{"\n"}
                 <span className="text-[#A0A0A0]">  https://install.qatech360.com/agent.sh</span>{"\n\n"}
@@ -486,11 +486,11 @@ export default function PlatformPage() {
                 <span className="text-[#A0A0A0]">  --token </span>
                 <span className="text-[#FFB800]">{"<TU_TOKEN_AQUI>"}</span>
                 <span className="text-white"> \</span>{"\n"}
-                <span className="text-[#A0A0A0]">  --manager wazuh.qatech360.com \</span>{"\n"}
+                <span className="text-[#A0A0A0]">  --manager manager.qatech360.com \</span>{"\n"}
                 <span className="text-[#A0A0A0]">  --group production</span>{"\n\n"}
                 <span className="text-[#666]"># Verificar estado del agente</span>{"\n"}
                 <span className="text-[#00FF88]">systemctl</span>
-                <span className="text-white"> status wazuh-agent</span>
+                <span className="text-white"> status qatech360-agent</span>
               </code>
             </pre>
           </motion.div>
@@ -578,15 +578,15 @@ export default function PlatformPage() {
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00FF88]/40 bg-[#00FF88]/10 text-[#00FF88] text-sm font-medium mb-6">
               Transparencia Open Source
             </span>
-            <h2 className="text-4xl font-bold mb-6">Construido sobre Wazuh</h2>
+            <h2 className="text-4xl font-bold mb-6">Tecnología Transparente</h2>
             <p className="text-[#A0A0A0] text-lg leading-relaxed mb-8">
-              Nuestra plataforma está construida sobre Wazuh 4.9.x, el SIEM/XDR open source más auditado del mundo.
+              Nuestra plataforma utiliza tecnología de código abierto de nivel empresarial, el enfoque SIEM/XDR más auditado del mundo.
               Tus equipos de seguridad pueden revisar exactamente qué corre en tu infraestructura.
               Sin cajas negras. Sin dependencia de un proveedor único.
             </p>
             <div className="grid md:grid-cols-3 gap-6 text-left">
               {[
-                { title: "Auditable", desc: "Todo el código fuente de Wazuh es público en GitHub. Tus auditores pueden verificarlo." },
+                { title: "Auditable", desc: "El núcleo de nuestra plataforma es de código abierto. Tus auditores pueden verificarlo." },
                 { title: "Sin lock-in", desc: "Si decides migrar, tus datos y configuraciones son portables. Tu infraestructura, tus reglas." },
                 { title: "Comunidad activa", desc: "Más de 10 millones de descargas. Vulnerabilidades corregidas en horas, no semanas." },
               ].map((item, i) => (

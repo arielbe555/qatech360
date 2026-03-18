@@ -337,7 +337,7 @@ export default function ServicesPage() {
               Todos nuestros servicios
             </h1>
             <p className="text-xl text-[#A0A0A0] max-w-2xl mx-auto">
-              Seguridad completa para cada capa de tu infraestructura. Powered by Wazuh, gestionado por expertos LATAM.
+              Seguridad completa para cada capa de tu infraestructura. Motor de detección propio, gestionado por expertos LATAM.
             </p>
           </motion.div>
         </div>

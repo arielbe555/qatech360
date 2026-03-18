@@ -123,8 +123,8 @@ const ARTICLES: Article[] = [
     categoryType: "danger",
   },
   {
-    slug: "wazuh-vs-splunk",
-    title: "Wazuh vs Splunk: Comparativa honesta para 2025",
+    slug: "qatech360-vs-splunk",
+    title: "qatech360 vs Splunk: Comparativa honesta para 2025",
     description:
       "Comparamos ambas plataformas SIEM en términos de costo, capacidades de detección, curva de aprendizaje y escalabilidad para equipos LATAM.",
     category: "EDR/XDR",

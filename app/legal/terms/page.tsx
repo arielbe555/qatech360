@@ -21,7 +21,7 @@ const sections = [
     title: "2. Descripción del servicio",
     content: [
       "qatech360 es una plataforma de ciberseguridad gestionada (MSSPaaS) que proporciona servicios de SIEM, EDR, XDR, gestión de vulnerabilidades, cumplimiento automatizado, inteligencia de amenazas y respuesta a incidentes, operados principalmente para empresas en América Latina.",
-      "El servicio se presta a través de un agente de software instalado en los endpoints del cliente, combinado con una plataforma central de análisis y detección de amenazas basada en Wazuh de código abierto. Los clientes acceden al servicio a través del portal en portal.qatech360.com.",
+      "El servicio se presta a través de un agente de software instalado en los endpoints del cliente, combinado con una plataforma central de análisis y detección de amenazas con tecnología de detección qatech360. Los clientes acceden al servicio a través del portal en portal.qatech360.com.",
       "El alcance específico del servicio, los límites de endpoints, los niveles de soporte y los acuerdos de nivel de servicio (SLA) se definen en el plan contratado (Inicial, Profesional o Empresarial) y en cualquier orden de servicio aplicable.",
     ],
   },
@@ -47,7 +47,7 @@ const sections = [
     id: "propiedad-intelectual",
     title: "5. Propiedad intelectual",
     content: [
-      "La plataforma qatech360, incluyendo su código fuente propietario, diseño, interfaces, documentación, logotipos y marcas, es propiedad de qatech360 S.A. de C.V. y está protegida por las leyes de propiedad intelectual aplicables. El servicio está construido sobre Wazuh, cuyo núcleo es de código abierto bajo licencia GPLv2.",
+      "La plataforma qatech360, incluyendo su código fuente propietario, diseño, interfaces, documentación, logotipos y marcas, es propiedad de qatech360 S.A. de C.V. y está protegida por las leyes de propiedad intelectual aplicables. El servicio utiliza tecnología propia de qatech360 con componentes de código abierto.",
       "Al usar la plataforma, no adquieres ningún derecho de propiedad sobre ella. Se te otorga una licencia limitada, no exclusiva, no transferible para acceder y usar el servicio durante el período de vigencia de tu suscripción y únicamente para los fines descritos en estos términos.",
       "Los datos de seguridad que el cliente genera y que son procesados por la plataforma siguen siendo propiedad del cliente. qatech360 no tiene ningún derecho de propiedad sobre los datos de los endpoints, logs o alertas de los clientes. Al cancelar el servicio, los clientes pueden exportar sus datos durante un período de 30 días antes de la eliminación.",
     ],

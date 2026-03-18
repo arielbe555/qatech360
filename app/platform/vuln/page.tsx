@@ -490,7 +490,7 @@ export default function VulnPage() {
               {/* Endpoint */}
               <rect x="20" y="60" width="140" height="80" rx="8" fill="#1A1A1A" stroke="#2A2A2A" strokeWidth="1" />
               <text x="90" y="90" textAnchor="middle" fill="#A0A0A0" fontSize="11" fontFamily="monospace">Endpoint</text>
-              <text x="90" y="108" textAnchor="middle" fill="#666666" fontSize="9">agente Wazuh</text>
+              <text x="90" y="108" textAnchor="middle" fill="#666666" fontSize="9">agente qatech360</text>
               <rect x="35" y="120" width="110" height="10" rx="2" fill="#0070F330" />
               <rect x="35" y="120" width="88" height="10" rx="2" fill="#0070F3" />
 

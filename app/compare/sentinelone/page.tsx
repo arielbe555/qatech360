@@ -77,7 +77,7 @@ const COMPARISON_ROWS = [
   { feature: "Precio transparente", qa: "Precios accesibles y transparentes", s1: "No (requiere cotización)", qaGood: true, s1Good: false, both: false },
   { feature: "Analistas humanos LATAM 24/7", qa: "✅", s1: "❌", qaGood: true, s1Good: false, both: false },
   { feature: "Onboarding", qa: "15 minutos", s1: "Días / semanas", qaGood: true, s1Good: false, both: false },
-  { feature: "Open source core", qa: "Wazuh", s1: "Propietario", qaGood: true, s1Good: false, both: false },
+  { feature: "Open source core", qa: "Código abierto", s1: "Propietario", qaGood: true, s1Good: false, both: false },
   { feature: "Cumplimiento NOM-151 / LGPD", qa: "✅", s1: "❌", qaGood: true, s1Good: false, both: false },
   { feature: "Prueba gratuita sin tarjeta", qa: "14 días", s1: "No", qaGood: true, s1Good: false, both: false },
   { feature: "Precio inicial", qa: "Precios accesibles LATAM", s1: "Requiere cotización enterprise", qaGood: true, s1Good: false, both: false },

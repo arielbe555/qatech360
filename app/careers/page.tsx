@@ -62,7 +62,7 @@ const openPositions = [
     department: "Ingeniería",
     location: "Remoto LATAM",
     type: "Tiempo completo",
-    desc: "Diseña y mantiene la infraestructura de detección de amenazas. Expertise en Wazuh, Elasticsearch y reglas de correlación SIEM.",
+    desc: "Diseña y mantiene la infraestructura de detección de amenazas. Expertise en plataformas SIEM/XDR, Elasticsearch y reglas de correlación.",
     color: "#FF3B3B",
   },
   {

@@ -73,7 +73,7 @@ const CERTS = [
   { name: "ISO 27001", sub: "Information Security" },
   { name: "SOC 2 Type II", sub: "Security & Availability" },
   { name: "PCI-DSS", sub: "Qualified Security Assessor" },
-  { name: "Wazuh Partner", sub: "Certified Integration" },
+  { name: "Open Source Leader", sub: "Certified Integration" },
 ];
 
 // ================================================================
@@ -379,9 +379,9 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold mb-6">Construido sobre Wazuh</h2>
+            <h2 className="text-3xl font-bold mb-6">Tecnología Transparente</h2>
             <p className="text-[#A0A0A0] leading-relaxed mb-8">
-              Creemos en la transparencia. Por eso construimos nuestra plataforma sobre Wazuh, el SIEM/XDR open source más auditado del mundo. Tus equipos pueden revisar cada línea de código que corre en tu infraestructura. Sin cajas negras.
+              Creemos en la transparencia. Por eso construimos nuestra plataforma con tecnología de código abierto, el enfoque más auditado del mundo en SIEM/XDR. Tus equipos pueden revisar cada línea de código que corre en tu infraestructura. Sin cajas negras.
             </p>
           </motion.div>
         </div>

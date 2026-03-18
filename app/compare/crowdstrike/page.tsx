@@ -65,7 +65,7 @@ const COMPARISON_ROWS = [
   { feature: "Mercado objetivo", qa: "LATAM", cs: "Global (USA-first)", qaGood: true, csGood: false },
   { feature: "Precio transparente", qa: "Precios accesibles y transparentes", cs: "No (requiere llamada de ventas)", qaGood: true, csGood: false },
   { feature: "Onboarding", qa: "15 minutos", cs: "Días / semanas", qaGood: true, csGood: false },
-  { feature: "Open source core", qa: "Wazuh", cs: "Propietario", qaGood: true, csGood: false },
+  { feature: "Open source core", qa: "Código abierto", cs: "Propietario", qaGood: true, csGood: false },
   { feature: "SOC en zona horaria LATAM", qa: "✅", cs: "❌", qaGood: true, csGood: false },
   { feature: "Cumplimiento NOM-151 / LGPD", qa: "✅", cs: "❌", qaGood: true, csGood: false },
   { feature: "Prueba gratuita sin tarjeta", qa: "14 días", cs: "No", qaGood: true, csGood: false },

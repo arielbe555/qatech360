@@ -116,11 +116,11 @@ function EndpointShieldSVG() {
       <path d="M380 55 L386 58 L386 64 C386 67 383 69 380 70 C377 69 374 67 374 64 L374 58 Z" stroke="#00FF88" strokeWidth="1" />
       <text x="380" y="142" textAnchor="middle" fill="#A0A0A0" fontSize="9" fontFamily="system-ui">Workstation</text>
 
-      {/* Central hub - wazuh manager */}
+      {/* Central hub - qatech360 manager */}
       <circle cx="240" cy="190" r="44" fill="#111111" stroke="#0070F3" strokeWidth="1.5" opacity="0.9" />
       <circle cx="240" cy="190" r="36" fill="#0A0A0A" stroke="#0070F3" strokeWidth="0.5" opacity="0.5" />
       <text x="240" y="183" textAnchor="middle" fill="#0070F3" fontSize="9" fontWeight="600" fontFamily="system-ui">qatech360</text>
-      <text x="240" y="196" textAnchor="middle" fill="#A0A0A0" fontSize="8" fontFamily="system-ui">wazuh-manager</text>
+      <text x="240" y="196" textAnchor="middle" fill="#A0A0A0" fontSize="8" fontFamily="system-ui">motor qatech360</text>
       <text x="240" y="208" textAnchor="middle" fill="#00FF88" fontSize="8" fontFamily="system-ui">● PROTEGIDO</text>
 
       {/* Pulse rings */}
@@ -413,7 +413,7 @@ export default function EDRPage() {
               { label: "→", desc: "", color: "transparent" },
               { label: "Análisis conductual", desc: "Behavioral engine", color: "#00D4FF" },
               { label: "→", desc: "", color: "transparent" },
-              { label: "wazuh-manager", desc: "Correlación + reglas", color: "#00FF88" },
+              { label: "Motor qatech360", desc: "Correlación + reglas", color: "#00FF88" },
               { label: "→", desc: "", color: "transparent" },
               { label: "Alerta / Respuesta", desc: "Bloqueo automático", color: "#FFB800" },
             ].map((step, i) => (
