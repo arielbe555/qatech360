@@ -567,15 +567,15 @@ export default function IncidentResponsePage() {
               </div>
               <div className="flex-shrink-0 text-center">
                 <div className="bg-[#111111] border border-[#0070F3]/30 rounded-2xl p-8 mb-4">
-                  <div className="text-[#A0A0A0] text-sm mb-1">Desde</div>
-                  <div className="text-4xl font-black text-white mb-1">$500</div>
-                  <div className="text-[#A0A0A0] text-sm">/mes</div>
+                  <div className="text-[#A0A0A0] text-sm mb-2">Precio</div>
+                  <div className="text-2xl font-black text-white mb-1">Consultar</div>
+                  <div className="text-[#A0A0A0] text-xs">Adaptado a tu organización</div>
                 </div>
                 <Link
-                  href="/pricing"
+                  href="/contact"
                   className="block px-8 py-3 bg-[#0070F3] hover:bg-[#0050D0] text-white font-bold rounded-xl transition-all duration-200 text-sm"
                 >
-                  Ver planes y precios
+                  Solicitar información
                 </Link>
               </div>
             </div>

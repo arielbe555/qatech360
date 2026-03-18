@@ -63,7 +63,7 @@ const retentionPlans = [
     retention: "30 días hot",
     events: "500M/día",
     search: "< 2s",
-    price: "$2,500",
+    price: "Consultar",
     featured: false,
   },
   {
@@ -71,7 +71,7 @@ const retentionPlans = [
     retention: "90 días hot + 1 año cold",
     events: "5B/día",
     search: "< 1s",
-    price: "$8,500",
+    price: "Consultar",
     featured: true,
   },
   {
@@ -79,7 +79,7 @@ const retentionPlans = [
     retention: "1 año hot + 7 años cold",
     events: "Ilimitado",
     search: "< 500ms",
-    price: "Custom",
+    price: "Consultar",
     featured: false,
   },
 ];
@@ -537,10 +537,10 @@ export default function SiemPage() {
             </motion.div>
             <motion.h2 variants={fadeUp} className="text-4xl font-bold mb-4">
               Retención flexible,{" "}
-              <span className="text-gradient-primary">precio fijo</span>
+              <span className="text-gradient-primary">precios transparentes</span>
             </motion.h2>
             <motion.p variants={fadeUp} className="text-[#9CA3AF] max-w-xl mx-auto">
-              Sin cargos por volumen de eventos. Precio mensual fijo predecible.
+              Sin cargos por volumen de eventos. Precio mensual predecible.
               El fin de las facturas de Splunk de 6 cifras.
             </motion.p>
           </motion.div>
@@ -570,7 +570,6 @@ export default function SiemPage() {
                   <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                   <div className="text-3xl font-extrabold text-gradient-primary mb-6">
                     {plan.price}
-                    {plan.price !== "Custom" && <span className="text-sm text-[#9CA3AF] font-normal">/mes</span>}
                   </div>
                   <div className="space-y-3">
                     {[
@@ -588,7 +587,7 @@ export default function SiemPage() {
                     href="/contact"
                     className={`mt-6 w-full text-center block py-3 rounded-xl font-semibold transition-all ${plan.featured ? "btn-primary" : "btn-secondary"}`}
                   >
-                    {plan.price === "Custom" ? "Contactar ventas" : "Empezar gratis"}
+                    Solicitar información
                   </Link>
                 </div>
               </motion.div>
@@ -602,11 +601,8 @@ export default function SiemPage() {
         <div className="absolute inset-0 bg-gradient-hero-radial opacity-50" />
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-            <motion.div variants={fadeUp}>
-              <span className="badge badge-primary mb-6">14 días gratis · Sin tarjeta</span>
-            </motion.div>
             <motion.h2 variants={fadeUp} className="text-4xl lg:text-5xl font-bold mb-6">
-              Deja de pagar a Splunk.
+              Deja de pagar de más.
               <br />
               <span className="text-gradient-primary">Empieza a ver más.</span>
             </motion.h2>
@@ -616,9 +612,9 @@ export default function SiemPage() {
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
               <Link href="/contact" className="btn-primary text-lg px-8 py-4">
-                Activar SIEM gratis
+                Solicitar información
               </Link>
-              <Link href="/pricing" className="btn-secondary text-lg px-8 py-4">
+              <Link href="/contact" className="btn-secondary text-lg px-8 py-4">
                 Comparar con Splunk
               </Link>
             </motion.div>

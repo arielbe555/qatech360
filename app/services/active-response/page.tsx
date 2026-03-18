@@ -140,8 +140,8 @@ function DelayCostComparison() {
         </motion.div>
       ))}
       <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-4 text-center">
-        <div className="text-[#666666] text-xs mb-1">Costo promedio de ransomware en empresa mediana LATAM</div>
-        <div className="text-3xl font-bold text-[#FF3B3B]">$500,000 USD</div>
+        <div className="text-[#666666] text-xs mb-1">Impacto económico promedio de ransomware en empresa mediana LATAM</div>
+        <div className="text-3xl font-bold text-[#FF3B3B]">Impacto millonario</div>
         <div className="text-[#666666] text-xs mt-1">En los 30 minutos que tarda la respuesta manual</div>
       </div>
     </div>
@@ -554,7 +554,7 @@ export default function ActiveResponsePage() {
             </span>
           </h2>
           <p className="text-[#A0A0A0] text-lg mb-8">
-            14 días gratis. Playbooks activos desde la primera hora. Sin configuración compleja.
+            Playbooks activos desde la primera hora. Sin configuración compleja.
           </p>
           <Link
             href="/trial"

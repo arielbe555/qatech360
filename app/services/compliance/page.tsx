@@ -274,10 +274,10 @@ export default function CompliancePage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/trial"
+              href="/contact"
               className="px-8 py-4 bg-[#0070F3] hover:bg-[#0050D0] text-white font-bold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(0,112,243,0.4)] hover:shadow-[0_0_50px_rgba(0,112,243,0.6)] text-lg"
             >
-              Genera tu primer informe gratis
+              Solicitar información
             </Link>
             <Link
               href="/demo"
@@ -567,7 +567,7 @@ export default function CompliancePage() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl font-black mb-4">
-              Ahorra{" "}
+              Recupera{" "}
               <span className="text-[#00FF88]">semanas de trabajo</span>
             </h2>
           </motion.div>
@@ -632,18 +632,18 @@ export default function CompliancePage() {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-4xl md:text-5xl font-black mb-6">
-              Genera tu primer informe{" "}
-              <span className="text-[#00FF88]">gratis</span>
+              Automatiza tu{" "}
+              <span className="text-[#00FF88]">cumplimiento</span>
             </h2>
             <p className="text-[#A0A0A0] text-xl mb-10">
-              Conecta tu infraestructura y ten tu primer informe de cumplimiento en 5 minutos.
+              Conecta tu infraestructura y ten tu primer informe de cumplimiento en minutos.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/trial"
+                href="/contact"
                 className="px-10 py-4 bg-[#0070F3] hover:bg-[#0050D0] text-white font-bold rounded-xl transition-all duration-200 shadow-[0_0_40px_rgba(0,112,243,0.5)] text-lg"
               >
-                Iniciar prueba gratis — 14 días
+                Solicitar información
               </Link>
               <Link
                 href="/contact"
@@ -652,7 +652,6 @@ export default function CompliancePage() {
                 Hablar con un experto
               </Link>
             </div>
-            <p className="mt-6 text-[#666666] text-sm">Sin tarjeta de crédito · Cancela cuando quieras</p>
           </motion.div>
         </div>
       </section>

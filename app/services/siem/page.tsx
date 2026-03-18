@@ -203,7 +203,7 @@ const comparisonRows = [
   { feature: "Gestión gestionada", qatech: "Sí (MSSP)", splunk: "No", elk: "No" },
   { feature: "Soporte en español", qatech: "Nativo", splunk: "No", elk: "No" },
   { feature: "Mapeo MITRE ATT&CK", qatech: "Sí, automático", splunk: "Sí", elk: "Manual" },
-  { feature: "Precio inicial USD/mes", qatech: "$149", splunk: "~$2,000", elk: "Infraestructura propia" },
+  { feature: "Precio inicial USD/mes", qatech: "Consultar", splunk: "Desde miles de USD", elk: "Infraestructura propia" },
   { feature: "Retención incluida", qatech: "90 días hot / 1 año cold", splunk: "Configurable (costoso)", elk: "Tu disco" },
   { feature: "Onboarding", qatech: "15 minutos", splunk: "Semanas", elk: "Meses" },
 ];
@@ -275,10 +275,10 @@ export default function SIEMPage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 <Link
-                  href="/trial"
+                  href="/contact"
                   className="px-7 py-3 rounded-lg bg-[#0070F3] hover:bg-[#0050D0] text-white font-semibold transition-all duration-200 shadow-[0_0_24px_rgba(0,112,243,0.4)] hover:shadow-[0_0_40px_rgba(0,112,243,0.6)]"
                 >
-                  Activar SIEM gratis
+                  Solicitar información
                 </Link>
                 <Link
                   href="/demo"
@@ -607,13 +607,13 @@ export default function SIEMPage() {
             </span>
           </h2>
           <p className="text-[#A0A0A0] text-lg mb-8">
-            14 días gratis. Sin tarjeta de crédito. Onboarding en 15 minutos.
+            Onboarding en 15 minutos. Soporte en español. Analistas LATAM 24/7.
           </p>
           <Link
-            href="/trial"
+            href="/contact"
             className="inline-block px-10 py-4 rounded-lg bg-[#0070F3] hover:bg-[#0050D0] text-white font-semibold text-lg transition-all duration-200 shadow-[0_0_40px_rgba(0,112,243,0.4)] hover:shadow-[0_0_60px_rgba(0,112,243,0.6)]"
           >
-            Iniciar prueba gratuita
+            Solicitar información
           </Link>
         </motion.div>
       </section>
