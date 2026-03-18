@@ -379,15 +379,28 @@ export function NavBar() {
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
-              {/* qatech360 shield logo */}
-              <Image
-                src="/images/backgrounds/shield.png"
-                alt="qatech360 logo"
-                width={38}
-                height={38}
-                className="h-9 w-auto"
-                priority
-              />
+              {/* qatech360 shield logo — SVG inline */}
+              <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="nav-outer" x1="32" y1="2" x2="32" y2="62" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#1A3A8A"/>
+                    <stop offset="100%" stopColor="#0A2540"/>
+                  </linearGradient>
+                  <linearGradient id="nav-inner" x1="32" y1="10" x2="32" y2="54" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#0070F3"/>
+                    <stop offset="100%" stopColor="#003BA3"/>
+                  </linearGradient>
+                </defs>
+                {/* Outer shield */}
+                <path d="M32 2L6 14v18c0 14 11 26 26 30 15-4 26-16 26-30V14L32 2z" fill="url(#nav-outer)" stroke="#00D4FF" strokeWidth="1.5"/>
+                {/* Inner shield */}
+                <path d="M32 10L14 19v13c0 10 8 19 18 22 10-3 18-12 18-22V19L32 10z" fill="url(#nav-inner)"/>
+                {/* Cyan accent ring */}
+                <circle cx="32" cy="32" r="10" stroke="#00D4FF" strokeWidth="1.5" fill="none" opacity="0.7"/>
+                {/* Checkmark + sword */}
+                <path d="M26 32l4 4 8-8" stroke="#00D4FF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <line x1="32" y1="38" x2="32" y2="44" stroke="#00D4FF" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+              </svg>
             </motion.span>
             <span className="text-xl font-extrabold tracking-tight">
               <span className="text-white">qatech</span>
