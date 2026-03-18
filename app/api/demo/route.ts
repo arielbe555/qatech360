@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { demoConfirmationEmail, demoNotificationEmail } from "@/lib/email-templates";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const TEAM_EMAIL = process.env.RESEND_DEMO_TO ?? "demos@qatech360.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <noreply@qatech360.com>";
+const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
 // ── Rate limiting ──
 const rateMap = new Map<string, { count: number; reset: number }>();
@@ -70,13 +70,13 @@ export async function POST(req: NextRequest) {
 
     // ── Send emails in parallel ──
     const [confirmResult, notifyResult] = await Promise.allSettled([
-      resend.emails.send({
+      getResend().emails.send({
         from: FROM_EMAIL,
         to: [email],
         subject: "¡Tu demo está confirmada! — qatech360",
         html: demoConfirmationEmail(name, company),
       }),
-      resend.emails.send({
+      getResend().emails.send({
         from: FROM_EMAIL,
         to: [TEAM_EMAIL],
         replyTo: email,

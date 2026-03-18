@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "qatech360 <noreply@qatech360.com>";
+const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
 // ── Rate limiting ──
 const rateMap = new Map<string, { count: number; reset: number }>();
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Email inválido." }, { status: 400 });
     }
 
-    await resend.emails.send({
+    await getResend().emails.send({
       from: FROM_EMAIL,
       to: [email],
       subject: "¡Bienvenido al newsletter de qatech360! 🛡️",
