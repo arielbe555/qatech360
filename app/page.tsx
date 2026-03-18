@@ -45,7 +45,7 @@ export default function HomePage() {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-[0.28] pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.55] pointer-events-none"
             aria-hidden="true"
           >
             <source src="/images/videos/planivideo.mp4" type="video/mp4" />
@@ -57,7 +57,7 @@ export default function HomePage() {
               alt=""
               fill
               className="object-cover"
-              style={{ opacity: 0.06, mixBlendMode: "screen" }}
+              style={{ opacity: 0.18, mixBlendMode: "screen" }}
               priority
             />
           </div>

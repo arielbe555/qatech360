@@ -64,7 +64,7 @@ export function CTASection() {
           alt=""
           fill
           className="object-cover object-center"
-          style={{ opacity: 0.12, mixBlendMode: "luminosity" }}
+          style={{ opacity: 0.30, mixBlendMode: "screen" }}
         />
       </div>
 

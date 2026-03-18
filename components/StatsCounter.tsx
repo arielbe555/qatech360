@@ -300,13 +300,13 @@ export function StatsCounter() {
           alt=""
           fill
           className="object-cover object-center"
-          style={{ opacity: 0.07, mixBlendMode: "luminosity" }}
+          style={{ opacity: 0.22, mixBlendMode: "luminosity" }}
         />
         {/* Dark gradient overlay to keep text readable */}
         <div
           className="absolute inset-0"
           style={{
-            background: "linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.7) 100%)",
+            background: "linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.1) 50%, rgba(10,10,10,0.4) 100%)",
           }}
         />
       </div>

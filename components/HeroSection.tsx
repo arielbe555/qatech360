@@ -147,7 +147,7 @@ export function HeroSection() {
       <motion.div
         aria-hidden="true"
         className="absolute right-[-5%] top-[5%] w-[55vw] max-w-[700px] pointer-events-none select-none"
-        animate={{ y: [0, -18, 0], opacity: [0.07, 0.12, 0.07] }}
+        animate={{ y: [0, -18, 0], opacity: [0.35, 0.55, 0.35] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
         <Image
@@ -158,7 +158,7 @@ export function HeroSection() {
           className="w-full h-auto"
           style={{
             mixBlendMode: "screen",
-            filter: "saturate(0.6) brightness(0.5)",
+            filter: "saturate(1.2) brightness(1.0)",
           }}
           priority
         />
@@ -308,7 +308,7 @@ export function HeroSection() {
             priority
           />
           {/* Bottom fade so it blends into the page */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/30 via-transparent to-transparent pointer-events-none" />
           {/* LIVE badge */}
           <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-[#111]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#00FF88]/30 shadow-[0_0_12px_rgba(0,255,136,0.2)]">
             <span className="relative flex h-2 w-2">
