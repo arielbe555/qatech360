@@ -146,22 +146,27 @@ export function HeroSection() {
       {/* Shield watermark — floating behind hero content */}
       <motion.div
         aria-hidden="true"
-        className="absolute right-[-5%] top-[5%] w-[55vw] max-w-[700px] pointer-events-none select-none"
-        animate={{ y: [0, -18, 0], opacity: [0.35, 0.55, 0.35] }}
+        className="absolute right-[-5%] top-[5%] w-[45vw] max-w-[600px] pointer-events-none select-none"
+        animate={{ y: [0, -18, 0], opacity: [0.12, 0.20, 0.12] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Image
-          src="/images/backgrounds/shield.png"
-          alt=""
-          width={700}
-          height={420}
-          className="w-full h-auto"
-          style={{
-            mixBlendMode: "screen",
-            filter: "saturate(1.2) brightness(1.0)",
-          }}
-          priority
-        />
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+          <defs>
+            <linearGradient id="hero-shield-outer" x1="32" y1="2" x2="32" y2="62" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#1A3A8A"/>
+              <stop offset="100%" stopColor="#0A2540"/>
+            </linearGradient>
+            <linearGradient id="hero-shield-inner" x1="32" y1="10" x2="32" y2="54" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#0070F3"/>
+              <stop offset="100%" stopColor="#003BA3"/>
+            </linearGradient>
+          </defs>
+          <path d="M32 2L6 14v18c0 14 11 26 26 30 15-4 26-16 26-30V14L32 2z" fill="url(#hero-shield-outer)" stroke="#00D4FF" strokeWidth="1"/>
+          <path d="M32 10L14 19v13c0 10 8 19 18 22 10-3 18-12 18-22V19L32 10z" fill="url(#hero-shield-inner)"/>
+          <circle cx="32" cy="32" r="10" stroke="#00D4FF" strokeWidth="1" fill="none" opacity="0.6"/>
+          <path d="M26 32l4 4 8-8" stroke="#00D4FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="32" y1="38" x2="32" y2="44" stroke="#00D4FF" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+        </svg>
       </motion.div>
 
       {/* Radial glow top */}
@@ -192,148 +197,153 @@ export function HeroSection() {
 
       {/* ── Content ── */}
       <motion.div
-        className="relative z-10 container-qatech text-center flex flex-col items-center gap-8 pt-24 pb-20"
+        className="relative z-10 container-qatech pt-24 pb-20"
         style={{ opacity, y }}
         variants={heroContainer}
         initial="hidden"
         animate="visible"
       >
-        {/* Live badge */}
-        <motion.div variants={heroBadge}>
-          <LiveThreatCounter />
-        </motion.div>
-
-        {/* Eyebrow */}
-        <motion.div variants={heroBadge} className="-mt-2">
-          <span className="badge badge-primary text-[11px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0070F3] animate-pulse" />
-            Plataforma de Ciberseguridad para LATAM
-          </span>
-        </motion.div>
-
-        {/* H1 */}
-        <motion.h1
-          variants={heroTitle}
-          className="heading-display text-white max-w-4xl px-4"
-        >
-          Proteja su empresa con{" "}
-          <span className="text-gradient-animated">
-            IA de próxima generación
-          </span>
-        </motion.h1>
-
-        {/* Tagline */}
-        <motion.p
-          variants={heroSubtitle}
-          className="body-lg text-[#9CA3AF] max-w-2xl px-4"
-        >
-          qatech360 detecta, analiza y neutraliza amenazas cibernéticas en{" "}
-          <strong className="text-white font-semibold">tiempo real</strong> —
-          antes de que afecten su negocio. Onboarding en{" "}
-          <strong className="text-[#00D4FF] font-semibold">15 minutos</strong>,
-          protección de nivel enterprise desde el día 1.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          variants={heroCtas}
-          className="flex flex-col sm:flex-row gap-4 items-center"
-        >
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link
-              href="/trial"
-              className="btn-primary text-base px-8 py-4 rounded-xl"
-              style={{ fontSize: "1rem" }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-              Prueba Gratis 15 Días
-            </Link>
+        {/* Live badge + eyebrow — centered above the two columns */}
+        <div className="flex flex-col items-center gap-3 mb-10">
+          <motion.div variants={heroBadge}>
+            <LiveThreatCounter />
           </motion.div>
-
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link
-              href="/demo"
-              className="btn-secondary text-base px-8 py-4 rounded-xl"
-              style={{ fontSize: "1rem" }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/>
-                <polygon points="10,8 16,12 10,16 10,8"/>
-              </svg>
-              Ver Demo en Vivo
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Trust signals */}
-        <motion.p variants={heroSubtitle} className="text-xs text-[#6B7280]">
-          Sin tarjeta de crédito · Configuración en minutos · Cancela cuando quieras
-        </motion.p>
-
-        {/* Stats row */}
-        <motion.div
-          variants={heroStats}
-          className="flex flex-wrap justify-center gap-3 mt-4"
-        >
-          <HeroStat value="15min" label="Onboarding" color="cyan" />
-          <HeroStat value="99.9%" label="Uptime SLA" color="accent" />
-          <HeroStat value="50+" label="Clientes activos" color="primary" />
-          <HeroStat value="< 1s" label="Detección" color="cyan" />
-        </motion.div>
-
-        {/* Dashboard screenshot — producto real */}
-        <motion.div
-          variants={heroStats}
-          className="relative w-full max-w-4xl mt-4"
-        >
-          {/* Outer glow frame */}
-          <div
-            className="absolute -inset-[1px] rounded-2xl pointer-events-none"
-            style={{
-              background: "linear-gradient(135deg, rgba(0,112,243,0.6) 0%, rgba(0,212,255,0.4) 50%, rgba(0,255,136,0.2) 100%)",
-            }}
-          />
-          {/* Screenshot */}
-          <Image
-            src="/images/screenshots/dashboard.png"
-            alt="Panel de Seguridad SOC de qatech360 — alertas críticas, agentes activos y amenazas bloqueadas en tiempo real"
-            width={1200}
-            height={740}
-            className="relative rounded-2xl w-full h-auto"
-            style={{
-              boxShadow: "0 0 80px rgba(0,112,243,0.45), 0 0 160px rgba(0,212,255,0.15), 0 40px 80px rgba(0,0,0,0.6)",
-            }}
-            priority
-          />
-          {/* Bottom fade so it blends into the page */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/30 via-transparent to-transparent pointer-events-none" />
-          {/* LIVE badge */}
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-[#111]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#00FF88]/30 shadow-[0_0_12px_rgba(0,255,136,0.2)]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF88]" />
+          <motion.div variants={heroBadge}>
+            <span className="badge badge-primary text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0070F3] animate-pulse" />
+              Plataforma de Ciberseguridad para LATAM
             </span>
-            <span className="text-[#00FF88] text-[11px] font-mono font-bold tracking-wider">LIVE</span>
-          </div>
-          {/* Corner accent lines */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#0070F3]/60 rounded-tl-2xl pointer-events-none" />
-          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#0070F3]/60 rounded-tr-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00D4FF]/40 rounded-bl-2xl pointer-events-none" />
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#00D4FF]/40 rounded-br-2xl pointer-events-none" />
-        </motion.div>
+          </motion.div>
+        </div>
 
-        {/* Logos / social proof */}
+        {/* Two-column hero layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left: headline + CTAs + stats */}
+          <div className="flex flex-col items-start gap-6">
+            {/* H1 */}
+            <motion.h1
+              variants={heroTitle}
+              className="heading-display text-white"
+            >
+              Proteja su empresa con{" "}
+              <span className="text-gradient-animated">
+                IA de próxima generación
+              </span>
+            </motion.h1>
+
+            {/* Tagline */}
+            <motion.p
+              variants={heroSubtitle}
+              className="body-lg text-[#9CA3AF]"
+            >
+              qatech360 detecta, analiza y neutraliza amenazas cibernéticas en{" "}
+              <strong className="text-white font-semibold">tiempo real</strong> —
+              antes de que afecten su negocio. Onboarding en{" "}
+              <strong className="text-[#00D4FF] font-semibold">15 minutos</strong>,
+              protección de nivel enterprise desde el día 1.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              variants={heroCtas}
+              className="flex flex-col sm:flex-row gap-4 items-start"
+            >
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/trial"
+                  className="btn-primary text-base px-8 py-4 rounded-xl"
+                  style={{ fontSize: "1rem" }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  Prueba Gratis 15 Días
+                </Link>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/demo"
+                  className="btn-secondary text-base px-8 py-4 rounded-xl"
+                  style={{ fontSize: "1rem" }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polygon points="10,8 16,12 10,16 10,8"/>
+                  </svg>
+                  Ver Demo en Vivo
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Trust signals */}
+            <motion.p variants={heroSubtitle} className="text-xs text-[#6B7280]">
+              Sin tarjeta de crédito · Configuración en minutos · Cancela cuando quieras
+            </motion.p>
+
+            {/* Stats row */}
+            <motion.div
+              variants={heroStats}
+              className="flex flex-wrap gap-3"
+            >
+              <HeroStat value="15min" label="Onboarding" color="cyan" />
+              <HeroStat value="99.9%" label="Uptime SLA" color="accent" />
+              <HeroStat value="50+" label="Clientes activos" color="primary" />
+              <HeroStat value="< 1s" label="Detección" color="cyan" />
+            </motion.div>
+          </div>
+
+          {/* Right: dashboard screenshot */}
+          <motion.div
+            variants={heroStats}
+            className="relative hidden lg:block"
+          >
+            {/* Outer glow frame */}
+            <div
+              className="absolute -inset-[1px] rounded-2xl pointer-events-none"
+              style={{
+                background: "linear-gradient(135deg, rgba(0,112,243,0.5), rgba(0,212,255,0.3))",
+              }}
+            />
+            {/* Screenshot */}
+            <Image
+              src="/images/screenshots/dashboard.png"
+              alt="Panel de Seguridad SOC de qatech360 — alertas críticas, agentes activos y amenazas bloqueadas en tiempo real"
+              width={680}
+              height={420}
+              className="relative rounded-2xl w-full h-auto"
+              style={{
+                boxShadow: "0 0 60px rgba(0,112,243,0.4)",
+              }}
+              priority
+            />
+            {/* Bottom fade so it blends into the page */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0A0A0A]/30 via-transparent to-transparent pointer-events-none" />
+            {/* LIVE badge */}
+            <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-[#111]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#00FF88]/30 shadow-[0_0_12px_rgba(0,255,136,0.2)]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF88]" />
+              </span>
+              <span className="text-[#00FF88] text-[11px] font-mono font-bold tracking-wider">LIVE</span>
+            </div>
+            {/* Corner accent lines */}
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#0070F3]/60 rounded-tl-2xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#0070F3]/60 rounded-tr-2xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00D4FF]/40 rounded-bl-2xl pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#00D4FF]/40 rounded-br-2xl pointer-events-none" />
+          </motion.div>
+        </div>
+
+        {/* Logos / social proof — below both columns */}
         <motion.div
           variants={heroStats}
-          className="flex flex-col items-center gap-3 mt-2"
+          className="flex flex-col items-center gap-3 mt-12"
         >
           <p className="text-xs font-medium text-[#6B7280] uppercase tracking-widest">
             Con la confianza de empresas líderes en LATAM
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 opacity-40 grayscale hover:opacity-60 transition-opacity duration-300">
-            {/* Placeholder logos — replace with real <Image> components */}
             {["Banco Nacional", "TechCorp MX", "Grupo Alfa", "Fintech BO", "Retail AR"].map((name) => (
               <span key={name} className="text-sm font-semibold text-[#9CA3AF] tracking-wide">
                 {name}
