@@ -229,35 +229,35 @@ const COMPARISON_FEATURES = [
 const FAQS = [
   {
     q: "¿Hay contrato mínimo de permanencia?",
-    a: "No. Todos nuestros planes son sin contrato mínimo. En planes anuales obtenés el descuento de precio, pero podés cancelar en cualquier momento con reembolso proporcional del tiempo no usado.",
+    a: "No. Todos nuestros planes son sin contrato mínimo. Podés cancelar en cualquier momento con reembolso proporcional del tiempo no usado.",
   },
   {
     q: "¿Puedo cancelar cuando quiera?",
-    a: "Sí, absolutamente. Si cancelás un plan mensual, tu acceso continúa hasta el fin del período facturado. Si cancelás un plan anual dentro de los 30 días, recibís un reembolso completo.",
+    a: "Sí, absolutamente. Si cancelás dentro de los primeros 30 días, recibís un reembolso completo. Después de ese período, el acceso continúa hasta el fin del período contratado.",
   },
   {
-    q: "¿Qué incluye el trial gratuito de 15 días?",
+    q: "¿Qué incluye el trial gratuito?",
     a: "El trial incluye acceso completo a las funciones del plan Professional: EDR completo, SIEM, Threat Intelligence, hasta 50 endpoints, y soporte prioritario. Sin tarjeta de crédito requerida.",
   },
   {
-    q: "¿Los precios están en dólares? ¿Puedo pagar en moneda local?",
-    a: "Los precios base están en USD. Para clientes en Argentina, Brasil, México, Colombia, Chile y Perú ofrecemos facturación en moneda local con tasas de conversión transparentes. Contáctanos para más detalles.",
+    q: "¿Puedo pagar en moneda local?",
+    a: "Sí. Para clientes en Argentina, Brasil, México, Colombia, Chile y Perú ofrecemos facturación en moneda local. Contáctanos para más detalles sobre opciones de pago disponibles en tu país.",
   },
   {
     q: "¿Qué pasa si supero el número de endpoints contratados?",
-    a: "Te notificamos automáticamente cuando llegás al 80% del límite. Podés escalar el plan en cualquier momento de forma instantánea, y el cobro adicional se hace de forma proporcional.",
+    a: "Te notificamos automáticamente cuando llegás al 80% del límite. Podés escalar el plan en cualquier momento de forma instantánea. Contáctanos para ajustar tu plan según tus necesidades.",
   },
   {
-    q: "¿Hay descuentos para startups o instituciones educativas?",
-    a: "Sí. Tenemos el programa qatech360 for Good con descuentos de hasta el 50% para ONGs, instituciones académicas y startups con menos de 2 años. Escribinos a hola@qatech360.com.",
+    q: "¿Hay condiciones especiales para startups o instituciones educativas?",
+    a: "Sí. Tenemos el programa qatech360 for Good con condiciones especiales para ONGs, instituciones académicas y startups con menos de 2 años. Escribinos a hola@qatech360.com.",
   },
   {
-    q: "¿Cómo funciona la facturación anual?",
-    a: "En el plan anual, el precio se cobra en un solo pago al inicio del período. El ahorro promedio es del 32% vs el plan mensual. Para Enterprise, ofrecemos facturación trimestral o mensual sin recargo.",
+    q: "¿Qué opciones de facturación están disponibles?",
+    a: "Ofrecemos facturación mensual y anual. Para Enterprise, también ofrecemos facturación trimestral. Contáctanos para conocer las opciones disponibles para tu empresa.",
   },
   {
-    q: "¿El plan Enterprise tiene precio fijo o requiere cotización?",
-    a: "Enterprise tiene precios personalizados que dependen del volumen total de endpoints, los servicios adicionales (SOC 24/7 full, CISO virtual, etc.) y el plazo de contrato. Pedí una cotización sin compromiso.",
+    q: "¿Cómo obtengo una cotización?",
+    a: "Todos nuestros planes se cotizan según las necesidades específicas de tu empresa: volumen de endpoints, servicios requeridos, industria y requerimientos de cumplimiento. Pedí tu cotización sin compromiso desde /contact.",
   },
 ];
 

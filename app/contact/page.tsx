@@ -130,7 +130,7 @@ const FAQS = [
   },
   {
     q: "¿Tienen oficinas físicas?",
-    a: "Operamos de forma remota, lo que nos permite tener talento en toda LATAM. Nuestro equipo principal está distribuido entre Ciudad de México, Bogotá y São Paulo.",
+    a: "Operamos de forma remota, lo que nos permite tener talento en toda LATAM. Nuestro equipo principal está distribuido entre Buenos Aires, Ciudad de México y São Paulo.",
   },
 ];
 

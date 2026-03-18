@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { pricingContainer, pricingCard, featuredPricingCard, viewportOnce } from "@/lib/animations";
 
@@ -19,9 +18,6 @@ interface PricingTier {
   name: string;
   badge?: string;
   description: string;
-  priceMonthly: number;
-  priceAnnual: number;
-  priceSuffix?: string;
   features: PricingFeature[];
   cta: string;
   ctaHref: string;
@@ -56,8 +52,6 @@ const TIERS: PricingTier[] = [
     id: "starter",
     name: "Starter",
     description: "Protección esencial para PYMEs y startups que comienzan su journey de seguridad.",
-    priceMonthly: 299,
-    priceAnnual: 249,
     features: [
       { text: "Hasta 25 endpoints",       included: true },
       { text: "EDR básico",               included: true },
@@ -70,8 +64,8 @@ const TIERS: PricingTier[] = [
       { text: "Threat Intelligence",      included: false },
       { text: "Compliance automatizado",  included: false },
     ],
-    cta: "Iniciar prueba gratis",
-    ctaHref: "/trial?plan=starter",
+    cta: "Solicitar información",
+    ctaHref: "/contact?plan=starter",
     color: "default",
   },
   {
@@ -79,8 +73,6 @@ const TIERS: PricingTier[] = [
     name: "Business",
     badge: "Más popular",
     description: "La opción preferida por medianas empresas que requieren protección avanzada y SOC dedicado.",
-    priceMonthly: 799,
-    priceAnnual: 649,
     features: [
       { text: "Hasta 150 endpoints",          included: true },
       { text: "EDR avanzado + UEBA",          included: true },
@@ -93,8 +85,8 @@ const TIERS: PricingTier[] = [
       { text: "Pen Testing (2/año)",          included: false },
       { text: "CISO virtual dedicado",        included: false },
     ],
-    cta: "Iniciar prueba gratis",
-    ctaHref: "/trial?plan=business",
+    cta: "Solicitar información",
+    ctaHref: "/contact?plan=business",
     featured: true,
     color: "primary",
   },
@@ -102,9 +94,6 @@ const TIERS: PricingTier[] = [
     id: "enterprise",
     name: "Enterprise",
     description: "Solución completa y a medida para grandes organizaciones y grupos corporativos en LATAM.",
-    priceMonthly: 0,
-    priceAnnual: 0,
-    priceSuffix: "A medida",
     features: [
       { text: "Endpoints ilimitados",           included: true },
       { text: "EDR avanzado + UEBA + XDR",      included: true },
@@ -128,17 +117,11 @@ const TIERS: PricingTier[] = [
 // ================================================================
 function PricingCard({
   tier,
-  isAnnual,
   index,
 }: {
   tier: PricingTier;
-  isAnnual: boolean;
   index: number;
 }) {
-  const price = isAnnual ? tier.priceAnnual : tier.priceMonthly;
-  const isCustom = tier.priceMonthly === 0;
-  const savings = tier.priceMonthly > 0 ? tier.priceMonthly - tier.priceAnnual : 0;
-
   return (
     <motion.div
       variants={tier.featured ? featuredPricingCard : pricingCard}
@@ -206,47 +189,12 @@ function PricingCard({
 
         {/* Price */}
         <div className="mb-6 pb-6 border-b border-[rgba(55,65,81,0.5)]">
-          {isCustom ? (
-            <div>
-              <p className="text-3xl font-extrabold text-white">{tier.priceSuffix}</p>
-              <p className="text-sm text-[#9CA3AF] mt-1">Cotización sin compromiso</p>
-            </div>
-          ) : (
-            <div>
-              <div className="flex items-end gap-1">
-                <span className="text-sm font-semibold text-[#9CA3AF] mb-1.5">USD</span>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={price}
-                    initial={{ opacity: 0, y: -12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 12 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className={`text-5xl font-extrabold tabular-nums ${
-                      tier.featured ? "text-gradient" : "text-white"
-                    }`}
-                  >
-                    {price.toLocaleString()}
-                  </motion.span>
-                </AnimatePresence>
-                <span className="text-sm text-[#9CA3AF] mb-1.5">/mes</span>
-              </div>
-              {isAnnual && savings > 0 && (
-                <motion.p
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="text-xs text-[#00FF88] mt-1 font-medium"
-                >
-                  Ahorras USD {savings}/mes · {Math.round((savings / tier.priceMonthly) * 100)}% off
-                </motion.p>
-              )}
-              {!isAnnual && (
-                <p className="text-xs text-[#6B7280] mt-1">
-                  O USD {tier.priceAnnual}/mes con plan anual
-                </p>
-              )}
-            </div>
-          )}
+          <div className="text-center py-2">
+            <span className={`text-3xl font-extrabold ${tier.featured ? "text-gradient" : "text-white"}`}>
+              Consultar
+            </span>
+            <p className="text-sm text-[#9CA3AF] mt-1">Cotización personalizada para tu empresa</p>
+          </div>
         </div>
 
         {/* Features */}
@@ -277,21 +225,12 @@ function PricingCard({
             }`}
           >
             {tier.cta}
-            {isCustom && (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12 5 19 12 12 19"/>
-              </svg>
-            )}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
           </Link>
         </motion.div>
-
-        {/* Guarantee note */}
-        {!isCustom && (
-          <p className="text-center text-xs text-[#6B7280] mt-3">
-            15 días gratis · Sin tarjeta · Cancela cuando quieras
-          </p>
-        )}
       </div>
     </motion.div>
   );
@@ -301,8 +240,6 @@ function PricingCard({
 // PRICING SECTION
 // ================================================================
 export function PricingSection() {
-  const [isAnnual, setIsAnnual] = useState(true);
-
   return (
     <section
       className="section-py relative bg-[#0A0A0A]"
@@ -333,48 +270,15 @@ export function PricingSection() {
         >
           <span className="badge badge-primary mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#0070F3]" />
-            Precios Transparentes
+            Planes de Seguridad
           </span>
           <h2 id="pricing-title" className="heading-1 text-white mt-4 mb-4">
             Inversión en seguridad,{" "}
             <span className="text-gradient">no en licencias</span>
           </h2>
           <p className="body-lg text-[#9CA3AF] max-w-xl mx-auto">
-            Precios claros, sin sorpresas. Escale según sus necesidades con nuestros planes flexibles.
+            Planes flexibles adaptados a tu empresa. Contáctanos para una cotización personalizada sin compromiso.
           </p>
-        </motion.div>
-
-        {/* Toggle mensual/anual */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={viewportOnce}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex items-center justify-center gap-4 mb-14"
-        >
-          <span className={`text-sm font-medium transition-colors ${!isAnnual ? "text-white" : "text-[#6B7280]"}`}>
-            Mensual
-          </span>
-          <button
-            onClick={() => setIsAnnual(!isAnnual)}
-            className="relative w-14 h-7 rounded-full transition-colors duration-300 focus-ring"
-            style={{ background: isAnnual ? "#0070F3" : "#374151" }}
-            role="switch"
-            aria-checked={isAnnual}
-            aria-label="Cambiar entre facturación mensual y anual"
-          >
-            <motion.span
-              animate={{ x: isAnnual ? 28 : 4 }}
-              transition={{ type: "spring", stiffness: 500, damping: 35 }}
-              className="absolute top-1 w-5 h-5 rounded-full bg-white shadow-md"
-            />
-          </button>
-          <span className={`text-sm font-medium transition-colors flex items-center gap-2 ${isAnnual ? "text-white" : "text-[#6B7280]"}`}>
-            Anual
-            <span className="badge badge-accent text-[9px] py-0.5 px-1.5">
-              Ahorra 20%
-            </span>
-          </span>
         </motion.div>
 
         {/* Pricing cards */}
@@ -389,7 +293,6 @@ export function PricingSection() {
             <PricingCard
               key={tier.id}
               tier={tier}
-              isAnnual={isAnnual}
               index={i}
             />
           ))}

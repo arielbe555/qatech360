@@ -46,7 +46,7 @@ const MISSION_VALUES = [
 ];
 
 const TIMELINE = [
-  { year: "2020", event: "Fundación en Ciudad de México. Primer equipo de 4 ingenieros de seguridad." },
+  { year: "2020", event: "Fundación en Buenos Aires, Argentina. Primer equipo de 4 ingenieros de seguridad." },
   { year: "2021", event: "Lanzamiento del primer SOC LATAM con cobertura en GMT-6 y GMT-5." },
   { year: "2022", event: "Alcanzamos 1,000 endpoints protegidos. Serie Seed cerrada con inversores LATAM." },
   { year: "2023", event: "Expansión a Brasil y Colombia. Cumplimiento LGPD y Ley 1581." },
@@ -199,7 +199,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-xl text-[#A0A0A0] max-w-3xl mx-auto leading-relaxed">
-              Somos el equipo de seguridad que las empresas latinoamericanas merecían. Nacimos en México en 2020 con una misión clara: llevar ciberseguridad de clase mundial a toda América Latina, en español, al precio justo.
+              Somos el equipo de seguridad que las empresas latinoamericanas merecían. Nacimos en Argentina en 2020 con una misión clara: llevar ciberseguridad de clase mundial a toda América Latina, en español, al precio justo.
             </p>
           </motion.div>
         </div>
@@ -342,7 +342,7 @@ export default function AboutPage() {
               </span>
               <h2 className="text-4xl font-bold mb-6">SOC en tu zona horaria</h2>
               <p className="text-[#A0A0A0] leading-relaxed mb-8">
-                Nuestro Centro de Operaciones de Seguridad opera desde México y Brasil, cubriendo todos los husos horarios de América Latina. Cuando se dispara una alerta crítica, un analista humano que habla tu idioma ya está investigando.
+                Nuestro Centro de Operaciones de Seguridad opera desde Buenos Aires y São Paulo, cubriendo todos los husos horarios de América Latina. Cuando se dispara una alerta crítica, un analista humano que habla tu idioma ya está investigando.
               </p>
               <div className="space-y-3">
                 {[
